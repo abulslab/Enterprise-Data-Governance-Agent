@@ -1,0 +1,35 @@
+{
+  "datasetUrn": "urn:datacatalog:production:finance:customer_orders_v2",
+  "datasetName": "Finance Customer Orders Partition (Candidate v2)",
+  "classificationTier": "CONFIDENTIAL",
+  "schemaVersion": "2.0.0",
+  "storageTarget": "LAKEHOUSE",
+  "columns": [
+    { "name": "order_id", "type": "uuid", "nullable": false },
+    { "name": "customer_id", "type": "string", "nullable": false },
+    { "name": "taxpayer_ssn", "type": "string", "nullable": false },
+    { "name": "order_amount", "type": "decimal", "nullable": false },
+    { "name": "order_timestamp", "type": "timestamp", "nullable": false }
+  ],
+  "sampleRecords": [
+    {
+      "order_id": "ord-992144-a",
+      "customer_id": "CUST-88192",
+      "taxpayer_ssn": "123-45-6789",
+      "order_amount": 1250.50,
+      "order_timestamp": "2026-10-30T14:22:10Z"
+    },
+    {
+      "order_id": "ord-992145-b",
+      "customer_id": "CUST-88193",
+      "taxpayer_ssn": "987-65-4321",
+      "order_amount": 89.99,
+      "order_timestamp": "2026-10-30T14:23:45Z"
+    }
+  ],
+  "metadata": {
+    "owner": "checkout-service-team",
+    "environment": "production",
+    "vaultEnforced": false
+  }
+}

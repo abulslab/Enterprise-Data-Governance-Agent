@@ -1,0 +1,46 @@
+{
+  "name": "enterprise-data-governance-agent",
+  "version": "1.0.0",
+  "description": "Autonomous AI Data Governance Agent for lakehouse schema contract verification, regulatory boundary enforcement, and consumer impact analysis.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "governance-agent": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/cli.ts",
+    "start:mock": "tsx src/cli.ts --candidate ./examples/candidates/candidate-critical-direct-pii-ssn.json --baseline ./examples/contracts/customer-orders-v1-baseline.json --llm mock",
+    "start:clean": "tsx src/cli.ts --candidate ./examples/candidates/candidate-clean-approved.json --baseline ./examples/contracts/customer-orders-v1-baseline.json --llm mock",
+    "start:ollama": "tsx src/cli.ts --candidate ./examples/candidates/candidate-critical-direct-pii-ssn.json --baseline ./examples/contracts/customer-orders-v1-baseline.json --llm ollama",
+    "start:gemini": "tsx src/cli.ts --candidate ./examples/candidates/candidate-critical-direct-pii-ssn.json --baseline ./examples/contracts/customer-orders-v1-baseline.json --llm gemini",
+    "ui": "npx serve ui -l 5175",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "tsx tests/unit/deterministicScanner.test.ts && tsx tests/unit/schemaDiffer.test.ts && tsx tests/unit/dataClassifier.test.ts && tsx tests/unit/policyRegistry.test.ts && tsx tests/unit/impactAnalyzer.test.ts",
+    "test:integration": "tsx tests/integration/governanceAgent.test.ts",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [
+    "data-governance",
+    "agentic-ai",
+    "data-contracts",
+    "schema-registry",
+    "pii-detection",
+    "gdpr",
+    "hipaa",
+    "pci-dss",
+    "glba",
+    "ooda-loop",
+    "zero-token-offloading"
+  ],
+  "author": "abulslab",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "serve": "^14.2.4",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}

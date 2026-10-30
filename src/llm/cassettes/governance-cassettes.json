@@ -1,0 +1,128 @@
+{
+  "quarantineCassette": [
+    {
+      "step": 1,
+      "phase": "OBSERVE",
+      "observation": "Ingested candidate dataset schema. Delegated scanning to Tier 4 Zero-Token deterministic scanner. Identified direct PII credentials in sample partition outside approved vault tier.",
+      "reasoning": "Direct government or financial credentials in non-restricted tiers violate Tier 1 Invariant 1 and regulatory standards.",
+      "decision": "Activate Tier 2 policy evaluations for GDPR, HIPAA, and GLBA.",
+      "engineProvider": "Offline Mock",
+      "latencyMs": 1,
+      "tokensConsumed": 0
+    },
+    {
+      "step": 2,
+      "phase": "REASON",
+      "observation": "Statutory boundaries breached: Invariant G-1 violation. Cleartext credentials detected without cryptographic envelope encryption.",
+      "reasoning": "Unprotected credentials exposure carries severe statutory penalties under GDPR Art 32 and GLBA § 6801. Auto-approval is legally prohibited.",
+      "decision": "Mandate Human-in-the-Loop Supervisory Quarantine. Halt pipeline lock.",
+      "engineProvider": "Offline Mock",
+      "latencyMs": 1,
+      "tokensConsumed": 0
+    },
+    {
+      "step": 3,
+      "phase": "DECIDE",
+      "observation": "Supervisory escalation protocol engaged. Quarantine partition generated.",
+      "reasoning": "Dataset must not reach downstream lakehouse partitions or streaming consumers.",
+      "decision": "Enforce QUARANTINE decision outcome and file defect candidate SEC-GOV-902.",
+      "engineProvider": "Offline Mock",
+      "latencyMs": 1,
+      "tokensConsumed": 0
+    },
+    {
+      "step": 4,
+      "phase": "EXECUTE",
+      "observation": "Quarantine gate locked. Downstream lakehouse ingestion suspended.",
+      "reasoning": "Cryptographic compliance dossier compiled with full evidence trail.",
+      "decision": "Emit exit code 1 to CI/CD gate. Alert Data Protection Officer.",
+      "engineProvider": "Offline Mock",
+      "latencyMs": 1,
+      "tokensConsumed": 0
+    }
+  ],
+  "approveCassette": [
+    {
+      "step": 1,
+      "phase": "OBSERVE",
+      "observation": "Ingested candidate dataset schema. Invariant scan detected zero unmasked direct PII credentials across all sample partition records.",
+      "reasoning": "Dataset satisfies privacy boundaries and masking policies.",
+      "decision": "Proceed to data contract compatibility and schema differ evaluation.",
+      "engineProvider": "Offline Mock",
+      "latencyMs": 1,
+      "tokensConsumed": 0
+    },
+    {
+      "step": 2,
+      "phase": "REASON",
+      "observation": "AST schema diff verified against registered baseline contract. Zero breaking field removals or incompatible type narrowing detected.",
+      "reasoning": "All registered downstream consumer contracts remain 100% backward compatible.",
+      "decision": "Certify dataset candidate for production pipeline ingestion.",
+      "engineProvider": "Offline Mock",
+      "latencyMs": 1,
+      "tokensConsumed": 0
+    },
+    {
+      "step": 3,
+      "phase": "DECIDE",
+      "observation": "Governance criteria satisfied: Invariant G-1, Invariant G-2, and statutory policies certified.",
+      "reasoning": "No supervisory escalation required for compliant candidate.",
+      "decision": "Enforce APPROVE decision outcome.",
+      "engineProvider": "Offline Mock",
+      "latencyMs": 1,
+      "tokensConsumed": 0
+    },
+    {
+      "step": 4,
+      "phase": "EXECUTE",
+      "observation": "Compliance dossier finalized with cryptographic trace ID.",
+      "reasoning": "Automated deployment certification issued.",
+      "decision": "Release pipeline lock. Emit exit code 0 to CI/CD gate.",
+      "engineProvider": "Offline Mock",
+      "latencyMs": 1,
+      "tokensConsumed": 0
+    }
+  ],
+  "blockCassette": [
+    {
+      "step": 1,
+      "phase": "OBSERVE",
+      "observation": "Candidate schema AST analysis identified critical column removals or incompatible type narrowing.",
+      "reasoning": "Breaking changes violate Invariant 2 (Data Contracts Cannot Be Violated).",
+      "decision": "Evaluate downstream consumer dependency graph and calculate blast radius.",
+      "engineProvider": "Offline Mock",
+      "latencyMs": 1,
+      "tokensConsumed": 0
+    },
+    {
+      "step": 2,
+      "phase": "REASON",
+      "observation": "Consumer impact assessment confirmed breaking changes impact Tier 1 critical consumers (streaming feeds, financial analytics).",
+      "reasoning": "Deployment would cause cascading runtime failure across downstream services.",
+      "decision": "Mandate immediate deployment block.",
+      "engineProvider": "Offline Mock",
+      "latencyMs": 1,
+      "tokensConsumed": 0
+    },
+    {
+      "step": 3,
+      "phase": "DECIDE",
+      "observation": "Deployment block policy enforced. Contract violation ticket generated.",
+      "reasoning": "Pull request must be rejected until contract migration or backward-compatibility layer is provided.",
+      "decision": "Enforce BLOCK_DEPLOYMENT decision outcome.",
+      "engineProvider": "Offline Mock",
+      "latencyMs": 1,
+      "tokensConsumed": 0
+    },
+    {
+      "step": 4,
+      "phase": "EXECUTE",
+      "observation": "CI/CD pull request gate locked. Defect ticket CONTRACT-BLOCKED-401 logged.",
+      "reasoning": "Prevented cascading downstream data corruption.",
+      "decision": "Emit exit code 1 to CI/CD pipeline.",
+      "engineProvider": "Offline Mock",
+      "latencyMs": 1,
+      "tokensConsumed": 0
+    }
+  ]
+}

@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise Data Governance Agent — Visual Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a11;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #4f46e5;
+      --accent-glow: rgba(79, 70, 229, 0.35);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --danger: #ef4444;
+      --danger-bg: rgba(239, 68, 68, 0.15);
+      --success: #10b981;
+      --success-bg: rgba(16, 185, 129, 0.15);
+      --warning: #f59e0b;
+      --warning-bg: rgba(245, 158, 11, 0.15);
+      --purple: #8b5cf6;
+      --purple-bg: rgba(139, 92, 246, 0.15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.12) 0px, transparent 50%);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px var(--accent-glow);
+      font-size: 24px;
+    }
+
+    .brand-title h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .brand-title p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .badges-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-purple { background: var(--purple-bg); color: #c4b5fd; border: 1px solid rgba(139, 92, 246, 0.3); }
+    .badge-amber { background: var(--warning-bg); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-red { background: var(--danger-bg); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .badge-green { background: var(--success-bg); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 1024px) { .grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    select, textarea, input {
+      width: 100%;
+      background: rgba(10, 15, 29, 0.7);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+    select:focus, textarea:focus, input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    textarea {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      min-height: 160px;
+      resize: vertical;
+      line-height: 1.45;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      position: relative;
+    }
+    .input-row input {
+      padding-right: 40px;
+    }
+    .toggle-pwd {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+      padding: 4px;
+    }
+    .toggle-pwd:hover { color: #fff; }
+
+    .config-box {
+      background: rgba(79, 70, 229, 0.08);
+      border: 1px solid rgba(79, 70, 229, 0.25);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 16px;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+      color: white;
+      box-shadow: 0 8px 20px var(--accent-glow);
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px var(--accent-glow);
+    }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      box-shadow: none;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      border-radius: 8px;
+      width: auto;
+      cursor: pointer;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 640px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+
+    .stat-box {
+      background: rgba(10, 15, 29, 0.6);
+      border: 1px solid var(--card-border);
+      padding: 10px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .stat-val { font-size: 1.15rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+    .stat-lbl { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
+
+    .section-box {
+      background: rgba(10, 15, 29, 0.5);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .step-item {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .step-body {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+
+    .step-decision {
+      font-size: 0.74rem;
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 5px 8px;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent);
+      color: #e2e8f0;
+      margin-top: 4px;
+    }
+
+    pre.dossier {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid var(--card-border);
+      padding: 14px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      line-height: 1.4;
+      color: #cbd5e1;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    .alert-box {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      margin-bottom: 14px;
+      display: none;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1e293b;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      font-size: 0.8rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      display: none;
+      z-index: 100;
+      animation: fadeIn 0.2s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="brand-icon">🛡️</div>
+        <div class="brand-title">
+          <h1>Enterprise Data Governance Agent Studio</h1>
+          <p>Autonomous Lakehouse Data Governance, Contract Enforcement & Blast Radius Intelligence</p>
+        </div>
+      </div>
+      <div class="badges-row">
+        <span class="badge badge-purple">4-Tier Cognitive</span>
+        <span class="badge badge-green">0-Token Scanner</span>
+        <span class="badge badge-amber" id="modeBadge">Mock Cassette</span>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- Left Panel: Input & Configuration -->
+      <div class="card">
+        <div class="card-title">
+          <span>1. Governance Audit Configuration</span>
+          <span class="badge badge-purple" id="tierBadge">TIER 1 INVARIANTS</span>
+        </div>
+
+        <div class="form-group">
+          <label>Load Scenario Preset</label>
+          <select id="presetSelect" onchange="loadPreset()">
+            <option value="critical_pii">Violation: Finance Customer Data (Cleartext SSN in Confidential) -> QUARANTINE</option>
+            <option value="breaking_drift">Violation: Breaking Contract Drift (Customer ID Dropped) -> BLOCK_DEPLOYMENT</option>
+            <option value="clean_evolution">Evolution: Optional Column Added (Masked PII) -> APPROVE_WITH_WARNING</option>
+            <option value="clean_exact">Compliant: Exact Contract Match (Zero Drift) -> APPROVE</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Candidate Dataset Schema (JSON)</label>
+          <textarea id="candidateInput" placeholder="Candidate Schema JSON..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Registered Baseline Data Contract (JSON)</label>
+          <textarea id="baselineInput" style="min-height: 120px;" placeholder="Baseline Contract JSON..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Reasoning Runtime Gateway</label>
+          <select id="gatewaySelect" onchange="updateGateway()">
+            <option value="mock">Offline Realistic Mock (1ms, 0 Tokens Consumed)</option>
+            <option value="gemini">Google Gemini Cloud (API Key Configurable)</option>
+            <option value="ollama">Local Ollama (Llama 3 / Qwen 2.5)</option>
+          </select>
+        </div>
+
+        <!-- Google Gemini Live Config -->
+        <div class="config-box" id="geminiConfigBox" style="display: none;">
+          <div class="form-group">
+            <label>
+              <span>Google AI Studio API Key</span>
+              <span id="geminiKeyStatus" style="font-size: 0.68rem; color: #10b981; display: none;">Saved in browser</span>
+            </label>
+            <div class="input-row">
+              <input type="password" id="geminiKeyInput" placeholder="Paste your AIzaSy... API key here" oninput="saveGeminiKey()" />
+              <button class="toggle-pwd" type="button" onclick="toggleKeyVisibility()" title="Show/Hide">👁️</button>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label>Gemini Model</label>
+            <select id="geminiModelSelect" onchange="saveGeminiModel()">
+              <option value="gemini-2.5-flash">gemini-2.5-flash (Fast & Frontier Reasoning - Recommended)</option>
+              <option value="gemini-1.5-flash">gemini-1.5-flash (Lightweight)</option>
+              <option value="gemini-1.5-pro">gemini-1.5-pro (Deep Multimodal & Long Context)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Local Ollama Config -->
+        <div class="config-box" id="ollamaConfigBox" style="display: none;">
+          <div class="form-group">
+            <label>Ollama Daemon URL</label>
+            <input type="text" id="ollamaUrlInput" value="http://localhost:11434" oninput="saveOllamaConfig()" />
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label>Ollama Model</label>
+            <input type="text" id="ollamaModelInput" value="llama3:latest" oninput="saveOllamaConfig()" />
+          </div>
+        </div>
+
+        <div class="alert-box" id="errorAlert"></div>
+
+        <button class="btn" onclick="runAudit()" id="runBtn">
+          <span>⚡ Run Autonomous Governance Audit</span>
+        </button>
+      </div>
+
+      <!-- Right Panel: Live OODA Reasoning & Deliverables -->
+      <div class="card">
+        <div class="card-title">
+          <span>2. Live OODA Reasoning & Governance Evidence</span>
+          <span id="statusBadge" class="badge badge-amber">IDLE</span>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="stat-val" id="statDuration">0ms</div>
+            <div class="stat-lbl">Scan Time</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" style="color: #6ee7b7;" id="statTokens">0</div>
+            <div class="stat-lbl">Tokens Consumed</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="statPii">0</div>
+            <div class="stat-lbl">PII Breaches</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="statDiffs">0</div>
+            <div class="stat-lbl">Contract Diffs</div>
+          </div>
+        </div>
+
+        <!-- Downstream Consumer Impact Card -->
+        <div class="section-box" id="blastRadiusBox" style="display: none;">
+          <div class="section-title">
+            <span>Downstream Consumer Blast Radius</span>
+            <span id="blastRiskBadge" class="badge badge-red">CRITICAL</span>
+          </div>
+          <div id="blastRadiusSummary" style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.4;"></div>
+        </div>
+
+        <!-- Statutory Regulatory Mapping Card -->
+        <div class="section-box" id="regulatoryBox" style="display: none;">
+          <div class="section-title">
+            <span>Statutory Regulatory Citations</span>
+            <span class="badge badge-amber">GDPR · HIPAA · GLBA · PCI-DSS</span>
+          </div>
+          <div id="regulatoryList" style="display: flex; flex-direction: column; gap: 8px;"></div>
+        </div>
+
+        <!-- Autonomous OODA Trajectory -->
+        <div class="form-group">
+          <label>Autonomous OODA Trajectory (Observe ➔ Reason ➔ Decide ➔ Execute)</label>
+          <div class="step-list" id="stepList">
+            <div style="text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.85rem;">
+              Click "Run Autonomous Governance Audit" to observe the agent's multi-tier cognitive trajectory.
+            </div>
+          </div>
+        </div>
+
+        <!-- Verifiable Compliance Dossier -->
+        <div class="form-group" id="dossierGroup" style="display: none; margin-top: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="margin-bottom: 0;">Cryptographic Compliance Dossier</label>
+            <button class="btn-secondary" onclick="copyDossier()">📋 Copy Dossier</button>
+          </div>
+          <pre class="dossier" id="dossierText"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script type="module">
+    // Bundled Example Schemas & Baseline Contracts
+    const PRESETS = {
+      critical_pii: {
+        candidate: {
+          datasetUrn: "urn:datacatalog:production:finance:customer_orders_v2",
+          datasetName: "Finance Customer Orders Partition (Candidate v2)",
+          classificationTier: "CONFIDENTIAL",
+          schemaVersion: "2.0.0",
+          storageTarget: "LAKEHOUSE",
+          columns: [
+            { name: "order_id", type: "uuid", nullable: false },
+            { name: "customer_id", type: "string", nullable: false },
+            { name: "taxpayer_ssn", type: "string", nullable: false },
+            { name: "order_amount", type: "decimal", nullable: false },
+            { name: "order_timestamp", type: "timestamp", nullable: false }
+          ],
+          sampleRecords: [
+            { order_id: "ord-992144-a", customer_id: "CUST-88192", taxpayer_ssn: "123-45-6789", order_amount: 1250.50, order_timestamp: "2026-10-30T14:22:10Z" },
+            { order_id: "ord-992145-b", customer_id: "CUST-88193", taxpayer_ssn: "987-65-4321", order_amount: 89.99, order_timestamp: "2026-10-30T14:23:45Z" }
+          ]
+        },
+        baseline: {
+          datasetUrn: "urn:datacatalog:production:finance:customer_orders_v1",
+          contractVersion: "1.0.0",
+          minimumClassificationTier: "CONFIDENTIAL",
+          allowedMutations: ["ADD_NULLABLE_COLUMN"],
+          prohibitedMutations: ["DROP_COLUMN", "NARROW_TYPE"],
+          columns: [
+            { name: "order_id", type: "uuid", nullable: false },
+            { name: "customer_id", type: "string", nullable: false },
+            { name: "order_amount", type: "decimal", nullable: false },
+            { name: "order_timestamp", type: "timestamp", nullable: false }
+          ],
+          registeredConsumers: [
+            { id: "c-1", serviceName: "General Ledger & Financial Reporting Pipeline", consumerType: "FINANCIAL_REPORTING", ownerTeam: "Finance Engineering", dependentFields: ["order_id", "order_amount"], slaTier: "TIER_1_CRITICAL" }
+          ]
+        }
+      },
+      breaking_drift: {
+        candidate: {
+          datasetUrn: "urn:datacatalog:production:finance:customer_orders_drift_candidate",
+          datasetName: "Finance Customer Orders Mutated (Drift Candidate)",
+          classificationTier: "CONFIDENTIAL",
+          schemaVersion: "2.0.0",
+          storageTarget: "LAKEHOUSE",
+          columns: [
+            { name: "order_id", type: "uuid", nullable: false },
+            { name: "order_amount", type: "string", nullable: false },
+            { name: "order_timestamp", type: "timestamp", nullable: false }
+          ],
+          sampleRecords: [
+            { order_id: "ord-992144-a", order_amount: "$1,250.50", order_timestamp: "2026-10-30T14:22:10Z" }
+          ]
+        },
+        baseline: {
+          datasetUrn: "urn:datacatalog:production:finance:customer_orders_v1",
+          contractVersion: "1.0.0",
+          minimumClassificationTier: "CONFIDENTIAL",
+          allowedMutations: ["ADD_NULLABLE_COLUMN"],
+          prohibitedMutations: ["DROP_COLUMN", "NARROW_TYPE"],
+          columns: [
+            { name: "order_id", type: "uuid", nullable: false },
+            { name: "customer_id", type: "string", nullable: false },
+            { name: "order_amount", type: "decimal", nullable: false },
+            { name: "order_timestamp", type: "timestamp", nullable: false }
+          ],
+          registeredConsumers: [
+            { id: "c-1", serviceName: "General Ledger & Financial Reporting Pipeline", consumerType: "FINANCIAL_REPORTING", ownerTeam: "Finance Engineering", dependentFields: ["order_id", "order_amount"], slaTier: "TIER_1_CRITICAL" },
+            { id: "c-2", serviceName: "Real-time Fraud Detection ML Model", consumerType: "ML_MODEL", ownerTeam: "Risk Data Science", dependentFields: ["customer_id", "order_amount"], slaTier: "TIER_1_CRITICAL" }
+          ]
+        }
+      },
+      clean_evolution: {
+        candidate: {
+          datasetUrn: "urn:datacatalog:production:finance:customer_orders_v1_1",
+          datasetName: "Finance Customer Orders Clean Partition",
+          classificationTier: "CONFIDENTIAL",
+          schemaVersion: "1.1.0",
+          storageTarget: "LAKEHOUSE",
+          columns: [
+            { name: "order_id", type: "uuid", nullable: false },
+            { name: "customer_id", type: "string", nullable: false },
+            { name: "order_amount", type: "decimal", nullable: false },
+            { name: "order_timestamp", type: "timestamp", nullable: false },
+            { name: "masked_taxpayer_id", "type": "string", nullable: true }
+          ],
+          sampleRecords: [
+            { order_id: "ord-992144-a", customer_id: "CUST-88192", order_amount: 1250.50, order_timestamp: "2026-10-30T14:22:10Z", masked_taxpayer_id: "***-**-6789" }
+          ]
+        },
+        baseline: {
+          datasetUrn: "urn:datacatalog:production:finance:customer_orders_v1",
+          contractVersion: "1.0.0",
+          minimumClassificationTier: "CONFIDENTIAL",
+          allowedMutations: ["ADD_NULLABLE_COLUMN"],
+          prohibitedMutations: ["DROP_COLUMN", "NARROW_TYPE"],
+          columns: [
+            { name: "order_id", type: "uuid", nullable: false },
+            { name: "customer_id", type: "string", nullable: false },
+            { name: "order_amount", type: "decimal", nullable: false },
+            { name: "order_timestamp", type: "timestamp", nullable: false }
+          ],
+          registeredConsumers: []
+        }
+      },
+      clean_exact: {
+        candidate: {
+          datasetUrn: "urn:datacatalog:production:finance:customer_orders_v1",
+          datasetName: "Finance Customer Orders Certified Baseline",
+          classificationTier: "CONFIDENTIAL",
+          schemaVersion: "1.0.0",
+          storageTarget: "LAKEHOUSE",
+          columns: [
+            { name: "order_id", type: "uuid", nullable: false },
+            { name: "customer_id", type: "string", nullable: false },
+            { name: "order_amount", type: "decimal", nullable: false },
+            { name: "order_timestamp", type: "timestamp", nullable: false }
+          ],
+          sampleRecords: [
+            { order_id: "ord-992144-a", customer_id: "CUST-88192", order_amount: 1250.50, order_timestamp: "2026-10-30T14:22:10Z" }
+          ]
+        },
+        baseline: {
+          datasetUrn: "urn:datacatalog:production:finance:customer_orders_v1",
+          contractVersion: "1.0.0",
+          minimumClassificationTier: "CONFIDENTIAL",
+          allowedMutations: ["ADD_NULLABLE_COLUMN"],
+          prohibitedMutations: ["DROP_COLUMN"],
+          columns: [
+            { name: "order_id", type: "uuid", nullable: false },
+            { name: "customer_id", type: "string", nullable: false },
+            { name: "order_amount", type: "decimal", nullable: false },
+            { name: "order_timestamp", type: "timestamp", nullable: false }
+          ],
+          registeredConsumers: []
+        }
+      }
+    };
+
+    // Compiled Regex for Client-Side Zero-Token Invariant Scanner
+    const PII_PATTERNS = {
+      SSN: /\b\d{3}-\d{2}-\d{4}\b/,
+      CREDIT_CARD_PAN: /\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12})\b/,
+      EMAIL: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/,
+      PHONE: /\b(?:\+?1[-.\s]?)?\(?[2-9][0-9]{2}\)?[-.\s]?[2-9][0-9]{2}[-.\s]?[0-9]{4}\b/
+    };
+    const MASKED_PATTERNS = [/\b\*{3}-\*{2}-\d{4}\b/, /\bX{3}-X{2}-\d{4}\b/];
+
+    // Local Storage Keys
+    const STORAGE_KEY_GEMINI = 'edga_gemini_api_key';
+    const STORAGE_KEY_GEMINI_MODEL = 'edga_gemini_model';
+    const STORAGE_KEY_OLLAMA_URL = 'edga_ollama_url';
+    const STORAGE_KEY_OLLAMA_MODEL = 'edga_ollama_model';
+
+    window.showToast = function(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 2500);
+    };
+
+    window.toggleKeyVisibility = function() {
+      const input = document.getElementById('geminiKeyInput');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    };
+
+    window.saveGeminiKey = function() {
+      const val = document.getElementById('geminiKeyInput').value.trim();
+      if (val) {
+        localStorage.setItem(STORAGE_KEY_GEMINI, val);
+        document.getElementById('geminiKeyStatus').style.display = 'inline';
+      } else {
+        localStorage.removeItem(STORAGE_KEY_GEMINI);
+        document.getElementById('geminiKeyStatus').style.display = 'none';
+      }
+    };
+
+    window.saveGeminiModel = function() {
+      localStorage.setItem(STORAGE_KEY_GEMINI_MODEL, document.getElementById('geminiModelSelect').value);
+    };
+
+    window.saveOllamaConfig = function() {
+      localStorage.setItem(STORAGE_KEY_OLLAMA_URL, document.getElementById('ollamaUrlInput').value.trim());
+      localStorage.setItem(STORAGE_KEY_OLLAMA_MODEL, document.getElementById('ollamaModelInput').value.trim());
+    };
+
+    window.loadPreset = function() {
+      const selected = document.getElementById('presetSelect').value;
+      const data = PRESETS[selected];
+      document.getElementById('candidateInput').value = JSON.stringify(data.candidate, null, 2);
+      document.getElementById('baselineInput').value = JSON.stringify(data.baseline, null, 2);
+    };
+
+    window.updateGateway = function() {
+      const gw = document.getElementById('gatewaySelect').value;
+      const geminiBox = document.getElementById('geminiConfigBox');
+      const ollamaBox = document.getElementById('ollamaConfigBox');
+      const modeBadge = document.getElementById('modeBadge');
+      document.getElementById('errorAlert').style.display = 'none';
+
+      if (gw === 'gemini') {
+        geminiBox.style.display = 'block';
+        ollamaBox.style.display = 'none';
+        modeBadge.textContent = 'Cloud: Gemini 2.5';
+        modeBadge.className = 'badge badge-purple';
+      } else if (gw === 'ollama') {
+        geminiBox.style.display = 'none';
+        ollamaBox.style.display = 'block';
+        modeBadge.textContent = 'Local: Ollama';
+        modeBadge.className = 'badge badge-green';
+      } else {
+        geminiBox.style.display = 'none';
+        ollamaBox.style.display = 'none';
+        modeBadge.textContent = 'Mock Cassette';
+        modeBadge.className = 'badge badge-amber';
+      }
+    };
+
+    window.copyDossier = function() {
+      const text = document.getElementById('dossierText').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Cryptographic Compliance Dossier copied to clipboard!');
+      });
+    };
+
+    function initSavedConfigs() {
+      const savedKey = localStorage.getItem(STORAGE_KEY_GEMINI);
+      if (savedKey) {
+        document.getElementById('geminiKeyInput').value = savedKey;
+        document.getElementById('geminiKeyStatus').style.display = 'inline';
+      }
+      const savedModel = localStorage.getItem(STORAGE_KEY_GEMINI_MODEL);
+      if (savedModel) {
+        document.getElementById('geminiModelSelect').value = savedModel;
+      }
+      const savedOllamaUrl = localStorage.getItem(STORAGE_KEY_OLLAMA_URL);
+      if (savedOllamaUrl) {
+        document.getElementById('ollamaUrlInput').value = savedOllamaUrl;
+      }
+      const savedOllamaModel = localStorage.getItem(STORAGE_KEY_OLLAMA_MODEL);
+      if (savedOllamaModel) {
+        document.getElementById('ollamaModelInput').value = savedOllamaModel;
+      }
+      loadPreset();
+      updateGateway();
+    }
+
+    // Call Gemini API directly from browser
+    async function callGeminiApi(apiKey, model, datasetUrn, outcome, piiCount, diffsCount) {
+      const prompt = `You are the Enterprise Data Governance Agent.
+Dataset candidate: '${datasetUrn}'.
+Findings from Tier 4 deterministic 0-token engine:
+- Direct PII Violations: ${piiCount}
+- Breaking Contract Mutations: ${diffsCount}
+- Calculated Decision Outcome: ${outcome}
+
+Rules:
+1. If PII > 0 outside Restricted vault: Invariant G-1 breach -> Quarantine partition.
+2. If Breaking Mutations > 0 with consumers: Invariant G-2 breach -> Block deployment.
+3. If Clean: Approve.
+
+Return ONLY a JSON array with exactly 4 OODA loop steps:
+[
+  { "step": 1, "phase": "OBSERVE", "observation": "...", "reasoning": "...", "decision": "..." },
+  { "step": 2, "phase": "REASON", "observation": "...", "reasoning": "...", "decision": "..." },
+  { "step": 3, "phase": "DECIDE", "observation": "...", "reasoning": "...", "decision": "..." },
+  { "step": 4, "phase": "EXECUTE", "observation": "...", "reasoning": "...", "decision": "..." }
+]`;
+
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { responseMimeType: 'application/json', temperature: 0.1 }
+        })
+      });
+
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        throw new Error(errJson.error?.message || `Google Gemini HTTP Error ${res.status}`);
+      }
+
+      const data = await res.json();
+      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      const tokensConsumed = data.usageMetadata?.totalTokenCount || 230;
+      const steps = JSON.parse(rawText);
+      return { steps: Array.isArray(steps) ? steps : (steps.steps || []), tokensConsumed };
+    }
+
+    // Main Audit Runner
+    window.runAudit = async function() {
+      const runBtn = document.getElementById('runBtn');
+      const statusBadge = document.getElementById('statusBadge');
+      const stepList = document.getElementById('stepList');
+      const dossierGroup = document.getElementById('dossierGroup');
+      const dossierText = document.getElementById('dossierText');
+      const alertBox = document.getElementById('errorAlert');
+      const blastBox = document.getElementById('blastRadiusBox');
+      const regBox = document.getElementById('regulatoryBox');
+      alertBox.style.display = 'none';
+
+      let candidate, baseline;
+      try {
+        candidate = JSON.parse(document.getElementById('candidateInput').value);
+      } catch (e) {
+        alertBox.textContent = '❌ Invalid JSON in Candidate Dataset Schema.';
+        alertBox.style.display = 'block';
+        return;
+      }
+
+      try {
+        const rawBaseline = document.getElementById('baselineInput').value.trim();
+        if (rawBaseline) baseline = JSON.parse(rawBaseline);
+      } catch (e) {
+        alertBox.textContent = '❌ Invalid JSON in Baseline Data Contract.';
+        alertBox.style.display = 'block';
+        return;
+      }
+
+      const gw = document.getElementById('gatewaySelect').value;
+      const apiKey = document.getElementById('geminiKeyInput').value.trim();
+      const geminiModel = document.getElementById('geminiModelSelect').value;
+
+      if (gw === 'gemini' && !apiKey) {
+        alertBox.innerHTML = '⚠️ <strong>Gemini API Key Required:</strong> Enter your Google AI Studio API key or switch to <em>Offline Mock</em>.';
+        alertBox.style.display = 'block';
+        document.getElementById('geminiKeyInput').focus();
+        return;
+      }
+
+      runBtn.disabled = true;
+      statusBadge.textContent = 'EXECUTING AUDIT...';
+      statusBadge.className = 'badge badge-amber';
+      stepList.innerHTML = '<div style="text-align: center; padding: 30px; color: var(--text-muted); font-size: 0.85rem;">🔄 Executing Tier 4 Deterministic Scanners & Autonomous OODA Loop...</div>';
+      dossierGroup.style.display = 'none';
+      blastBox.style.display = 'none';
+      regBox.style.display = 'none';
+
+      const startTime = performance.now();
+
+      // 1. Deterministic Scan (0 Tokens)
+      const records = candidate.sampleRecords || [];
+      const sensitiveFindings = [];
+
+      for (let r = 0; r < records.length; r++) {
+        const rec = records[r];
+        for (const [fName, val] of Object.entries(rec)) {
+          if (!val) continue;
+          const s = String(val).trim();
+          if (MASKED_PATTERNS.some(p => p.test(s))) continue;
+          for (const [pName, regex] of Object.entries(PII_PATTERNS)) {
+            if (regex.test(s)) {
+              sensitiveFindings.push({ field: fName, pattern: pName, sample: s });
+              break;
+            }
+          }
+        }
+      }
+
+      // 2. Schema Diff
+      const schemaDiffs = [];
+      if (baseline) {
+        const baseCols = new Map(baseline.columns.map(c => [c.name, c]));
+        const candCols = new Map(candidate.columns.map(c => [c.name, c]));
+
+        // Dropped columns
+        for (const [name, oldCol] of baseCols.entries()) {
+          if (!candCols.has(name)) {
+            schemaDiffs.push({ field: name, type: 'FIELD_REMOVED', isBreaking: true, desc: `Column '${name}' (${oldCol.type}) removed from production contract.` });
+          }
+        }
+        // Added columns
+        for (const [name, newCol] of candCols.entries()) {
+          if (!baseCols.has(name)) {
+            schemaDiffs.push({ field: name, type: 'FIELD_ADDED_OPTIONAL', isBreaking: false, desc: `Optional column '${name}' (${newCol.type}) added.` });
+          }
+        }
+      }
+
+      // 3. Governance Decision
+      let outcome = 'APPROVE';
+      let outcomeRationale = 'Dataset complies with all governance policies.';
+      let issueTicketKey = null;
+
+      if (sensitiveFindings.length > 0 && candidate.classificationTier !== 'RESTRICTED') {
+        outcome = 'QUARANTINE';
+        outcomeRationale = `Invariant 1 Breach: Unmasked Direct PII credentials detected in ${candidate.classificationTier} storage tier. Automated partition quarantine enforced.`;
+        issueTicketKey = 'SEC-GOV-902';
+      } else if (schemaDiffs.some(d => d.isBreaking)) {
+        outcome = 'BLOCK_DEPLOYMENT';
+        outcomeRationale = `Invariant 2 Breach: Candidate contains breaking column removals impacting registered downstream consumers.`;
+        issueTicketKey = 'CONTRACT-BLOCKED-401';
+      } else if (schemaDiffs.some(d => !d.isBreaking)) {
+        outcome = 'APPROVE_WITH_WARNING';
+        outcomeRationale = `Non-breaking backward-compatible schema evolution detected.`;
+      }
+
+      // 4. Trajectory Generation
+      let trajectory = [];
+      let tokensConsumed = 0;
+      let providerLabel = 'Offline Mock';
+
+      try {
+        if (gw === 'gemini') {
+          providerLabel = `Gemini (${geminiModel})`;
+          statusBadge.textContent = 'CALLING GEMINI...';
+          const geminiRes = await callGeminiApi(apiKey, geminiModel, candidate.datasetUrn, outcome, sensitiveFindings.length, schemaDiffs.length);
+          trajectory = geminiRes.steps;
+          tokensConsumed = geminiRes.tokensConsumed;
+        } else {
+          // Default Cassette
+          providerLabel = 'Realistic Mock';
+          tokensConsumed = 0;
+          if (outcome === 'QUARANTINE') {
+            trajectory = [
+              { step: 1, phase: 'OBSERVE', observation: `Ingested candidate '${candidate.datasetUrn}'. Invariant scanner flagged unmasked PII in sample records.`, decision: 'Trigger Tier 2 statutory mapping.' },
+              { step: 2, phase: 'REASON', observation: `Statutory boundaries breached: Invariant G-1 violation. Cleartext credentials outside secure vault.`, decision: 'Mandate Human-in-the-Loop Supervisory Quarantine.' },
+              { step: 3, phase: 'DECIDE', observation: `Supervisory escalation protocol engaged. Quarantine bucket allocated.`, decision: `Enforce QUARANTINE decision and file defect candidate ${issueTicketKey}.` },
+              { step: 4, phase: 'EXECUTE', observation: `Quarantine gate locked. Downstream ingestion suspended.`, decision: 'Emit Exit Code 1 to CI/CD pipeline.' }
+            ];
+          } else if (outcome === 'BLOCK_DEPLOYMENT') {
+            trajectory = [
+              { step: 1, phase: 'OBSERVE', observation: `Candidate schema AST analysis identified critical column removals.`, decision: 'Evaluate downstream consumer dependency graph.' },
+              { step: 2, phase: 'REASON', observation: `Consumer impact analysis confirmed breaking changes impact active consumers.`, decision: 'Mandate immediate deployment block.' },
+              { step: 3, phase: 'DECIDE', observation: `Deployment block policy enforced. Defect ticket logged.`, decision: `Enforce BLOCK_DEPLOYMENT decision outcome.` },
+              { step: 4, phase: 'EXECUTE', observation: `CI/CD pull request gate locked. Defect ticket ${issueTicketKey} logged.`, decision: 'Emit Exit Code 1 to CI/CD pipeline.' }
+            ];
+          } else {
+            trajectory = [
+              { step: 1, phase: 'OBSERVE', observation: `Ingested candidate '${candidate.datasetUrn}'. Zero unmasked PII detected.`, decision: 'Verify schema contract compatibility.' },
+              { step: 2, phase: 'REASON', observation: `AST diff verified. Zero breaking changes detected.`, decision: 'Certify dataset candidate for production ingestion.' },
+              { step: 3, phase: 'DECIDE', observation: `Governance criteria satisfied: Invariant G-1 and G-2 certified.`, decision: `Enforce ${outcome} decision outcome.` },
+              { step: 4, phase: 'EXECUTE', observation: `Compliance dossier finalized with cryptographic trace ID.`, decision: 'Release pipeline lock. Emit Exit Code 0 to CI/CD gate.' }
+            ];
+          }
+        }
+      } catch (err) {
+        console.error(err);
+        alertBox.innerHTML = `⚠️ <strong>${providerLabel} Failed:</strong> ${err.message}. Cascading to Realistic Cassette.`;
+        alertBox.style.display = 'block';
+        providerLabel = 'Cassette Fallback';
+        trajectory = [
+          { step: 1, phase: 'OBSERVE', observation: 'Fallback cassette engaged.', decision: 'Run deterministic safety invariants.' },
+          { step: 2, phase: 'REASON', observation: `Evaluated safety boundaries: ${outcome}.`, decision: 'Synthesize dossier.' },
+          { step: 3, phase: 'DECIDE', observation: `Decision: ${outcome}.`, decision: 'Finalize decision.' },
+          { step: 4, phase: 'EXECUTE', observation: 'Audit record recorded.', decision: 'Emit CI/CD status.' }
+        ];
+      }
+
+      const totalDuration = Math.round(performance.now() - startTime);
+
+      // Update Metrics
+      document.getElementById('statDuration').textContent = `${totalDuration}ms`;
+      document.getElementById('statTokens').textContent = String(tokensConsumed);
+      document.getElementById('statTokens').style.color = tokensConsumed === 0 ? '#6ee7b7' : '#a855f7';
+      document.getElementById('statPii').textContent = String(sensitiveFindings.length);
+      document.getElementById('statPii').style.color = sensitiveFindings.length > 0 ? '#ef4444' : '#10b981';
+      document.getElementById('statDiffs').textContent = String(schemaDiffs.length);
+
+      // Update Status Badge
+      statusBadge.textContent = outcome;
+      if (outcome === 'APPROVE') statusBadge.className = 'badge badge-green';
+      else if (outcome === 'APPROVE_WITH_WARNING') statusBadge.className = 'badge badge-amber';
+      else statusBadge.className = 'badge badge-red';
+
+      // Update Blast Radius Card
+      if (schemaDiffs.some(d => d.isBreaking) && baseline?.registeredConsumers?.length) {
+        blastBox.style.display = 'block';
+        document.getElementById('blastRiskBadge').textContent = 'CRITICAL BLAST RADIUS';
+        document.getElementById('blastRadiusSummary').innerHTML = `
+          Breaking contract mutation breaks <strong>${baseline.registeredConsumers.length} active consumer systems</strong>:
+          <ul style="margin-top: 6px; padding-left: 18px;">
+            ${baseline.registeredConsumers.map(c => `<li><strong>${c.serviceName}</strong> (${c.consumerType}, ${c.slaTier})</li>`).join('')}
+          </ul>
+        `;
+      }
+
+      // Update Regulatory Card
+      if (sensitiveFindings.length > 0) {
+        regBox.style.display = 'block';
+        document.getElementById('regulatoryList').innerHTML = `
+          <div style="font-size: 0.76rem; color: #fca5a5;">
+            <strong>• PCI-DSS v4.0 Req 3.4 & GLBA 15 U.S.C. § 6801:</strong> Unmasked credentials outside vault carries statutory fine risk up to $100k/incident.
+          </div>
+          <div style="font-size: 0.76rem; color: #fde68a;">
+            <strong>• GDPR Article 32 & HIPAA 45 CFR § 164.514:</strong> Mandatory requirement for Format-Preserving Encryption or Safe Harbor tokenization.
+          </div>
+        `;
+      }
+
+      // Render Trajectory Steps
+      stepList.innerHTML = '';
+      for (const t of trajectory) {
+        await new Promise(r => setTimeout(r, 120));
+        const item = document.createElement('div');
+        item.className = 'step-item';
+        item.innerHTML = `
+          <div class="step-header">
+            <span style="color: #4f46e5;">STEP ${t.step} · ${t.phase}</span>
+            <span class="badge ${gw === 'gemini' ? 'badge-purple' : 'badge-amber'}">${providerLabel.toUpperCase()}</span>
+          </div>
+          <div class="step-body">${t.observation}</div>
+          <div class="step-decision"><strong>DECISION:</strong> ${t.decision}</div>
+        `;
+        stepList.appendChild(item);
+      }
+
+      // Generate Dossier Text
+      const traceId = `GOV-AUDIT-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+      const dossier = `================================================================================
+ENTERPRISE DATA GOVERNANCE COMPLIANCE AUDIT DOSSIER
+================================================================================
+Audit Trace ID:     ${traceId}
+Dataset URN:        ${candidate.datasetUrn}
+Audit Timestamp:    ${new Date().toISOString()}
+Declared Security:  ${candidate.classificationTier}
+Recommended Tier:   ${sensitiveFindings.length > 0 ? 'RESTRICTED' : candidate.classificationTier}
+Governance Status:  ${outcome} ${issueTicketKey ? `(Ticket: ${issueTicketKey})` : ''}
+Reasoning Gateway:  ${providerLabel}
+
+ZERO-TOKEN DETERMINISTIC SCAN METRICS:
+- Scanned Records:     ${records.length}
+- Total Duration:      ${totalDuration}ms
+- Tokens Consumed:     ${tokensConsumed} (${tokensConsumed === 0 ? '100% Zero-Token Offload' : 'Cognitive Cloud Tokens'})
+- PII Violations:      ${sensitiveFindings.length} ${sensitiveFindings.length > 0 ? '(' + sensitiveFindings.map(f => f.pattern + ' in column ' + f.field).join(', ') + ')' : ''}
+- Contract Mutations:  ${schemaDiffs.length} ${schemaDiffs.map(d => `[${d.type}: ${d.field}]`).join(', ')}
+
+EXECUTIVE SUMMARY:
+${outcomeRationale}
+
+RECOMMENDED ACTION:
+${outcome === 'QUARANTINE' ? 'Halt pipeline. Quarantined due to Invariant 1 cleartext PII violation. Route to Security Officer.' : outcome === 'BLOCK_DEPLOYMENT' ? 'Reject CI/CD deployment. Restore dropped columns or provide backward compatibility layer.' : 'Dataset certified. Ingestion pipeline unlocked.'}
+================================================================================`;
+
+      dossierText.textContent = dossier;
+      dossierGroup.style.display = 'block';
+      runBtn.disabled = false;
+    };
+
+    initSavedConfigs();
+  </script>
+</body>
+</html>

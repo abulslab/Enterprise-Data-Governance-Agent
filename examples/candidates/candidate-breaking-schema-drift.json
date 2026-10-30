@@ -1,0 +1,23 @@
+{
+  "datasetUrn": "urn:datacatalog:production:finance:customer_orders_drift_candidate",
+  "datasetName": "Finance Customer Orders Mutated (Drift Candidate)",
+  "classificationTier": "CONFIDENTIAL",
+  "schemaVersion": "2.0.0",
+  "storageTarget": "LAKEHOUSE",
+  "columns": [
+    { "name": "order_id", "type": "uuid", "nullable": false },
+    { "name": "order_amount", "type": "string", "nullable": false },
+    { "name": "order_timestamp", "type": "timestamp", "nullable": false }
+  ],
+  "sampleRecords": [
+    {
+      "order_id": "ord-992144-a",
+      "order_amount": "$1,250.50",
+      "order_timestamp": "2026-10-30T14:22:10Z"
+    }
+  ],
+  "metadata": {
+    "owner": "legacy-migration-team",
+    "environment": "production"
+  }
+}
