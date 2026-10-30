@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,40 +8,119 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
+    /* ==========================================================================
+       THEME VARIABLES — White / Executive Light Theme (Default)
+       ========================================================================== */
+    :root, [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-gradient: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+                     radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.06) 0px, transparent 50%),
+                     #f8fafc;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(226, 232, 240, 0.6);
+      --card-hover-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.08);
+      --section-box-bg: #f1f5f9;
+      --section-box-border: #e2e8f0;
+      --accent: #4f46e5;
+      --accent-glow: rgba(79, 70, 229, 0.25);
+      --text: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --input-bg: #f8fafc;
+      --input-border: #cbd5e1;
+      --input-text: #0f172a;
+      --step-item-bg: #ffffff;
+      --step-item-border: #e2e8f0;
+      --step-decision-bg: #f1f5f9;
+      --dossier-bg: #f8fafc;
+      --dossier-text: #1e293b;
+      --dossier-border: #cbd5e1;
+      
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+      --danger-border: #fecaca;
+      --danger-text: #991b1b;
+      
+      --success: #059669;
+      --success-bg: #ecfdf5;
+      --success-border: #a7f3d0;
+      --success-text: #065f46;
+      
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+      --warning-text: #92400e;
+      
+      --purple: #7c3aed;
+      --purple-bg: #f5f3ff;
+      --purple-border: #ddd6fe;
+      --purple-text: #5b21b6;
+    }
+
+    /* Dark Mode Override (Optional toggle) */
+    [data-theme="dark"] {
       --bg: #070a11;
+      --bg-gradient: radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0px, transparent 50%),
+                     radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+                     #070a11;
       --card-bg: rgba(15, 23, 42, 0.75);
       --card-border: rgba(255, 255, 255, 0.08);
-      --accent: #4f46e5;
-      --accent-glow: rgba(79, 70, 229, 0.35);
+      --card-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+      --card-hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      --section-box-bg: rgba(10, 15, 29, 0.6);
+      --section-box-border: rgba(255, 255, 255, 0.08);
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.35);
       --text: #f8fafc;
       --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      --input-bg: rgba(10, 15, 29, 0.7);
+      --input-border: rgba(255, 255, 255, 0.08);
+      --input-text: #ffffff;
+      --step-item-bg: rgba(15, 23, 42, 0.6);
+      --step-item-border: rgba(255, 255, 255, 0.08);
+      --step-decision-bg: rgba(0, 0, 0, 0.3);
+      --dossier-bg: rgba(0, 0, 0, 0.45);
+      --dossier-text: #cbd5e1;
+      --dossier-border: rgba(255, 255, 255, 0.08);
+      
       --danger: #ef4444;
       --danger-bg: rgba(239, 68, 68, 0.15);
+      --danger-border: rgba(239, 68, 68, 0.3);
+      --danger-text: #fca5a5;
+      
       --success: #10b981;
       --success-bg: rgba(16, 185, 129, 0.15);
+      --success-border: rgba(16, 185, 129, 0.3);
+      --success-text: #6ee7b7;
+      
       --warning: #f59e0b;
       --warning-bg: rgba(245, 158, 11, 0.15);
+      --warning-border: rgba(245, 158, 11, 0.3);
+      --warning-text: #fde68a;
+      
       --purple: #8b5cf6;
       --purple-bg: rgba(139, 92, 246, 0.15);
+      --purple-border: rgba(139, 92, 246, 0.3);
+      --purple-text: #c4b5fd;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
       background: var(--bg);
+      background-image: var(--bg-gradient);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       padding: 24px;
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.12) 0px, transparent 50%);
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .container {
-      max-width: 1400px;
+      max-width: 1420px;
       margin: 0 auto;
       width: 100%;
     }
@@ -51,7 +130,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 24px;
-      padding-bottom: 16px;
+      padding-bottom: 18px;
       border-bottom: 1px solid var(--card-border);
       flex-wrap: wrap;
       gap: 16px;
@@ -67,29 +146,31 @@
       width: 46px;
       height: 46px;
       border-radius: 14px;
-      background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 20px var(--accent-glow);
+      box-shadow: 0 8px 18px var(--accent-glow);
       font-size: 24px;
+      color: white;
     }
 
     .brand-title h1 {
       font-size: 1.25rem;
       font-weight: 800;
       letter-spacing: -0.02em;
-      color: #fff;
+      color: var(--text);
     }
 
     .brand-title p {
       font-size: 0.78rem;
       color: var(--text-muted);
+      font-weight: 500;
     }
 
-    .badges-row {
+    .header-actions {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       align-items: center;
       flex-wrap: wrap;
     }
@@ -105,10 +186,30 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
-    .badge-purple { background: var(--purple-bg); color: #c4b5fd; border: 1px solid rgba(139, 92, 246, 0.3); }
-    .badge-amber { background: var(--warning-bg); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.3); }
-    .badge-red { background: var(--danger-bg); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
-    .badge-green { background: var(--success-bg); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-purple { background: var(--purple-bg); color: var(--purple-text); border: 1px solid var(--purple-border); }
+    .badge-amber { background: var(--warning-bg); color: var(--warning-text); border: 1px solid var(--warning-border); }
+    .badge-red { background: var(--danger-bg); color: var(--danger-text); border: 1px solid var(--danger-border); }
+    .badge-green { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
+
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--section-box-bg);
+      transform: translateY(-1px);
+    }
 
     .grid {
       display: grid;
@@ -122,19 +223,24 @@
       border: 1px solid var(--card-border);
       border-radius: 20px;
       padding: 24px;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--card-shadow);
       display: flex;
       flex-direction: column;
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover {
+      box-shadow: var(--card-hover-shadow);
     }
 
     .card-title {
       font-size: 0.95rem;
-      font-weight: 700;
-      margin-bottom: 16px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      color: var(--text);
     }
 
     .form-group {
@@ -144,7 +250,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -154,9 +260,9 @@
 
     select, textarea, input {
       width: 100%;
-      background: rgba(10, 15, 29, 0.7);
-      border: 1px solid var(--card-border);
-      color: #fff;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: var(--input-text);
       padding: 10px 14px;
       border-radius: 12px;
       font-family: inherit;
@@ -167,14 +273,15 @@
     select:focus, textarea:focus, input:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px var(--accent-glow);
+      background: #ffffff;
     }
 
     textarea {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      min-height: 160px;
+      font-size: 0.74rem;
+      min-height: 150px;
       resize: vertical;
-      line-height: 1.45;
+      line-height: 1.5;
     }
 
     .input-row {
@@ -192,16 +299,16 @@
       transform: translateY(-50%);
       background: none;
       border: none;
-      color: var(--text-muted);
+      color: var(--text-subtle);
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       padding: 4px;
     }
-    .toggle-pwd:hover { color: #fff; }
+    .toggle-pwd:hover { color: var(--text); }
 
     .config-box {
-      background: rgba(79, 70, 229, 0.08);
-      border: 1px solid rgba(79, 70, 229, 0.25);
+      background: var(--purple-bg);
+      border: 1px solid var(--purple-border);
       border-radius: 14px;
       padding: 14px;
       margin-bottom: 16px;
@@ -221,13 +328,14 @@
       cursor: pointer;
       border: none;
       transition: all 0.2s;
-      background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
       color: white;
-      box-shadow: 0 8px 20px var(--accent-glow);
+      box-shadow: 0 6px 16px var(--accent-glow);
     }
     .btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 12px 26px var(--accent-glow);
+      box-shadow: 0 10px 22px var(--accent-glow);
+      background: linear-gradient(135deg, #4338ca, #4f46e5);
     }
     .btn:active { transform: translateY(0); }
     .btn:disabled {
@@ -237,48 +345,57 @@
     }
 
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--card-bg);
       border: 1px solid var(--card-border);
       color: var(--text);
-      box-shadow: none;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
       padding: 6px 12px;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
+      font-weight: 600;
       border-radius: 8px;
       width: auto;
       cursor: pointer;
+      transition: all 0.2s;
     }
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.12);
+      background: var(--section-box-bg);
+      border-color: var(--input-border);
     }
 
     .stats-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
+      gap: 12px;
       margin-bottom: 16px;
     }
     @media (max-width: 640px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
 
     .stat-box {
-      background: rgba(10, 15, 29, 0.6);
+      background: var(--card-bg);
       border: 1px solid var(--card-border);
-      padding: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      padding: 12px 10px;
       border-radius: 12px;
       text-align: center;
+      transition: all 0.2s;
     }
-    .stat-val { font-size: 1.15rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
-    .stat-lbl { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
+    .stat-box:hover {
+      border-color: var(--input-border);
+    }
+    .stat-val { font-size: 1.25rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+    .stat-lbl { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-top: 3px; }
 
     .section-box {
-      background: rgba(10, 15, 29, 0.5);
-      border: 1px solid var(--card-border);
+      background: var(--section-box-bg);
+      border: 1px solid var(--section-box-border);
       border-radius: 14px;
       padding: 14px;
       margin-bottom: 14px;
+      animation: fadeIn 0.25s ease-out;
     }
     .section-title {
       font-size: 0.75rem;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--text-muted);
@@ -296,13 +413,15 @@
     }
 
     .step-item {
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid var(--card-border);
+      background: var(--step-item-bg);
+      border: 1px solid var(--step-item-border);
+      border-left: 3px solid var(--accent);
       border-radius: 12px;
-      padding: 12px;
+      padding: 12px 14px;
       display: flex;
       flex-direction: column;
       gap: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
       animation: fadeIn 0.3s ease-out;
     }
     @keyframes fadeIn {
@@ -314,45 +433,64 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 0.74rem;
+      font-weight: 800;
     }
 
     .step-body {
       font-size: 0.8rem;
-      color: #cbd5e1;
-      line-height: 1.4;
+      color: var(--text);
+      line-height: 1.45;
     }
 
     .step-decision {
       font-size: 0.74rem;
       font-family: 'JetBrains Mono', monospace;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 5px 8px;
-      border-radius: 6px;
+      background: var(--step-decision-bg);
+      padding: 6px 10px;
+      border-radius: 8px;
       border-left: 3px solid var(--accent);
-      color: #e2e8f0;
+      color: var(--text);
       margin-top: 4px;
     }
 
     pre.dossier {
-      background: rgba(0, 0, 0, 0.45);
-      border: 1px solid var(--card-border);
+      background: var(--dossier-bg);
+      border: 1px solid var(--dossier-border);
       padding: 14px;
       border-radius: 12px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.72rem;
-      line-height: 1.4;
-      color: #cbd5e1;
-      max-height: 200px;
+      line-height: 1.45;
+      color: var(--dossier-text);
+      max-height: 220px;
       overflow-y: auto;
       white-space: pre-wrap;
     }
 
+    .remediation-card {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .remediation-code {
+      background: #1e293b;
+      color: #38bdf8;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.73rem;
+      margin-top: 6px;
+      overflow-x: auto;
+    }
+
     .alert-box {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      color: #fca5a5;
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: var(--danger-text);
       padding: 10px 14px;
       border-radius: 10px;
       font-size: 0.78rem;
@@ -364,13 +502,14 @@
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background: #1e293b;
-      color: #fff;
+      background: #0f172a;
+      color: #ffffff;
       padding: 12px 20px;
       border-radius: 12px;
-      border: 1px solid var(--card-border);
+      border: 1px solid rgba(255,255,255,0.1);
       font-size: 0.8rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
       display: none;
       z-index: 100;
       animation: fadeIn 0.2s ease-out;
@@ -387,10 +526,11 @@
           <p>Autonomous Lakehouse Data Governance, Contract Enforcement & Blast Radius Intelligence</p>
         </div>
       </div>
-      <div class="badges-row">
+      <div class="header-actions">
         <span class="badge badge-purple">4-Tier Cognitive</span>
         <span class="badge badge-green">0-Token Scanner</span>
         <span class="badge badge-amber" id="modeBadge">Mock Cassette</span>
+        <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Theme</button>
       </div>
     </header>
 
@@ -419,7 +559,7 @@
 
         <div class="form-group">
           <label>Registered Baseline Data Contract (JSON)</label>
-          <textarea id="baselineInput" style="min-height: 120px;" placeholder="Baseline Contract JSON..."></textarea>
+          <textarea id="baselineInput" style="min-height: 110px;" placeholder="Baseline Contract JSON..."></textarea>
         </div>
 
         <div class="form-group">
@@ -436,7 +576,7 @@
           <div class="form-group">
             <label>
               <span>Google AI Studio API Key</span>
-              <span id="geminiKeyStatus" style="font-size: 0.68rem; color: #10b981; display: none;">Saved in browser</span>
+              <span id="geminiKeyStatus" style="font-size: 0.68rem; color: #059669; display: none;">Saved in browser</span>
             </label>
             <div class="input-row">
               <input type="password" id="geminiKeyInput" placeholder="Paste your AIzaSy... API key here" oninput="saveGeminiKey()" />
@@ -481,11 +621,11 @@
 
         <div class="stats-row">
           <div class="stat-box">
-            <div class="stat-val" id="statDuration">0ms</div>
+            <div class="stat-val" style="color: #4f46e5;" id="statDuration">0ms</div>
             <div class="stat-lbl">Scan Time</div>
           </div>
           <div class="stat-box">
-            <div class="stat-val" style="color: #6ee7b7;" id="statTokens">0</div>
+            <div class="stat-val" style="color: #059669;" id="statTokens">0</div>
             <div class="stat-lbl">Tokens Consumed</div>
           </div>
           <div class="stat-box">
@@ -493,9 +633,21 @@
             <div class="stat-lbl">PII Breaches</div>
           </div>
           <div class="stat-box">
-            <div class="stat-val" id="statDiffs">0</div>
+            <div class="stat-val" style="color: #d97706;" id="statDiffs">0</div>
             <div class="stat-lbl">Contract Diffs</div>
           </div>
+        </div>
+
+        <!-- Novelty Feature: Automated Remediation Code Generator -->
+        <div class="remediation-card" id="remediationCard">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="font-size: 0.78rem; color: #1e40af;">💡 Automated Remediation Synthesizer (Auto-Fix)</strong>
+            <button class="btn-secondary" onclick="copyRemediation()">Copy SQL</button>
+          </div>
+          <div style="font-size: 0.75rem; color: #334155; margin-top: 4px;">
+            Deterministic remediation transformation synthesized for ingestion boundary:
+          </div>
+          <div class="remediation-code" id="remediationCode"></div>
         </div>
 
         <!-- Downstream Consumer Impact Card -->
@@ -504,7 +656,7 @@
             <span>Downstream Consumer Blast Radius</span>
             <span id="blastRiskBadge" class="badge badge-red">CRITICAL</span>
           </div>
-          <div id="blastRadiusSummary" style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.4;"></div>
+          <div id="blastRadiusSummary" style="font-size: 0.78rem; color: var(--text); line-height: 1.45;"></div>
         </div>
 
         <!-- Statutory Regulatory Mapping Card -->
@@ -520,7 +672,7 @@
         <div class="form-group">
           <label>Autonomous OODA Trajectory (Observe ➔ Reason ➔ Decide ➔ Execute)</label>
           <div class="step-list" id="stepList">
-            <div style="text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.85rem;">
+            <div style="text-align: center; padding: 35px 20px; color: var(--text-muted); font-size: 0.85rem;">
               Click "Run Autonomous Governance Audit" to observe the agent's multi-tier cognitive trajectory.
             </div>
           </div>
@@ -625,7 +777,7 @@
             { name: "customer_id", type: "string", nullable: false },
             { name: "order_amount", type: "decimal", nullable: false },
             { name: "order_timestamp", type: "timestamp", nullable: false },
-            { name: "masked_taxpayer_id", "type": "string", nullable: true }
+            { name: "masked_taxpayer_id", type: "string", nullable: true }
           ],
           sampleRecords: [
             { order_id: "ord-992144-a", customer_id: "CUST-88192", order_amount: 1250.50, order_timestamp: "2026-10-30T14:22:10Z", masked_taxpayer_id: "***-**-6789" }
@@ -680,7 +832,7 @@
       }
     };
 
-    // Compiled Regex for Client-Side Zero-Token Invariant Scanner
+    // Regex Scanner
     const PII_PATTERNS = {
       SSN: /\b\d{3}-\d{2}-\d{4}\b/,
       CREDIT_CARD_PAN: /\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12})\b/,
@@ -690,10 +842,20 @@
     const MASKED_PATTERNS = [/\b\*{3}-\*{2}-\d{4}\b/, /\bX{3}-X{2}-\d{4}\b/];
 
     // Local Storage Keys
+    const STORAGE_KEY_THEME = 'edga_theme';
     const STORAGE_KEY_GEMINI = 'edga_gemini_api_key';
     const STORAGE_KEY_GEMINI_MODEL = 'edga_gemini_model';
     const STORAGE_KEY_OLLAMA_URL = 'edga_ollama_url';
     const STORAGE_KEY_OLLAMA_MODEL = 'edga_ollama_model';
+
+    // Theme Toggle Functionality
+    window.toggleTheme = function() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(STORAGE_KEY_THEME, next);
+      document.getElementById('themeBtn').textContent = next === 'light' ? '☀️ Light Theme' : '🌙 Dark Theme';
+    };
 
     window.showToast = function(msg) {
       const t = document.getElementById('toast');
@@ -762,11 +924,23 @@
     window.copyDossier = function() {
       const text = document.getElementById('dossierText').textContent;
       navigator.clipboard.writeText(text).then(() => {
-        showToast('Cryptographic Compliance Dossier copied to clipboard!');
+        showToast('Compliance Dossier copied to clipboard!');
+      });
+    };
+
+    window.copyRemediation = function() {
+      const text = document.getElementById('remediationCode').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Auto-Fix SQL transformation copied to clipboard!');
       });
     };
 
     function initSavedConfigs() {
+      // Default Theme to Light
+      const savedTheme = localStorage.getItem(STORAGE_KEY_THEME) || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeBtn').textContent = savedTheme === 'light' ? '☀️ Light Theme' : '🌙 Dark Theme';
+
       const savedKey = localStorage.getItem(STORAGE_KEY_GEMINI);
       if (savedKey) {
         document.getElementById('geminiKeyInput').value = savedKey;
@@ -842,6 +1016,7 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
       const alertBox = document.getElementById('errorAlert');
       const blastBox = document.getElementById('blastRadiusBox');
       const regBox = document.getElementById('regulatoryBox');
+      const remCard = document.getElementById('remediationCard');
       alertBox.style.display = 'none';
 
       let candidate, baseline;
@@ -880,6 +1055,7 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
       dossierGroup.style.display = 'none';
       blastBox.style.display = 'none';
       regBox.style.display = 'none';
+      remCard.style.display = 'none';
 
       const startTime = performance.now();
 
@@ -997,9 +1173,9 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
       // Update Metrics
       document.getElementById('statDuration').textContent = `${totalDuration}ms`;
       document.getElementById('statTokens').textContent = String(tokensConsumed);
-      document.getElementById('statTokens').style.color = tokensConsumed === 0 ? '#6ee7b7' : '#a855f7';
+      document.getElementById('statTokens').style.color = tokensConsumed === 0 ? '#059669' : '#7c3aed';
       document.getElementById('statPii').textContent = String(sensitiveFindings.length);
-      document.getElementById('statPii').style.color = sensitiveFindings.length > 0 ? '#ef4444' : '#10b981';
+      document.getElementById('statPii').style.color = sensitiveFindings.length > 0 ? '#dc2626' : '#059669';
       document.getElementById('statDiffs').textContent = String(schemaDiffs.length);
 
       // Update Status Badge
@@ -1007,6 +1183,23 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
       if (outcome === 'APPROVE') statusBadge.className = 'badge badge-green';
       else if (outcome === 'APPROVE_WITH_WARNING') statusBadge.className = 'badge badge-amber';
       else statusBadge.className = 'badge badge-red';
+
+      // Novelty Feature: Auto-Synthesize Remediation Code
+      if (sensitiveFindings.length > 0) {
+        remCard.style.display = 'block';
+        const piiField = sensitiveFindings[0].field;
+        document.getElementById('remediationCode').textContent = 
+`-- Automated Invariant G-1 Remediation SQL (dbt / PySpark / Trino):
+SELECT
+  order_id,
+  customer_id,
+  order_amount,
+  order_timestamp,
+  -- Dynamic Column Masking & Salted Tokenization:
+  CONCAT('***-**-', SUBSTRING(${piiField}, -4)) AS masked_${piiField},
+  SHA256(CONCAT(current_salt_key(), '::', ${piiField})) AS tokenized_${piiField}_ref
+FROM raw_staging_stream;`;
+      }
 
       // Update Blast Radius Card
       if (schemaDiffs.some(d => d.isBreaking) && baseline?.registeredConsumers?.length) {
@@ -1024,10 +1217,10 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
       if (sensitiveFindings.length > 0) {
         regBox.style.display = 'block';
         document.getElementById('regulatoryList').innerHTML = `
-          <div style="font-size: 0.76rem; color: #fca5a5;">
+          <div style="font-size: 0.76rem; color: #991b1b; background: #fef2f2; padding: 8px 12px; border-radius: 8px; border: 1px solid #fecaca;">
             <strong>• PCI-DSS v4.0 Req 3.4 & GLBA 15 U.S.C. § 6801:</strong> Unmasked credentials outside vault carries statutory fine risk up to $100k/incident.
           </div>
-          <div style="font-size: 0.76rem; color: #fde68a;">
+          <div style="font-size: 0.76rem; color: #92400e; background: #fffbeb; padding: 8px 12px; border-radius: 8px; border: 1px solid #fde68a;">
             <strong>• GDPR Article 32 & HIPAA 45 CFR § 164.514:</strong> Mandatory requirement for Format-Preserving Encryption or Safe Harbor tokenization.
           </div>
         `;
@@ -1041,7 +1234,7 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
         item.className = 'step-item';
         item.innerHTML = `
           <div class="step-header">
-            <span style="color: #4f46e5;">STEP ${t.step} · ${t.phase}</span>
+            <span style="color: #4f46e5; font-weight: 800;">STEP ${t.step} · ${t.phase}</span>
             <span class="badge ${gw === 'gemini' ? 'badge-purple' : 'badge-amber'}">${providerLabel.toUpperCase()}</span>
           </div>
           <div class="step-body">${t.observation}</div>
