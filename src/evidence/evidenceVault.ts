@@ -497,10 +497,22 @@ export class EvidenceVault {
         datasetUrn: 'urn:datacatalog:production:customer:customer_master',
         datasetName: 'Customer Master 360 Warehouse Table',
         classification: 'CONFIDENTIAL' as ClassificationTier,
-        provider: 'Google Gemini',
-        model: 'gemini-2.5-flash',
+        provider: 'Enterprise Governance Runtime',
+        model: 'deterministic-v1',
         decision: 'APPROVE' as GovernanceDecisionOutcome,
-        timestamp: '2026-09-04T10:14:20Z',
+        timestamp: '2026-08-03T10:14:20Z',
+        violations: [],
+        regulations: [],
+        blastRadius: 0
+      },
+      {
+        datasetUrn: 'urn:datacatalog:production:customer:customer_master',
+        datasetName: 'Customer Master 360 Warehouse Table',
+        classification: 'CONFIDENTIAL' as ClassificationTier,
+        provider: 'Enterprise Governance Runtime',
+        model: 'deterministic-v1',
+        decision: 'APPROVE_WITH_WARNING' as GovernanceDecisionOutcome,
+        timestamp: '2026-08-10T16:05:30Z',
         violations: [],
         regulations: [],
         blastRadius: 0
@@ -509,10 +521,10 @@ export class EvidenceVault {
         datasetUrn: 'urn:datacatalog:production:customer:customer_master',
         datasetName: 'Customer Master 360 Warehouse Table',
         classification: 'RESTRICTED' as ClassificationTier,
-        provider: 'Google Gemini',
-        model: 'gemini-2.5-flash',
+        provider: 'Enterprise Governance Runtime',
+        model: 'deterministic-v1',
         decision: 'QUARANTINE' as GovernanceDecisionOutcome,
-        timestamp: '2026-09-18T14:22:15Z',
+        timestamp: '2026-08-25T14:22:15Z',
         violations: [
           { type: 'SSN', field: 'taxpayer_ssn', description: 'Cleartext Social Security Number detected outside Restricted vault', severity: 'CRITICAL' as const, regulation: 'GDPR' as const }
         ],
@@ -523,10 +535,10 @@ export class EvidenceVault {
         datasetUrn: 'urn:datacatalog:production:customer:customer_master',
         datasetName: 'Customer Master 360 Warehouse Table',
         classification: 'CONFIDENTIAL' as ClassificationTier,
-        provider: 'Google Gemini',
-        model: 'gemini-2.5-flash',
+        provider: 'Enterprise Governance Runtime',
+        model: 'deterministic-v1',
         decision: 'BLOCK_DEPLOYMENT' as GovernanceDecisionOutcome,
-        timestamp: '2026-10-02T09:41:00Z',
+        timestamp: '2026-09-17T09:41:00Z',
         violations: [
           { type: 'SCHEMA_MUTATION', field: 'customer_id', description: 'Dropped required column breaks downstream fraud and ledger models', severity: 'HIGH' as const }
         ],
@@ -536,14 +548,17 @@ export class EvidenceVault {
       {
         datasetUrn: 'urn:datacatalog:production:customer:customer_master',
         datasetName: 'Customer Master 360 Warehouse Table',
-        classification: 'CONFIDENTIAL' as ClassificationTier,
-        provider: 'Google Gemini',
-        model: 'gemini-2.5-flash',
-        decision: 'APPROVE_WITH_WARNING' as GovernanceDecisionOutcome,
-        timestamp: '2026-10-12T16:05:30Z',
-        violations: [],
-        regulations: [],
-        blastRadius: 0
+        classification: 'RESTRICTED' as ClassificationTier,
+        provider: 'Enterprise Governance Runtime',
+        model: 'deterministic-v1',
+        decision: 'QUARANTINE' as GovernanceDecisionOutcome,
+        timestamp: '2026-10-05T11:30:00Z',
+        violations: [
+          { type: 'REPEAT_OFFENDER', field: 'taxpayer_ssn', description: 'Repeat offender escalation: 3rd breach within 90 days triggers Invariant G-4', severity: 'CRITICAL' as const, regulation: 'GDPR' as const }
+        ],
+        regulations: ['GDPR' as const],
+        blastRadius: 2,
+        hitlRequired: true
       },
       {
         datasetUrn: 'urn:datacatalog:production:finance:customer_orders_v2',

@@ -240,6 +240,109 @@
       border-color: var(--accent);
     }
 
+    /* Enterprise Hero Banner */
+    .demo-hero {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(124, 58, 237, 0.05) 100%), var(--card-bg);
+      border: 1px solid var(--purple-border);
+      border-radius: 20px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .demo-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, #4f46e5, #7c3aed);
+    }
+    .demo-hero-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: var(--purple-bg);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      border: 1px solid var(--purple-border);
+      margin-bottom: 8px;
+    }
+    .demo-hero-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .demo-hero-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+    .hero-caps-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 1024px) { .hero-caps-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 640px) { .hero-caps-grid { grid-template-columns: repeat(2, 1fr); } }
+    .hero-cap-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .recommended-banner {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    [data-theme="dark"] .recommended-banner {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    .rec-badge {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #065f46;
+      background: #d1fae5;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      white-space: nowrap;
+    }
+    [data-theme="dark"] .rec-badge {
+      color: #6ee7b7;
+      background: rgba(16, 185, 129, 0.25);
+    }
+    .rec-text {
+      font-size: 0.8rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
     .scenario-header {
       display: flex;
       justify-content: space-between;
@@ -322,10 +425,36 @@
       </div>
     </header>
 
+    <!-- HERO SECTION: ENTERPRISE GOVERNANCE DEMO CENTER -->
+    <div class="demo-hero">
+      <div class="demo-hero-badge">ENTERPRISE VERIFICATION SUITE</div>
+      <h1 class="demo-hero-title">Enterprise Governance Demo Center</h1>
+      <p class="demo-hero-subtitle">
+        Execute realistic governance incidents demonstrating:
+      </p>
+      <div class="hero-caps-grid">
+        <div class="hero-cap-item"><span>🔒</span> Privacy Protection</div>
+        <div class="hero-cap-item"><span>📜</span> Contract Governance</div>
+        <div class="hero-cap-item"><span>⚖️</span> Regulatory Compliance</div>
+        <div class="hero-cap-item"><span>🧠</span> Governance Memory</div>
+        <div class="hero-cap-item"><span>🛡️</span> Human-in-the-Loop Controls</div>
+        <div class="hero-cap-item"><span>🕸️</span> Blast Radius Analysis</div>
+      </div>
+    </div>
+
+    <!-- RECOMMENDED FIRST DEMO CALLOUT -->
+    <div class="recommended-banner">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span class="rec-badge">⭐ RECOMMENDED FIRST DEMO</span>
+        <span class="rec-text"><strong>PII Leak Detection</strong> — Demonstrates: Tier 4 Detection · Statutory Regulatory Mapping · Governance Decisions · Automated Code Remediation</span>
+      </div>
+      <a href="index.html?scenario=critical_pii&autorun=true" class="header-btn" style="background: #059669; color: white; border: none; font-size: 0.76rem; padding: 6px 14px;">⚡ Run Recommended</a>
+    </div>
+
     <div class="card">
       <div class="card-title">
         <span>Curated Enterprise Governance Demonstrations</span>
-        <span class="badge badge-purple">Recruiter & Executive Ready</span>
+        <span class="badge badge-purple">Recruiter &amp; Executive Ready</span>
       </div>
       <div class="card-subtitle">
         One-click interactive scenarios designed to showcase autonomous decision-making, zero-token deterministic scanning, and multi-agent governance in production.
@@ -333,10 +462,15 @@
 
       <div class="scenario-grid">
         <!-- Scenario 1: PII Leak Detection -->
-        <div class="scenario-card">
+        <div class="scenario-card" style="border-color: #a7f3d0; background: linear-gradient(180deg, rgba(16, 185, 129, 0.03) 0%, var(--card-bg) 100%);">
           <div>
             <div class="scenario-header">
-              <div class="scenario-title">1. PII Leak Detection</div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                  <span class="badge badge-green" style="font-size: 0.6rem; padding: 2px 8px;">⭐ RECOMMENDED FIRST DEMO</span>
+                </div>
+                <div class="scenario-title">1. PII Leak Detection</div>
+              </div>
               <span class="badge badge-red">QUARANTINE</span>
             </div>
             <p class="scenario-desc">
@@ -345,6 +479,7 @@
             <div class="scenario-meta">
               <div><strong>Target Invariant:</strong> G-1 (Zero Direct PII outside vault)</div>
               <div><strong>Regulation:</strong> GDPR Article 32, HIPAA Safe Harbor, GLBA 501b</div>
+              <div><strong>Capabilities:</strong> Tier 4 Detection · Regulatory Mapping · Governance Decisions · Auto-Remediation</div>
               <div><strong>Outcome:</strong> Automated partition quarantine + Auto-fix SQL</div>
             </div>
           </div>
@@ -425,6 +560,26 @@
             </div>
           </div>
           <a href="index.html?scenario=policy_compiler&autorun=true" class="btn">🚀 Launch &amp; Execute Scenario</a>
+        </div>
+
+        <!-- Scenario 6: Consumer Blast Radius Analysis -->
+        <div class="scenario-card">
+          <div>
+            <div class="scenario-header">
+              <div class="scenario-title">6. Consumer Blast Radius Analysis</div>
+              <span class="badge badge-red">BLOCK_DEPLOYMENT</span>
+            </div>
+            <p class="scenario-desc">
+              A contract-breaking schema change drops <code>customer_id</code> and mutates column types, directly impacting downstream dependencies across Tableau Dashboards, Customer APIs, ML Feature Stores, and Billing Pipelines.
+            </p>
+            <div class="scenario-meta">
+              <div><strong>Impacted Services:</strong> Tableau Dashboards · Customer APIs · ML Feature Stores · Billing Pipelines</div>
+              <div><strong>Blast Radius:</strong> CRITICAL (Multiple Tier 1 Services Broken)</div>
+              <div><strong>Outcome:</strong> BLOCK_DEPLOYMENT · Exit Code 1 · Incident Dispatched</div>
+              <div><strong>Reason:</strong> Demonstrates downstream governance awareness</div>
+            </div>
+          </div>
+          <a href="index.html?scenario=blast_radius_analysis&autorun=true" class="btn">🚀 Launch &amp; Execute Scenario</a>
         </div>
       </div>
     </div>

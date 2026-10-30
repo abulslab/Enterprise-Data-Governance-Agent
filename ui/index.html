@@ -695,6 +695,7 @@
             <option value="breaking_drift">Scenario 3: Breaking Contract Drift (Customer ID Dropped) -> BLOCK_DEPLOYMENT</option>
             <option value="repeat_offender">Scenario 4: Repeat Offender Dataset (Multiple Prior Breaches) -> HITL ESCALATION</option>
             <option value="policy_compiler">Scenario 5: Natural Language Policy Compiler -> AST INVARIANT COMPILE</option>
+            <option value="blast_radius_analysis">Scenario 6: Consumer Blast Radius Analysis (Tableau, APIs, ML, Billing) -> BLOCK_DEPLOYMENT</option>
             <option value="clean_evolution">Evolution: Optional Column Added (Masked PII) -> APPROVE_WITH_WARNING</option>
             <option value="clean_exact">Compliant: Exact Contract Match (Zero Drift) -> APPROVE</option>
           </select>
@@ -1038,6 +1039,42 @@ Select an enterprise incident platform above to view the synthesized escalation 
           registeredConsumers: [
             { id: "c-1", serviceName: "General Ledger & Financial Reporting Pipeline", consumerType: "FINANCIAL_REPORTING", ownerTeam: "Finance Engineering", dependentFields: ["order_id", "order_amount"], slaTier: "TIER_1_CRITICAL" },
             { id: "c-2", serviceName: "Real-time Fraud Detection ML Model", consumerType: "ML_MODEL", ownerTeam: "Risk Data Science", dependentFields: ["customer_id", "order_amount"], slaTier: "TIER_1_CRITICAL" }
+          ]
+        }
+      },
+      blast_radius_analysis: {
+        candidate: {
+          datasetUrn: "urn:datacatalog:production:finance:customer_orders_blast_candidate",
+          datasetName: "Finance Customer Core Data (Breaking Evolution)",
+          classificationTier: "CONFIDENTIAL",
+          schemaVersion: "2.5.0",
+          storageTarget: "LAKEHOUSE",
+          columns: [
+            { name: "order_id", type: "uuid", nullable: false },
+            { name: "order_amount", type: "string", nullable: false },
+            { name: "order_timestamp", type: "timestamp", nullable: false }
+          ],
+          sampleRecords: [
+            { order_id: "ord-992144-a", order_amount: "$1,250.50", order_timestamp: "2026-10-30T14:22:10Z" }
+          ]
+        },
+        baseline: {
+          datasetUrn: "urn:datacatalog:production:finance:customer_orders_v1",
+          contractVersion: "1.0.0",
+          minimumClassificationTier: "CONFIDENTIAL",
+          allowedMutations: ["ADD_NULLABLE_COLUMN"],
+          prohibitedMutations: ["DROP_COLUMN", "NARROW_TYPE"],
+          columns: [
+            { name: "order_id", type: "uuid", nullable: false },
+            { name: "customer_id", type: "string", nullable: false },
+            { name: "order_amount", type: "decimal", nullable: false },
+            { name: "order_timestamp", type: "timestamp", nullable: false }
+          ],
+          registeredConsumers: [
+            { id: "c-101", serviceName: "Tableau Executive BI & Revenue Reporting", consumerType: "DASHBOARD", ownerTeam: "Enterprise BI", dependentFields: ["customer_id", "order_amount"], slaTier: "TIER_1_CRITICAL" },
+            { id: "c-102", serviceName: "Customer Account Gateway & Mobile APIs", consumerType: "API_GATEWAY", ownerTeam: "Digital Platform", dependentFields: ["customer_id", "order_id"], slaTier: "TIER_1_CRITICAL" },
+            { id: "c-103", serviceName: "Risk Scoring & Fraud ML Feature Store", consumerType: "FEATURE_STORE", ownerTeam: "Risk Data Science", dependentFields: ["customer_id", "order_amount"], slaTier: "TIER_1_CRITICAL" },
+            { id: "c-104", serviceName: "General Ledger Billing & Reconciliation Pipeline", consumerType: "FINANCIAL_REPORTING", ownerTeam: "Financial Systems", dependentFields: ["customer_id", "order_id", "order_amount"], slaTier: "TIER_1_CRITICAL" }
           ]
         }
       },
@@ -1445,6 +1482,16 @@ Select an enterprise incident platform above to view the synthesized escalation 
           if (autorunParam === 'true') {
             setTimeout(() => { window.runAudit(); }, 350);
           }
+        } else if (scenarioParam === 'blast_radius_analysis') {
+          document.getElementById('presetSelect').value = 'blast_radius_analysis';
+          window.loadPreset();
+          window.switchTab('dagTab');
+          if (autorunParam === 'true') {
+            setTimeout(() => {
+              window.runAudit();
+              window.switchTab('dagTab');
+            }, 350);
+          }
         } else if (scenarioParam === 'policy_compiler') {
           document.getElementById('presetSelect').value = 'policy_compiler';
           window.loadPreset();
@@ -1475,7 +1522,7 @@ Rules:
 2. If Breaking Mutations > 0 with consumers: Invariant G-2 breach -> Block deployment.
 3. If Clean: Approve.
 
-Return ONLY a JSON array with exactly 4 OODA loop steps:
+Return ONLY a JSON array with exactly 4 governance workflow steps (OBSERVE, REASON, DECIDE, EXECUTE):
 [
   { "step": 1, "phase": "OBSERVE", "observation": "...", "reasoning": "...", "decision": "..." },
   { "step": 2, "phase": "REASON", "observation": "...", "reasoning": "...", "decision": "..." },
@@ -1519,7 +1566,7 @@ Rules:
 2. If Breaking Mutations > 0 with consumers: Invariant G-2 breach -> Block deployment.
 3. If Clean: Approve.
 
-Return ONLY a valid JSON array with exactly 4 OODA loop steps:
+Return ONLY a valid JSON array with exactly 4 governance workflow steps (OBSERVE, REASON, DECIDE, EXECUTE):
 [
   { "step": 1, "phase": "OBSERVE", "observation": "...", "reasoning": "...", "decision": "..." },
   { "step": 2, "phase": "REASON", "observation": "...", "reasoning": "...", "decision": "..." },
@@ -1572,7 +1619,7 @@ Rules:
 2. If Breaking Mutations > 0 with consumers: Invariant G-2 breach -> Block deployment.
 3. If Clean: Approve.
 
-Return ONLY a valid JSON array with exactly 4 OODA loop steps:
+Return ONLY a valid JSON array with exactly 4 governance workflow steps (OBSERVE, REASON, DECIDE, EXECUTE):
 [
   { "step": 1, "phase": "OBSERVE", "observation": "...", "reasoning": "...", "decision": "..." },
   { "step": 2, "phase": "REASON", "observation": "...", "reasoning": "...", "decision": "..." },
@@ -1901,7 +1948,7 @@ Audit Timestamp:    ${new Date().toISOString()}
 Declared Security:  ${candidate.classificationTier}
 Recommended Tier:   ${sensitiveFindings.length > 0 ? 'RESTRICTED' : candidate.classificationTier}
 Governance Status:  ${outcome} ${issueTicketKey ? `(Ticket: ${issueTicketKey})` : ''}
-Reasoning Gateway:  ${providerLabel}
+Reasoning Runtime:  Enterprise Governance Runtime
 
 ZERO-TOKEN DETERMINISTIC SCAN METRICS:
 - Scanned Records:     ${records.length}

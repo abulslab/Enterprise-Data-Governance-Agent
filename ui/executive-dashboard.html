@@ -574,21 +574,31 @@
     <!-- EXECUTIVE LEADERSHIP BANNER -->
     <div class="executive-header-card">
       <div class="health-gauge-box">
-        <div class="gauge-circle">
-          <div class="gauge-score" id="headerHealthScore">94</div>
-          <div class="gauge-denom">/ 100</div>
+        <div class="gauge-circle" style="width: 84px; height: 84px; border-width: 4px;">
+          <div class="gauge-score" id="headerHealthScore" style="font-size: 2rem; font-weight: 900; line-height: 1;">94</div>
+          <div class="gauge-denom" style="font-size: 0.72rem; font-weight: 800; opacity: 0.9;">/ 100</div>
         </div>
         <div>
-          <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.08em; opacity: 0.85;">PLATFORM GOVERNANCE HEALTH</div>
-          <div style="font-size: 1.4rem; font-weight: 800;">EXCELLENT — 99.2% COMPLIANCE RATE</div>
-          <div style="font-size: 0.75rem; opacity: 0.9; margin-top: 2px;">
-            Continuous autonomous telemetry across 2,184 governed enterprise lakehouse assets.
+          <div style="font-size: 0.68rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.08em; opacity: 0.85;">GOVERNANCE HEALTH SCORE</div>
+          <div style="display: flex; align-items: baseline; gap: 12px; margin: 3px 0 2px 0;">
+            <span style="font-size: 1.85rem; font-weight: 900; letter-spacing: -0.02em;">94 / 100</span>
+            <span class="badge" style="background: rgba(255,255,255,0.22); color: white; border: 1px solid rgba(255,255,255,0.4); font-size: 0.74rem; padding: 3px 12px; font-weight: 900; letter-spacing: 0.05em;">EXCELLENT</span>
+          </div>
+          <div style="font-size: 0.75rem; opacity: 0.9;">
+            Continuous autonomous telemetry across 2,184 governed enterprise lakehouse assets · 99.2% compliance rate.
           </div>
         </div>
       </div>
-      <button class="btn" onclick="openExecutiveReport()">
-        <span>📄 Export Board Brief (PDF)</span>
-      </button>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div style="background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22); border-radius: 12px; padding: 10px 18px; text-align: right;">
+          <div style="font-size: 0.64rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.08em; opacity: 0.85;">FINANCIAL RISK AVOIDED</div>
+          <div style="font-size: 1.45rem; font-weight: 900; color: #a7f3d0; margin-top: 1px;">$3.42M</div>
+          <div style="font-size: 0.68rem; opacity: 0.85;">Statutory Fine Defense</div>
+        </div>
+        <button class="btn" onclick="openExecutiveReport()">
+          <span>📄 Export Board Brief (PDF)</span>
+        </button>
+      </div>
     </div>
 
     <!-- 6-CARD TOP EXECUTIVE KPI STRIP -->
@@ -596,7 +606,7 @@
       <div class="kpi-card">
         <div class="kpi-lbl">Datasets Governed</div>
         <div class="kpi-val" style="color: #4f46e5;">2,184</div>
-        <div class="kpi-sub">Lakehouse, DW & Streams</div>
+        <div class="kpi-sub">Lakehouse, DW &amp; Streams</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-lbl">Critical Violations Prevented</div>
@@ -618,10 +628,10 @@
         <div class="kpi-val" style="color: #10b981;">99.2%</div>
         <div class="kpi-sub">Statutory SLA satisfied</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-lbl">Financial Risk Avoided</div>
-        <div class="kpi-val" style="color: #059669;">$3.4M</div>
-        <div class="kpi-sub">Statutory regulatory fines</div>
+      <div class="kpi-card" style="border: 2px solid #059669; background: linear-gradient(180deg, rgba(5, 150, 105, 0.06) 0%, var(--card-bg) 100%);">
+        <div class="kpi-lbl" style="color: #059669; font-weight: 800;">Financial Risk Avoided</div>
+        <div class="kpi-val" style="color: #059669; font-weight: 900;">$3.42M</div>
+        <div class="kpi-sub" style="color: #059669; font-weight: 600;">Statutory regulatory fines avoided</div>
       </div>
     </div>
 

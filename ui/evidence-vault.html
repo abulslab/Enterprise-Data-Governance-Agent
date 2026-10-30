@@ -420,6 +420,102 @@
     .timeline-dot.red { background: #ef4444; }
     .timeline-dot.green { background: #10b981; }
     .timeline-dot.amber { background: #f59e0b; }
+    .timeline-dot.orange { background: #ea580c; }
+    .timeline-dot.purple { background: #8b5cf6; }
+
+    /* VISUAL EVENT TIMELINE (GOVERNANCE EVOLUTION OVER TIME) */
+    .visual-timeline-box {
+      background: var(--section-box-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px 14px;
+      margin-bottom: 18px;
+    }
+    .visual-timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text);
+    }
+    .visual-timeline-track {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: relative;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 8px 4px;
+    }
+    .visual-timeline-track::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      right: 20px;
+      height: 2px;
+      background: var(--card-border);
+      z-index: 1;
+    }
+    .v-node {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex: 1;
+      min-width: 80px;
+      transition: transform 0.2s;
+    }
+    .v-node:hover {
+      transform: translateY(-2px);
+    }
+    .v-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      margin-bottom: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      border: 2px solid #94a3b8;
+    }
+    .v-dot.green { border-color: #10b981; color: #10b981; background: #ecfdf5; }
+    .v-dot.amber { border-color: #f59e0b; color: #f59e0b; background: #fffbeb; }
+    .v-dot.orange { border-color: #ea580c; color: #ea580c; background: #fff7ed; }
+    .v-dot.red { border-color: #ef4444; color: #ef4444; background: #fef2f2; }
+    .v-dot.purple { border-color: #8b5cf6; color: #8b5cf6; background: #f5f3ff; }
+
+    .v-badge {
+      font-size: 0.64rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      margin-bottom: 3px;
+      white-space: nowrap;
+    }
+    .v-badge.green { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+    .v-badge.amber { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .v-badge.orange { background: #ffedd5; color: #9a3412; border: 1px solid #fed7aa; }
+    .v-badge.red { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+    .v-badge.purple { background: #ede9fe; color: #5b21b6; border: 1px solid #ddd6fe; }
+
+    .v-date {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+    }
 
     /* TABLE */
     .table-container {
@@ -621,6 +717,17 @@
           <strong>🚨 HIGH RISK REPEAT OFFENDER DETECTED:</strong> 3+ violations logged within 90 days. Governance Memory has engaged Tier 1 Invariant G-4, revoking automated release and requiring supervisory review.
         </div>
 
+        <!-- VISUAL EVENT TIMELINE: GOVERNANCE EVOLUTION OVER TIME -->
+        <div class="visual-timeline-box">
+          <div class="visual-timeline-header">
+            <span>Governance Evolution Over Time</span>
+            <span class="badge badge-purple" style="font-size: 0.6rem;">Visual State Progression</span>
+          </div>
+          <div class="visual-timeline-track" id="visualEventTimeline">
+            <!-- Dynamically populated color-coded nodes -->
+          </div>
+        </div>
+
         <div class="timeline-list" id="timelineList">
           <!-- Dynamically injected timeline items -->
         </div>
@@ -808,18 +915,54 @@
       const { trend, records } = EvidenceVault.getDatasetTimeline(urn);
       const profile = EvidenceVault.getDatasetRiskProfile(urn);
 
+      // Visual Event Timeline: Governance Evolution Over Time
+      const vTimeline = document.getElementById('visualEventTimeline');
+      vTimeline.innerHTML = '';
+
       // Timeline List
       const list = document.getElementById('timelineList');
       list.innerHTML = '';
+
       records.forEach(r => {
-        const dotColor = r.decision === 'QUARANTINE' ? 'red' : r.decision === 'BLOCK_DEPLOYMENT' ? 'amber' : 'green';
+        let nodeColor = 'green';
+        let label = 'APPROVE';
+        if (r.hitlRequired || r.decision === 'HITL ESCALATION' || (r.violations && r.violations.some(v => v.type === 'REPEAT_OFFENDER'))) {
+          nodeColor = 'purple';
+          label = 'HITL';
+        } else if (r.decision === 'BLOCK_DEPLOYMENT') {
+          nodeColor = 'red';
+          label = 'BLOCK_DEPLOYMENT';
+        } else if (r.decision === 'QUARANTINE') {
+          nodeColor = 'orange';
+          label = 'QUARANTINE';
+        } else if (r.decision === 'APPROVE_WITH_WARNING') {
+          nodeColor = 'amber';
+          label = 'WARNING';
+        } else {
+          nodeColor = 'green';
+          label = 'APPROVE';
+        }
+
+        const dateStr = new Date(r.timestamp).toISOString().split('T')[0];
+
+        // 1. Append Visual Stepper Node
+        const vNode = document.createElement('div');
+        vNode.className = 'v-node';
+        vNode.innerHTML = `
+          <div class="v-dot ${nodeColor}">●</div>
+          <div class="v-badge ${nodeColor}">${label}</div>
+          <div class="v-date">${dateStr}</div>
+        `;
+        vTimeline.appendChild(vNode);
+
+        // 2. Append Detailed List Item
         const item = document.createElement('div');
         item.className = 'timeline-item';
         item.innerHTML = `
-          <div class="timeline-dot ${dotColor}"></div>
+          <div class="timeline-dot ${nodeColor}"></div>
           <div style="display: flex; justify-content: space-between; align-items: center;">
-            <strong style="font-size: 0.78rem;">${new Date(r.timestamp).toISOString().split('T')[0]}</strong>
-            <span class="badge ${r.decision === 'QUARANTINE' ? 'badge-red' : r.decision === 'BLOCK_DEPLOYMENT' ? 'badge-amber' : 'badge-green'}">${r.decision}</span>
+            <strong style="font-size: 0.78rem;">${dateStr}</strong>
+            <span class="badge ${nodeColor === 'red' ? 'badge-red' : nodeColor === 'orange' ? 'badge-amber' : nodeColor === 'purple' ? 'badge-purple' : nodeColor === 'amber' ? 'badge-amber' : 'badge-green'}">${label === 'HITL' ? 'HITL ESCALATION' : r.decision}</span>
           </div>
           <div style="font-size: 0.73rem; color: var(--text-muted);">
             ${r.violations.length > 0 ? r.violations.map(v => v.description).join('; ') : 'All statutory governance invariants satisfied.'}

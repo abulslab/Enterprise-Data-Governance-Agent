@@ -266,10 +266,50 @@
       border-radius: 14px;
       padding: 18px;
       border-top: 4px solid var(--accent);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
-    .tier-num { font-size: 0.7rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
-    .tier-name { font-size: 0.95rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
-    .tier-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.45; }
+    .tier-num { font-size: 0.7rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+    .tier-name { font-size: 0.95rem; font-weight: 800; color: var(--text); }
+    .tier-purpose-label, .tier-caps-label {
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 3px;
+    }
+    .tier-purpose {
+      font-size: 0.78rem;
+      color: var(--text);
+      font-weight: 700;
+      line-height: 1.35;
+    }
+    .tier-caps-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .tier-caps-list li {
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .tier-caps-list li::before {
+      content: "•";
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 0.85rem;
+      line-height: 1;
+    }
 
     .topo-diagram {
       background: var(--section-box-bg);
@@ -310,54 +350,119 @@
       </div>
     </header>
 
-    <!-- 5-TIER COGNITIVE ARCHITECTURE -->
+    <!-- 5-TIER GOVERNANCE ARCHITECTURE -->
     <div class="card">
       <div class="card-title">
-        <span>The Five-Tier Cognitive Governance Architecture (Tier 0 to Tier 4)</span>
+        <span>The Five-Tier Governance Architecture (Tier 0 to Tier 4)</span>
         <span class="badge badge-purple">Deterministic + AI + Cryptographic Ledger</span>
       </div>
       <div class="card-subtitle">
-        Architectural separation of immutable safety invariants, statutory frameworks, cognitive governance reasoning, zero-token deterministic engines, and cryptographic evidence persistence.
+        Architectural separation of immutable safety invariants, statutory frameworks, autonomous governance reasoning, zero-token deterministic engines, and cryptographic evidence persistence.
       </div>
 
       <div class="tiers-grid">
+        <!-- Tier 0 -->
         <div class="tier-box" style="border-top-color: #4f46e5;">
-          <div class="tier-num">Tier 0</div>
-          <div class="tier-name">Evidence Vault</div>
-          <div class="tier-desc">
-            Cryptographic governance memory layer: Append-only SHA-256 Merkle chain, historical dataset timelines, repeat offender tracking, and tamper-evident audit dossiers.
+          <div>
+            <div class="tier-num" style="color: #4f46e5;">Tier 0</div>
+            <div class="tier-name">Evidence Vault</div>
+          </div>
+          <div>
+            <span class="tier-purpose-label">Purpose</span>
+            <div class="tier-purpose">Cryptographic Governance Memory</div>
+          </div>
+          <div>
+            <span class="tier-caps-label">Key Capabilities</span>
+            <ul class="tier-caps-list">
+              <li>Audit History (Append-only SHA-256)</li>
+              <li>Evidence Chain &amp; Merkle Ledger</li>
+              <li>Dataset Risk Profiles</li>
+              <li>Historical Incident Timeline</li>
+            </ul>
           </div>
         </div>
 
+        <!-- Tier 1 -->
         <div class="tier-box" style="border-top-color: #dc2626;">
-          <div class="tier-num">Tier 1</div>
-          <div class="tier-name">System Invariants</div>
-          <div class="tier-desc">
-            Immutable operating principles defined in <code>AGENTS.md</code>: Invariants G-1 (Zero unmasked PII outside vaults), G-2 (Contracts cannot be broken), G-3 (Auditable compliance dossiers), G-4 (Mandatory HITL on repeat offenders), G-5 (Deterministic evidence required).
+          <div>
+            <div class="tier-num" style="color: #dc2626;">Tier 1</div>
+            <div class="tier-name">System Invariants</div>
+          </div>
+          <div>
+            <span class="tier-purpose-label">Purpose</span>
+            <div class="tier-purpose">Non-Negotiable Safety Baselines</div>
+          </div>
+          <div>
+            <span class="tier-caps-label">Key Capabilities</span>
+            <ul class="tier-caps-list">
+              <li>Zero Unmasked PII Outside Vaults (G-1)</li>
+              <li>Zero Breaking Contract Drift (G-2)</li>
+              <li>Cryptographic Dossier Integrity (G-3)</li>
+              <li>Mandatory HITL on Repeat Violations (G-4)</li>
+            </ul>
           </div>
         </div>
 
+        <!-- Tier 2 -->
         <div class="tier-box" style="border-top-color: #d97706;">
-          <div class="tier-num">Tier 2</div>
-          <div class="tier-name">Governance Policies</div>
-          <div class="tier-desc">
-            Statutory legal and regulatory mapping: GDPR Art 32 & 5(1)(f), HIPAA 45 CFR § 164.514 Safe Harbor, GLBA 15 U.S.C. § 6801(b) Safeguards Rule, and PCI-DSS Requirement 3.4 for unreadable primary account numbers.
+          <div>
+            <div class="tier-num" style="color: #d97706;">Tier 2</div>
+            <div class="tier-name">Governance Policies</div>
+          </div>
+          <div>
+            <span class="tier-purpose-label">Purpose</span>
+            <div class="tier-purpose">Statutory Regulatory Mapping</div>
+          </div>
+          <div>
+            <span class="tier-caps-label">Key Capabilities</span>
+            <ul class="tier-caps-list">
+              <li>GDPR Art. 32 &amp; 5(1)(f) Mapping</li>
+              <li>HIPAA 45 CFR § 164.514 Safe Harbor</li>
+              <li>GLBA 15 U.S.C. § 6801(b) Safeguards</li>
+              <li>PCI-DSS Req 3.4 Cardholder Protection</li>
+            </ul>
           </div>
         </div>
 
+        <!-- Tier 3 -->
         <div class="tier-box" style="border-top-color: #7c3aed;">
-          <div class="tier-num">Tier 3</div>
-          <div class="tier-name">Autonomous Governance Decision Engine</div>
-          <div class="tier-desc">
-            Autonomous cognitive reasoning loop: OBSERVE ➔ REASON ➔ DECIDE ➔ EXECUTE. Evaluates downstream consumer blast radius and coordinates multi-agent consensus debate via Tri-Mode Gateway.
+          <div>
+            <div class="tier-num" style="color: #7c3aed;">Tier 3</div>
+            <div class="tier-name">Governance Reasoning Engine</div>
+          </div>
+          <div>
+            <span class="tier-purpose-label">Purpose</span>
+            <div class="tier-purpose">Autonomous Decision Engine</div>
+          </div>
+          <div>
+            <span class="tier-caps-label">Key Capabilities</span>
+            <ul class="tier-caps-list">
+              <li>OBSERVE ➔ REASON ➔ DECIDE ➔ EXECUTE</li>
+              <li>Downstream Blast Radius DAG Analysis</li>
+              <li>Multi-Agent Consensus Debate</li>
+              <li>Automated Remediation Synthesis</li>
+            </ul>
           </div>
         </div>
 
+        <!-- Tier 4 -->
         <div class="tier-box" style="border-top-color: #059669;">
-          <div class="tier-num">Tier 4</div>
-          <div class="tier-name">Deterministic Engine</div>
-          <div class="tier-desc">
-            100% zero-token offloading: regex patterns (SSN, Email, Phone, IBAN, Passport), mathematical checksums (Luhn Mod 10 PAN, ABA Federal Reserve Routing mod-10), and AST schema contract differ (&lt; 2ms).
+          <div>
+            <div class="tier-num" style="color: #059669;">Tier 4</div>
+            <div class="tier-name">Deterministic Engine</div>
+          </div>
+          <div>
+            <span class="tier-purpose-label">Purpose</span>
+            <div class="tier-purpose">Zero-Token Pre-Execution Offload</div>
+          </div>
+          <div>
+            <span class="tier-caps-label">Key Capabilities</span>
+            <ul class="tier-caps-list">
+              <li>AST Schema Contract Differ (&lt; 2ms)</li>
+              <li>Luhn Mod-10 PAN Checksum Validation</li>
+              <li>ABA Federal Reserve Routing Mod-10</li>
+              <li>Regex Pattern Recognition (SSN, IBAN)</li>
+            </ul>
           </div>
         </div>
       </div>
