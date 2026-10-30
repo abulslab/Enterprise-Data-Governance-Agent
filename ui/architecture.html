@@ -155,11 +155,11 @@
 
     .tiers-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 16px;
       margin-bottom: 24px;
     }
-    @media (max-width: 1024px) { .tiers-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 1200px) { .tiers-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 640px) { .tiers-grid { grid-template-columns: 1fr; } }
 
     .tier-box {
@@ -195,31 +195,41 @@
       <div class="nav-links">
         <a href="index.html" class="nav-link">🛡️ Governance Studio</a>
         <a href="reasoning-runtime.html" class="nav-link">🧠 Reasoning Runtime Gateway</a>
+        <a href="evidence-vault.html" class="nav-link">🗄️ Evidence Vault</a>
+        <a href="executive-dashboard.html" class="nav-link">📊 Executive Dashboard</a>
         <a href="architecture.html" class="nav-link active">🏛️ Architecture</a>
         <a href="demo-scenarios.html" class="nav-link">🎬 Demo Scenarios</a>
       </div>
       <div class="header-actions">
-        <span class="badge badge-purple">Recruiter & Architect Reference</span>
+        <span class="badge badge-purple">Principal Architect Reference</span>
         <button class="header-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Theme</button>
       </div>
     </nav>
 
-    <!-- 4-TIER COGNITIVE ARCHITECTURE -->
+    <!-- 5-TIER COGNITIVE ARCHITECTURE -->
     <div class="card">
       <div class="card-title">
-        <span>The Four-Tier Cognitive Governance Architecture</span>
-        <span class="badge badge-purple">Deterministic + AI Hybrid</span>
+        <span>The Five-Tier Cognitive Governance Architecture (Tier 0 to Tier 4)</span>
+        <span class="badge badge-purple">Deterministic + AI + Cryptographic Ledger</span>
       </div>
       <div class="card-subtitle">
-        Architectural separation of immutable safety invariants, statutory frameworks, cognitive OODA reasoning, and zero-token deterministic engines.
+        Architectural separation of immutable safety invariants, statutory frameworks, cognitive OODA reasoning, zero-token deterministic engines, and cryptographic evidence persistence.
       </div>
 
       <div class="tiers-grid">
+        <div class="tier-box" style="border-top-color: #4f46e5;">
+          <div class="tier-num">Tier 0</div>
+          <div class="tier-name">Evidence Vault</div>
+          <div class="tier-desc">
+            Cryptographic governance memory layer: Append-only SHA-256 Merkle chain, historical dataset timelines, repeat offender tracking, and tamper-evident audit dossiers.
+          </div>
+        </div>
+
         <div class="tier-box" style="border-top-color: #dc2626;">
           <div class="tier-num">Tier 1</div>
           <div class="tier-name">System Invariants</div>
           <div class="tier-desc">
-            Immutable operating principles defined in <code>AGENTS.md</code>: Invariants G-1 (Zero unmasked PII outside vaults), G-2 (Contracts cannot be broken), G-3 (Auditable compliance dossiers), G-4 (Mandatory HITL on critical breaches), G-5 (Deterministic evidence required).
+            Immutable operating principles defined in <code>AGENTS.md</code>: Invariants G-1 (Zero unmasked PII outside vaults), G-2 (Contracts cannot be broken), G-3 (Auditable compliance dossiers), G-4 (Mandatory HITL on repeat offenders), G-5 (Deterministic evidence required).
           </div>
         </div>
 

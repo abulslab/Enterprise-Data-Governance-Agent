@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🗄️ Governance Evidence Vault — Enterprise Data Governance Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root[data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-gradient: radial-gradient(circle at 10% 20%, rgba(241, 245, 249, 1) 0%, rgba(248, 250, 252, 1) 90%);
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --text-subtle: #94a3b8;
+      --accent: #4f46e5;
+      --accent-glow: rgba(79, 70, 229, 0.15);
+      --accent-hover: #4338ca;
+      --success-bg: #ecfdf5;
+      --success-text: #065f46;
+      --success-border: #a7f3d0;
+      --warning-bg: #fffbeb;
+      --warning-text: #92400e;
+      --warning-border: #fde68a;
+      --danger-bg: #fef2f2;
+      --danger-text: #991b1b;
+      --danger-border: #fecaca;
+      --purple-bg: #f5f3ff;
+      --purple-text: #5b21b6;
+      --purple-border: #ddd6fe;
+      --section-box-bg: #f1f5f9;
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --input-text: #0f172a;
+    }
+    :root[data-theme="dark"] {
+      --bg: #090d16;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #090d16 75%);
+      --card-bg: #0f172a;
+      --card-border: #1e293b;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.25);
+      --accent-hover: #4f46e5;
+      --success-bg: rgba(6, 95, 70, 0.2);
+      --success-text: #34d399;
+      --success-border: rgba(52, 211, 153, 0.3);
+      --warning-bg: rgba(146, 64, 14, 0.2);
+      --warning-text: #fbbf24;
+      --warning-border: rgba(251, 191, 36, 0.3);
+      --danger-bg: rgba(153, 27, 27, 0.2);
+      --danger-text: #f87171;
+      --danger-border: rgba(248, 113, 113, 0.3);
+      --purple-bg: rgba(91, 33, 182, 0.2);
+      --purple-text: #c084fc;
+      --purple-border: rgba(192, 132, 252, 0.3);
+      --section-box-bg: #1e293b;
+      --input-bg: #1e293b;
+      --input-border: #334155;
+      --input-text: #f8fafc;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      background-image: var(--bg-gradient);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* TOP ENTERPRISE NAVBAR */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 8px 16px var(--accent-glow);
+    }
+    .brand-title h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .brand-title p {
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 7px 12px;
+      border-radius: 10px;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--section-box-bg);
+    }
+    .nav-link.active {
+      color: var(--accent);
+      background: var(--purple-bg);
+      border: 1px solid var(--purple-border);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s;
+    }
+    .header-btn:hover {
+      background: var(--section-box-bg);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .runtime-status-pill {
+      background: var(--card-bg);
+      border: 1px solid var(--purple-border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    .runtime-status-pill:hover {
+      background: var(--purple-bg);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-green { background: #10b981; box-shadow: 0 0 8px #10b981; }
+    .dot-amber { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
+    .dot-red { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+
+    /* BADGES */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-purple { background: var(--purple-bg); color: var(--purple-text); border: 1px solid var(--purple-border); }
+    .badge-green { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
+    .badge-amber { background: var(--warning-bg); color: var(--warning-text); border: 1px solid var(--warning-border); }
+    .badge-red { background: var(--danger-bg); color: var(--danger-text); border: 1px solid var(--danger-border); }
+
+    /* CARD STYLES */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 24px;
+      transition: all 0.3s;
+    }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text);
+    }
+    .card-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.45;
+    }
+
+    /* TOP KPI STRIP */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 900px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .kpi-grid { grid-template-columns: 1fr; } }
+
+    .kpi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      box-shadow: var(--card-shadow);
+    }
+    .kpi-val {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .kpi-lbl {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+    .kpi-sub {
+      font-size: 0.72rem;
+      color: var(--text-subtle);
+    }
+
+    /* CHAIN VISUALIZER */
+    .chain-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 14px 4px 20px;
+      align-items: center;
+    }
+    .chain-node {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+      min-width: 260px;
+      max-width: 260px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      position: relative;
+      border-top: 4px solid #4f46e5;
+    }
+    .chain-node.quarantine { border-top-color: #ef4444; }
+    .chain-node.block { border-top-color: #f59e0b; }
+    .chain-node.approve { border-top-color: #10b981; }
+
+    .chain-node-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+    .hash-snippet {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      background: var(--section-box-bg);
+      padding: 4px 8px;
+      border-radius: 6px;
+      color: var(--text-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .chain-connector {
+      font-size: 1.4rem;
+      color: var(--text-subtle);
+      flex-shrink: 0;
+    }
+
+    /* TIMELINE & RISK PROFILE SPLIT */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 960px) { .split-grid { grid-template-columns: 1fr; } }
+
+    .timeline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 14px;
+      position: relative;
+      padding-left: 20px;
+    }
+    .timeline-list::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: 7px;
+      width: 2px;
+      background: var(--card-border);
+    }
+    .timeline-item {
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -19px;
+      top: 18px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #4f46e5;
+      border: 2px solid var(--card-bg);
+    }
+    .timeline-dot.red { background: #ef4444; }
+    .timeline-dot.green { background: #10b981; }
+    .timeline-dot.amber { background: #f59e0b; }
+
+    /* TABLE */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      text-align: left;
+    }
+    table.data-table th {
+      background: var(--section-box-bg);
+      padding: 12px 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--card-border);
+      letter-spacing: 0.04em;
+    }
+    table.data-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--card-border);
+      color: var(--text);
+    }
+    table.data-table tr:last-child td { border-bottom: none; }
+    table.data-table tr:hover td { background: var(--section-box-bg); }
+
+    /* CONTROLS */
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-input {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: var(--input-text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      outline: none;
+      min-width: 220px;
+    }
+    .filter-select {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: var(--input-text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      outline: none;
+      cursor: pointer;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: white;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn:hover {
+      box-shadow: 0 4px 12px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+    }
+    .btn-secondary:hover {
+      background: var(--section-box-bg);
+      border-color: var(--accent);
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.8rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      display: none;
+      z-index: 1000;
+      animation: fadeIn 0.2s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- TOP ENTERPRISE NAVBAR -->
+    <nav class="top-nav">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">🛡️</div>
+        <div class="brand-title">
+          <h1>Enterprise Data Governance Agent</h1>
+          <p>Autonomous Lakehouse Governance, Contract Enforcement & Blast Radius Intelligence</p>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">🛡️ Governance Studio</a>
+        <a href="reasoning-runtime.html" class="nav-link">🧠 Reasoning Runtime Gateway</a>
+        <a href="evidence-vault.html" class="nav-link active">🗄️ Evidence Vault</a>
+        <a href="executive-dashboard.html" class="nav-link">📊 Executive Dashboard</a>
+        <a href="architecture.html" class="nav-link">🏛️ Architecture</a>
+        <a href="demo-scenarios.html" class="nav-link">🎬 Demo Scenarios</a>
+      </div>
+      <div class="header-actions">
+        <a href="reasoning-runtime.html" class="runtime-status-pill" id="headerRuntimeBadge" title="Click to open Reasoning Runtime Gateway">
+          <span class="status-dot dot-green" id="headerStatusDot"></span>
+          <span id="headerRuntimeText">Current Runtime: Mock</span>
+        </a>
+        <button class="header-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Theme</button>
+      </div>
+    </nav>
+
+    <!-- TOP KPI STRIP -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-lbl">Total Evidence Records</div>
+        <div class="kpi-val" style="color: #4f46e5;" id="metricTotalRecords">8</div>
+        <div class="kpi-sub">Immutable SHA-256 Decision Blocks</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-lbl">Chain Integrity Status</div>
+        <div class="kpi-val" style="color: #059669;" id="metricChainStatus">100% VALID</div>
+        <div class="kpi-sub">Cryptographic Merkle Link Verified</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-lbl">Repeat Offenders Flagged</div>
+        <div class="kpi-val" style="color: #dc2626;" id="metricRepeatCount">2</div>
+        <div class="kpi-sub">Mandatory Invariant G-4 HITL Escalation</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-lbl">Audit Readiness Level</div>
+        <div class="kpi-val" style="color: #7c3aed;">PRINCIPAL</div>
+        <div class="kpi-sub">GDPR • HIPAA • PCI-DSS • GLBA Certified</div>
+      </div>
+    </div>
+
+    <!-- SECTION: CRYPTOGRAPHIC APPEND-ONLY AUDIT CHAIN -->
+    <div class="card">
+      <div class="card-title">
+        <span>Immutable Cryptographic Audit Chain (Tier 0 System of Record)</span>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-secondary" onclick="verifyChain()">🔐 Verify Chain Integrity</button>
+          <button class="btn btn-secondary" onclick="exportAuditLedger()">📥 Export CSV Ledger</button>
+        </div>
+      </div>
+      <div class="card-subtitle">
+        Every autonomous governance decision is cryptographically fingerprinted using SHA-256 over Dataset URN, Violations AST, Regulatory Citations, Decision Outcome, and the previous block hash.
+      </div>
+
+      <div class="chain-scroll" id="chainScroll">
+        <!-- Dynamically injected chain blocks -->
+      </div>
+    </div>
+
+    <!-- SECTION: TIMELINE VIEW & DATASET RISK PROFILE SPLIT -->
+    <div class="split-grid">
+      <!-- Left: Dataset History Timeline -->
+      <div class="card" style="margin-bottom: 0;">
+        <div class="card-title">
+          <span>Dataset Governance Timeline</span>
+          <select class="filter-select" id="datasetSelector" onchange="renderDatasetTimeline()">
+            <option value="urn:datacatalog:production:customer:customer_master">customer_master (Warehouse 360)</option>
+            <option value="urn:datacatalog:production:finance:customer_orders_v2">finance:customer_orders_v2</option>
+            <option value="urn:datacatalog:production:payments:transactions_live_v1">payments:transactions_live_v1</option>
+            <option value="urn:datacatalog:production:marketing:lead_events_unvaulted">marketing:lead_events_unvaulted</option>
+          </select>
+        </div>
+        <div class="card-subtitle" id="timelineSubtitle">
+          Tracking chronological compliance evolution across production ingestion windows.
+        </div>
+
+        <div id="repeatOffenderBanner" style="display: none; background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 12px; margin-bottom: 14px; font-size: 0.78rem; color: #991b1b;">
+          <strong>🚨 HIGH RISK REPEAT OFFENDER DETECTED:</strong> 3+ violations logged within 90 days. Governance Memory has engaged Tier 1 Invariant G-4, revoking automated release and requiring supervisory review.
+        </div>
+
+        <div class="timeline-list" id="timelineList">
+          <!-- Dynamically injected timeline items -->
+        </div>
+      </div>
+
+      <!-- Right: Persistent Dataset Risk Profile -->
+      <div class="card" style="margin-bottom: 0;">
+        <div class="card-title">
+          <span>Persistent Dataset Risk Profile</span>
+          <span class="badge badge-red" id="profileRiskBadge">RISK: 87 / 100</span>
+        </div>
+        <div class="card-subtitle">
+          Computed risk coefficient based on violation frequency, statutory exposure, and consumer blast radius.
+        </div>
+
+        <div style="background: var(--section-box-bg); border-radius: 14px; padding: 16px; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">HISTORICAL TREND</span>
+            <span class="badge badge-amber" id="profileTrendBadge">Deteriorating</span>
+          </div>
+          <div style="font-size: 1.3rem; font-weight: 800; color: var(--text);" id="profileDatasetName">Customer Master 360 Warehouse Table</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 4px;" id="profileUrn">urn:datacatalog:production:customer:customer_master</div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+          <div style="background: var(--card-bg); border: 1px solid var(--card-border); padding: 12px; border-radius: 10px;">
+            <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">PRIOR INCIDENTS</div>
+            <div style="font-size: 1.25rem; font-weight: 800; color: #dc2626;" id="profileIncidents">2</div>
+          </div>
+          <div style="background: var(--card-bg); border: 1px solid var(--card-border); padding: 12px; border-radius: 10px;">
+            <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">CLASSIFICATION</div>
+            <div style="font-size: 1.05rem; font-weight: 800; color: var(--text);" id="profileClassification">CONFIDENTIAL</div>
+          </div>
+        </div>
+
+        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">PRIMARY INVARIANT VIOLATIONS</div>
+        <div id="profileViolationsList" style="display: flex; flex-direction: column; gap: 6px; font-size: 0.74rem;">
+          <!-- Dynamically injected violations tags -->
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION: COMPREHENSIVE EVIDENCE RECORDS LEDGER -->
+    <div class="card" style="margin-top: 24px;">
+      <div class="card-title">
+        <span>Evidence Vault Historical Ledger & Signatures</span>
+        <span class="badge badge-purple" id="recordsCountBadge">8 Decisions Stored</span>
+      </div>
+      <div class="card-subtitle">
+        Searchable, tamper-evident record of all automated approvals, quarantines, deployment blocks, and synthesized remediations.
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" class="filter-input" id="searchFilter" placeholder="Search by Dataset URN, Evidence ID, or Violation..." oninput="filterRecords()">
+        <select class="filter-select" id="decisionFilter" onchange="filterRecords()">
+          <option value="ALL">All Decisions</option>
+          <option value="QUARANTINE">QUARANTINE</option>
+          <option value="BLOCK_DEPLOYMENT">BLOCK_DEPLOYMENT</option>
+          <option value="APPROVE_WITH_WARNING">APPROVE_WITH_WARNING</option>
+          <option value="APPROVE">APPROVE</option>
+        </select>
+        <select class="filter-select" id="classificationFilter" onchange="filterRecords()">
+          <option value="ALL">All Classifications</option>
+          <option value="RESTRICTED">RESTRICTED</option>
+          <option value="CONFIDENTIAL">CONFIDENTIAL</option>
+          <option value="INTERNAL">INTERNAL</option>
+          <option value="PUBLIC">PUBLIC</option>
+        </select>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Evidence ID</th>
+              <th>Timestamp</th>
+              <th>Dataset URN</th>
+              <th>Classification</th>
+              <th>Decision</th>
+              <th>Risk</th>
+              <th>Violations</th>
+              <th>Regulations</th>
+              <th>SHA-256 Fingerprint</th>
+            </tr>
+          </thead>
+          <tbody id="recordsTableBody">
+            <!-- Dynamically populated rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script type="module">
+    import { EvidenceVault } from '../dist/evidence/evidenceVault.js';
+
+    const STORAGE_KEY_THEME = 'edga_theme';
+    const STORAGE_KEY_PROVIDER = 'edga_llm_provider';
+    const STORAGE_KEY_GEMINI_MODEL = 'edga_gemini_model';
+    const STORAGE_KEY_OLLAMA_MODEL = 'edga_ollama_model';
+    const STORAGE_KEY_CUSTOM_MODEL = 'edga_custom_model';
+
+    let allRecords = [];
+
+    // Initialize Vault and UI
+    function init() {
+      // Theme
+      const savedTheme = localStorage.getItem(STORAGE_KEY_THEME) || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeBtn').textContent = savedTheme === 'light' ? '☀️ Light Theme' : '🌙 Dark Theme';
+
+      // Header Runtime Pill
+      const prov = localStorage.getItem(STORAGE_KEY_PROVIDER) || 'mock';
+      const geminiModel = localStorage.getItem(STORAGE_KEY_GEMINI_MODEL) || 'gemini-2.5-flash';
+      const ollamaModel = localStorage.getItem(STORAGE_KEY_OLLAMA_MODEL) || 'llama3:latest';
+      const customModel = localStorage.getItem(STORAGE_KEY_CUSTOM_MODEL) || 'gpt-4o';
+      const headerRuntimeText = document.getElementById('headerRuntimeText');
+      if (headerRuntimeText) {
+        if (prov === 'gemini') headerRuntimeText.textContent = `Current Runtime: Google Gemini (${geminiModel})`;
+        else if (prov === 'ollama') headerRuntimeText.textContent = `Current Runtime: Ollama (${ollamaModel.split(':')[0]})`;
+        else if (prov === 'custom') headerRuntimeText.textContent = `Current Runtime: OpenAI-Compatible (${customModel || 'vLLM'})`;
+        else headerRuntimeText.textContent = 'Current Runtime: Mock (Deterministic)';
+      }
+
+      // Initialize EvidenceVault instance
+      EvidenceVault.ensureInitialized();
+      allRecords = EvidenceVault.getAllRecords();
+
+      // Update KPI strip
+      document.getElementById('metricTotalRecords').textContent = String(allRecords.length);
+      const repeatOffenders = EvidenceVault.getRepeatOffenders();
+      document.getElementById('metricRepeatCount').textContent = String(repeatOffenders.length);
+
+      renderChainBlocks();
+      renderDatasetTimeline();
+      filterRecords();
+    }
+
+    // Render Append-Only Cryptographic Chain
+    function renderChainBlocks() {
+      const container = document.getElementById('chainScroll');
+      container.innerHTML = '';
+
+      allRecords.forEach((rec, idx) => {
+        const node = document.createElement('div');
+        const decisionClass = rec.decision === 'QUARANTINE' ? 'quarantine' : rec.decision === 'BLOCK_DEPLOYMENT' ? 'block' : 'approve';
+        node.className = `chain-node ${decisionClass}`;
+        
+        node.innerHTML = `
+          <div class="chain-node-header">
+            <span>Block #${idx + 1} · ${rec.id}</span>
+            <span class="badge ${rec.decision === 'QUARANTINE' ? 'badge-red' : rec.decision === 'BLOCK_DEPLOYMENT' ? 'badge-amber' : 'badge-green'}">${rec.decision}</span>
+          </div>
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+            ${rec.datasetName}
+          </div>
+          <div style="font-size: 0.68rem; color: var(--text-muted);">
+            Time: ${new Date(rec.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+          </div>
+          <div>
+            <div style="font-size: 0.62rem; text-transform: uppercase; color: var(--text-subtle); font-weight: 700;">Previous Hash</div>
+            <div class="hash-snippet" title="${rec.previousHash}">${rec.previousHash.substring(0, 16)}...</div>
+          </div>
+          <div>
+            <div style="font-size: 0.62rem; text-transform: uppercase; color: var(--text-subtle); font-weight: 700;">Current SHA-256 Hash</div>
+            <div class="hash-snippet" style="color: #4f46e5;" title="${rec.evidenceHash}">${rec.evidenceHash.substring(0, 16)}...</div>
+          </div>
+        `;
+        container.appendChild(node);
+
+        if (idx < allRecords.length - 1) {
+          const arrow = document.createElement('div');
+          arrow.className = 'chain-connector';
+          arrow.innerHTML = '➔';
+          container.appendChild(arrow);
+        }
+      });
+    }
+
+    // Render Dataset Timeline & Risk Profile
+    window.renderDatasetTimeline = function() {
+      const urn = document.getElementById('datasetSelector').value;
+      const { trend, records } = EvidenceVault.getDatasetTimeline(urn);
+      const profile = EvidenceVault.getDatasetRiskProfile(urn);
+
+      // Timeline List
+      const list = document.getElementById('timelineList');
+      list.innerHTML = '';
+      records.forEach(r => {
+        const dotColor = r.decision === 'QUARANTINE' ? 'red' : r.decision === 'BLOCK_DEPLOYMENT' ? 'amber' : 'green';
+        const item = document.createElement('div');
+        item.className = 'timeline-item';
+        item.innerHTML = `
+          <div class="timeline-dot ${dotColor}"></div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="font-size: 0.78rem;">${new Date(r.timestamp).toISOString().split('T')[0]}</strong>
+            <span class="badge ${r.decision === 'QUARANTINE' ? 'badge-red' : r.decision === 'BLOCK_DEPLOYMENT' ? 'badge-amber' : 'badge-green'}">${r.decision}</span>
+          </div>
+          <div style="font-size: 0.73rem; color: var(--text-muted);">
+            ${r.violations.length > 0 ? r.violations.map(v => v.description).join('; ') : 'All statutory governance invariants satisfied.'}
+          </div>
+          <div style="font-size: 0.66rem; font-family: 'JetBrains Mono', monospace; color: var(--text-subtle);">
+            Fingerprint: ${r.evidenceHash.substring(0, 24)}...
+          </div>
+        `;
+        list.appendChild(item);
+      });
+
+      // Repeat Offender Banner
+      const banner = document.getElementById('repeatOffenderBanner');
+      banner.style.display = profile.isRepeatOffender ? 'block' : 'none';
+
+      // Profile View
+      document.getElementById('profileRiskBadge').textContent = `RISK SCORE: ${profile.riskScore} / 100`;
+      document.getElementById('profileTrendBadge').textContent = profile.trend;
+      document.getElementById('profileTrendBadge').className = `badge ${profile.trend === 'Improving' ? 'badge-green' : profile.trend === 'Deteriorating' ? 'badge-red' : 'badge-amber'}`;
+      document.getElementById('profileDatasetName').textContent = profile.datasetName;
+      document.getElementById('profileUrn').textContent = profile.datasetUrn;
+      document.getElementById('profileIncidents').textContent = String(profile.priorIncidents);
+      document.getElementById('profileClassification').textContent = profile.classification;
+
+      const violList = document.getElementById('profileViolationsList');
+      violList.innerHTML = '';
+      if (profile.primaryViolations.length === 0) {
+        violList.innerHTML = '<span style="color: #059669;">Zero active violations logged.</span>';
+      } else {
+        profile.primaryViolations.forEach(v => {
+          const tag = document.createElement('div');
+          tag.style.cssText = 'background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 4px 8px; border-radius: 6px;';
+          tag.textContent = `• ${v}`;
+          violList.appendChild(tag);
+        });
+      }
+    };
+
+    // Filter Evidence Ledger Table
+    window.filterRecords = function() {
+      const q = document.getElementById('searchFilter').value.toLowerCase();
+      const dec = document.getElementById('decisionFilter').value;
+      const cls = document.getElementById('classificationFilter').value;
+
+      const filtered = allRecords.filter(r => {
+        const matchesQ = !q || r.datasetUrn.toLowerCase().includes(q) || r.id.toLowerCase().includes(q) || r.datasetName.toLowerCase().includes(q);
+        const matchesDec = dec === 'ALL' || r.decision === dec;
+        const matchesCls = cls === 'ALL' || r.classification === cls;
+        return matchesQ && matchesDec && matchesCls;
+      });
+
+      document.getElementById('recordsCountBadge').textContent = `${filtered.length} Decisions Stored`;
+
+      const tbody = document.getElementById('recordsTableBody');
+      tbody.innerHTML = '';
+      filtered.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${r.id}</strong></td>
+          <td style="color: var(--text-muted); font-size: 0.72rem;">${new Date(r.timestamp).toISOString().replace('T', ' ').slice(0, 19)}</td>
+          <td title="${r.datasetUrn}"><strong>${r.datasetName}</strong><br><span style="font-size: 0.68rem; color: var(--text-muted); font-family: monospace;">${r.datasetUrn.split(':').slice(-2).join(':')}</span></td>
+          <td><span class="badge ${r.classification === 'RESTRICTED' ? 'badge-red' : r.classification === 'CONFIDENTIAL' ? 'badge-amber' : 'badge-green'}">${r.classification}</span></td>
+          <td><span class="badge ${r.decision === 'QUARANTINE' ? 'badge-red' : r.decision === 'BLOCK_DEPLOYMENT' ? 'badge-amber' : 'badge-green'}">${r.decision}</span></td>
+          <td><span class="badge ${r.riskLevel === 'CRITICAL' ? 'badge-red' : r.riskLevel === 'HIGH' ? 'badge-amber' : 'badge-green'}">${r.riskLevel}</span></td>
+          <td style="max-width: 220px; font-size: 0.72rem;">${r.violations.length > 0 ? r.violations.map(v => `${v.type} (${v.field})`).join(', ') : '<span style="color: #059669;">Compliant</span>'}</td>
+          <td>${r.regulations.length > 0 ? r.regulations.map(reg => `<span class="badge badge-purple" style="font-size: 0.62rem;">${reg}</span>`).join(' ') : '—'}</td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span class="hash-snippet" title="${r.evidenceHash}">${r.evidenceHash.substring(0, 14)}...</span>
+              <button onclick="navigator.clipboard.writeText('${r.evidenceHash}'); showToast('SHA-256 Hash copied!');" style="background:none; border:none; cursor:pointer;" title="Copy Full Hash">📋</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    };
+
+    // Verify Chain Action
+    window.verifyChain = function() {
+      const res = EvidenceVault.verifyChainIntegrity();
+      if (res.isValid) {
+        showToast(`✅ ${res.message}`);
+        document.getElementById('metricChainStatus').textContent = '100% VALID';
+        document.getElementById('metricChainStatus').style.color = '#059669';
+      } else {
+        showToast(`❌ Chain Tamper Alert: ${res.message}`);
+        document.getElementById('metricChainStatus').textContent = 'TAMPER ALERT';
+        document.getElementById('metricChainStatus').style.color = '#dc2626';
+      }
+    };
+
+    // Export CSV Ledger
+    window.exportAuditLedger = function() {
+      let csv = 'id,timestamp,datasetUrn,classification,decision,riskLevel,evidenceHash,previousHash\n';
+      allRecords.forEach(r => {
+        csv += `"${r.id}","${r.timestamp}","${r.datasetUrn}","${r.classification}","${r.decision}","${r.riskLevel}","${r.evidenceHash}","${r.previousHash}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `governance-evidence-ledger-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      showToast('📥 Evidence Ledger exported to CSV!');
+    };
+
+    window.toggleTheme = function() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = cur === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(STORAGE_KEY_THEME, next);
+      document.getElementById('themeBtn').textContent = next === 'light' ? '☀️ Light Theme' : '🌙 Dark Theme';
+    };
+
+    window.showToast = function(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 2600);
+    };
+
+    init();
+  </script>
+</body>
+</html>

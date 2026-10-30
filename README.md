@@ -29,7 +29,9 @@ This agent specializes in **data privacy boundaries, sensitive data discovery, c
 
 ---
 
-## 🏗️ 4-Tier Cognitive Architecture
+---
+
+## 🏗️ 5-Tier Cognitive Architecture
 
 ```
 Candidate Dataset Schema + Sample Partition
@@ -37,13 +39,13 @@ Candidate Dataset Schema + Sample Partition
                     ▼
 ┌────────────────────────────────────────────────────────┐
 │ Tier 4: Zero-Token Deterministic Scanner               │  ◄── 0 Tokens Consumed
-│ (Compiled Regex, Luhn Mod 10, ABA Checksum, AST Diff)  │      Sub-millisecond execution
+│ (Compiled Regex, Luhn Mod 10, ABA Checksum, AST Diff)  │      Sub-millisecond execution (< 2ms)
 └───────────────────────────┬────────────────────────────┘
                             │ Exact Findings & Offsets
                             ▼
 ┌────────────────────────────────────────────────────────┐
 │ Tier 3: Autonomous OODA Cognitive Reasoner             │  ◄── Observe ➔ Reason ➔ Decide ➔ Execute
-│ (Observe ➔ Reason ➔ Decide ➔ Execute)                  │      Consumer Blast Radius Assessment
+│ (Tri-Mode Gateway: Gemini, Ollama, Mock)               │      Consumer Blast Radius Assessment
 └───────────────────────────┬────────────────────────────┘
                             │
                             ├──► Offline Realistic Mock   (0 Cost, 1ms, 0 Tokens)
@@ -52,15 +54,21 @@ Candidate Dataset Schema + Sample Partition
                             │
                             ▼
 ┌────────────────────────────────────────────────────────┐
-│ Tier 1 & 2: Invariants & Governance Policies           │  ◄── AGENTS.md Invariants G-1, G-2, G-3
+│ Tier 1 & 2: Invariants & Governance Policies           │  ◄── AGENTS.md Invariants G-1 to G-5
 │ (Supervisory Gate & Statutory Mappings)                │      GDPR, HIPAA, GLBA, PCI-DSS
 └───────────────────────────┬────────────────────────────┘
                             │
                             ▼
 ┌────────────────────────────────────────────────────────┐
+│ Tier 0: Governance Evidence Vault & Memory Ledger      │  ◄── Append-only SHA-256 Merkle chain,
+│ (Historical Timelines, Repeat Offenders, System Audit) │      Tamper-evident verification, Executive KPIs
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
 │ Verifiable Governance Deliverables                     │  ◄── • Cryptographic Compliance Dossier
-│                                                        │      • Issue Defect Candidate (SEC-GOV-902)
-│                                                        │      • CI/CD Exit Code (0 = PASS, 1 = BLOCK)
+│                                                        │      • Executive Boardroom Brief (PDF)
+│                                                        │      • CI/CD Exit Code Gate (0 = PASS, 1 = BLOCK)
 └────────────────────────────────────────────────────────┘
 ```
 

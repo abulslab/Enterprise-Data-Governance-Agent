@@ -20,6 +20,16 @@ export { GovernanceMemory } from './memory/governanceMemory.js';
 export { RemediationSynthesizer } from './autofix/remediationSynthesizer.js';
 export { PolicyCompiler } from './compiler/policyCompiler.js';
 export { EscalationManager } from './hitl/escalationManager.js';
+export { EvidenceVault } from './evidence/evidenceVault.js';
+export type { 
+  GovernanceEvidenceRecord, 
+  DatasetRiskProfile, 
+  ChainVerificationResult, 
+  ExecutiveKpiSummary, 
+  RegulatoryExposureSummary,
+  GovernanceRiskLevel,
+  TrendDirection
+} from './evidence/evidenceVault.js';
 export { createServer } from './server.js';
 
 export type * from './types.js';

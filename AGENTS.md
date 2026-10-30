@@ -22,12 +22,17 @@ Your domain is **compliance, privacy boundaries, data classification, data contr
 
 ---
 
-## 2. The 4-Tier Cognitive Architecture
+## 2. The 5-Tier Cognitive Architecture
 
-Every governance task executed by the agent must conform strictly to the **4-Tier Cognitive Hierarchy**:
+Every governance task executed by the agent must conform strictly to the **5-Tier Cognitive Hierarchy**:
 
 ```
 ┌────────────────────────────────────────────────────────┐
+│ Tier 0: Governance Evidence Vault (Memory & Ledger)    │  ◄── SHA-256 append-only Merkle chain,
+│ (Persistent audit trail, timelines, repeat offenders)  │      historical memory & executive telemetry
+└──────────────────────────┬─────────────────────────────┘
+                           │
+┌──────────────────────────▼─────────────────────────────┐
 │ Tier 1: System Invariants (AGENTS.md)                  │  ◄── Mandatory rules & safety gates
 └──────────────────────────┬─────────────────────────────┘
                            │
@@ -47,6 +52,7 @@ Every governance task executed by the agent must conform strictly to the **4-Tie
 
 | Tier | Component | Trigger | Determinism | LLM Tokens Consumed |
 | :---: | :--- | :--- | :---: | :---: |
+| **Tier 0** | **Evidence Vault** | Audit outcome persistence & memory | 100% Cryptographic SHA-256 | **0 Tokens** |
 | **Tier 1** | **System Invariants** | Every session & execution | 100% Deterministic | **0 Tokens** |
 | **Tier 2** | **Governance Policies** | Matched on domain & classification | Rule-based Mapping | **0 Tokens** |
 | **Tier 3** | **OODA Agent** | Synthesis, reasoning & blast radius | Cognitive Reasoning | **Dynamic (Gateway)** |
