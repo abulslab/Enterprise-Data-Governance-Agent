@@ -31,7 +31,7 @@ const newRecord = EvidenceVault.recordDecision({
   blastRadius: 0
 });
 
-assert.ok(newRecord.id.startsWith('EV-'));
+assert.ok(newRecord.id.startsWith('INC-2026') || newRecord.id.startsWith('GOV-2026') || newRecord.id.startsWith('CERT-2026'));
 assert.strictEqual(newRecord.decision, 'QUARANTINE');
 assert.strictEqual(newRecord.riskLevel, 'CRITICAL');
 assert.strictEqual(newRecord.hitlRequired, true);

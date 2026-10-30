@@ -153,6 +153,35 @@
     }
     .badge-purple { background: var(--purple-bg); color: var(--purple-text); border: 1px solid var(--purple-border); }
 
+    .runtime-status-pill {
+      background: var(--card-bg);
+      border: 1px solid var(--purple-border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    .runtime-status-pill:hover {
+      background: var(--purple-bg);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-green { background: #10b981; box-shadow: 0 0 8px #10b981; }
+    .badge-green { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
+
     .tiers-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -189,7 +218,7 @@
         <div class="brand-icon">🛡️</div>
         <div class="brand-title">
           <h1>Enterprise Data Governance Agent</h1>
-          <p>Autonomous Lakehouse Governance, Contract Enforcement & Blast Radius Intelligence</p>
+          <p>Autonomous Lakehouse Governance, Contract Enforcement, Compliance Intelligence, Blast Radius Analysis</p>
         </div>
       </a>
       <div class="nav-links">
@@ -201,7 +230,13 @@
         <a href="demo-scenarios.html" class="nav-link">🎬 Demo Scenarios</a>
       </div>
       <div class="header-actions">
-        <span class="badge badge-purple">Principal Architect Reference</span>
+        <span class="badge badge-purple">5-TIER GOVERNANCE</span>
+        <a href="reasoning-runtime.html" class="runtime-status-pill" id="headerRuntimeBadge" title="Click to open Reasoning Runtime Gateway">
+          <span class="status-dot dot-green" id="headerStatusDot"></span>
+          <span id="headerRuntimeText">Current Runtime: Mock</span>
+        </a>
+        <span class="badge badge-green" title="Platform Health: Excellent (94/100)">Platform Health: Excellent</span>
+        <span class="badge badge-purple" title="Compliance Success Rate: 99.2%">Compliance: 99.2%</span>
         <button class="header-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Theme</button>
       </div>
     </nav>

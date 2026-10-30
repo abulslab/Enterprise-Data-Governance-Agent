@@ -174,8 +174,13 @@ export class EvidenceVault {
       previousHash
     );
 
+    const prefix = input.decision === 'QUARANTINE' || input.decision === 'BLOCK_DEPLOYMENT'
+      ? 'INC-2026'
+      : (input.decision === 'APPROVE' ? 'CERT-2026' : 'GOV-2026');
+    const id = `${prefix}-${Math.floor(100000 + Math.random() * 900000)}`;
+
     const record: GovernanceEvidenceRecord = {
-      id: `EV-${Math.random().toString(36).substring(2, 9).toUpperCase()}-${Date.now().toString().slice(-4)}`,
+      id,
       timestamp,
       datasetUrn: input.datasetUrn,
       datasetName: input.datasetName || input.datasetUrn.split(':').pop() || 'dataset_asset',
@@ -596,6 +601,17 @@ export class EvidenceVault {
       }
     ];
 
+    const seedIds = [
+      'CERT-2026-000014',
+      'INC-2026-004981',
+      'GOV-2026-000341',
+      'CERT-2026-000028',
+      'INC-2026-005012',
+      'INC-2026-005019',
+      'INC-2026-005044',
+      'CERT-2026-000095'
+    ];
+
     let currentPrevHash = GENESIS_HASH;
     for (let i = 0; i < historicalSeeds.length; i++) {
       const s = historicalSeeds[i];
@@ -609,7 +625,7 @@ export class EvidenceVault {
       );
 
       const record: GovernanceEvidenceRecord = {
-        id: `EV-${(1001 + i).toString()}`,
+        id: seedIds[i] || `GOV-2026-${(1001 + i).toString()}`,
         timestamp: s.timestamp,
         datasetUrn: s.datasetUrn,
         datasetName: s.datasetName,

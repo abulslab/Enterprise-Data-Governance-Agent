@@ -488,9 +488,27 @@
     }
 
     @media print {
-      body { background: #ffffff !important; color: #000000 !important; padding: 0 !important; }
-      .top-nav, .header-actions, .btn, .time-filter-strip { display: none !important; }
-      .card, .executive-header-card { box-shadow: none !important; border: 1px solid #ccc !important; }
+      body { background: #ffffff !important; color: #0f172a !important; padding: 0 !important; }
+      .top-nav, .header-actions, .btn, .time-filter-strip, .no-print { display: none !important; }
+      .card, .executive-header-card { display: none !important; }
+      .modal-overlay {
+        position: static !important;
+        display: block !important;
+        background: none !important;
+        backdrop-filter: none !important;
+        width: 100% !important;
+        height: auto !important;
+        padding: 0 !important;
+      }
+      .modal-content {
+        max-width: 100% !important;
+        width: 100% !important;
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: none !important;
+        padding: 24px !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+      }
     }
   </style>
 </head>
@@ -502,7 +520,7 @@
         <div class="brand-icon">🛡️</div>
         <div class="brand-title">
           <h1>Enterprise Data Governance Agent</h1>
-          <p>Autonomous Lakehouse Governance, Contract Enforcement & Blast Radius Intelligence</p>
+          <p>Autonomous Lakehouse Governance, Contract Enforcement, Compliance Intelligence, Blast Radius Analysis</p>
         </div>
       </a>
       <div class="nav-links">
@@ -514,6 +532,13 @@
         <a href="demo-scenarios.html" class="nav-link">🎬 Demo Scenarios</a>
       </div>
       <div class="header-actions">
+        <span class="badge badge-purple">5-TIER GOVERNANCE</span>
+        <a href="reasoning-runtime.html" class="runtime-status-pill" id="headerRuntimeBadge" title="Click to open Reasoning Runtime Gateway">
+          <span class="status-dot dot-green" id="headerStatusDot"></span>
+          <span id="headerRuntimeText">Current Runtime: Mock</span>
+        </a>
+        <span class="badge badge-green" title="Platform Health: Excellent (94/100)">Platform Health: Excellent</span>
+        <span class="badge badge-purple" title="Compliance Success Rate: 99.2%">Compliance: 99.2%</span>
         <button class="header-btn" onclick="openExecutiveReport()">📄 Board-Ready Brief</button>
         <button class="header-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Theme</button>
       </div>
@@ -851,48 +876,153 @@
 
   <!-- BOARD-READY EXECUTIVE BRIEF MODAL -->
   <div class="modal-overlay" id="execModal">
-    <div class="modal-content">
+    <div class="modal-content" id="printableBrief">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--accent); padding-bottom: 16px; margin-bottom: 20px;">
         <div>
-          <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.08em; color: var(--accent);">BOARDROOM EXECUTIVE BRIEF</div>
-          <h2 style="font-size: 1.4rem; font-weight: 800;">Enterprise Data Governance Executive Report</h2>
-          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Audited and certified by Autonomous Agentic Governance Platform</p>
+          <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.08em; color: var(--accent);">BOARDROOM EXECUTIVE BRIEF • SYSTEM OF RECORD</div>
+          <h2 style="font-size: 1.4rem; font-weight: 800; margin-top: 2px;">Enterprise Data Governance Executive Report</h2>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Certified by Autonomous Digital Governance Officer • Tier 0 Evidence Vault Record</p>
         </div>
-        <button onclick="closeExecutiveReport()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted);">✕</button>
+        <button onclick="closeExecutiveReport()" class="no-print" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted);">✕</button>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; background: var(--section-box-bg); padding: 14px; border-radius: 12px;">
+      <!-- AUDIT CERTIFICATE STRIP -->
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; background: var(--section-box-bg); padding: 14px; border-radius: 12px; border: 1px solid var(--card-border);">
         <div>
-          <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">Generated Timestamp</div>
-          <div style="font-size: 0.8rem; font-weight: 700;" id="reportTimestamp">2026-10-30T18:00:00Z</div>
+          <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Certificate ID</div>
+          <div style="font-size: 0.8rem; font-weight: 800; font-family: monospace; color: var(--accent);">CERT-2026-000014</div>
         </div>
         <div>
-          <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">Governance Health Score</div>
+          <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Generated Timestamp</div>
+          <div style="font-size: 0.75rem; font-weight: 700;" id="reportTimestamp">2026-10-30T18:00:00Z</div>
+        </div>
+        <div>
+          <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Governance Health</div>
           <div style="font-size: 0.8rem; font-weight: 800; color: #059669;">94 / 100 (EXCELLENT)</div>
         </div>
         <div>
-          <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">Cryptographic SHA-256 Sign</div>
-          <div style="font-size: 0.7rem; font-family: monospace; color: #4f46e5;">d8a39b0f7c2e...</div>
+          <div style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Cryptographic SHA-256</div>
+          <div style="font-size: 0.68rem; font-family: monospace; color: #4f46e5; word-break: break-all;" title="d8a39b0f7c2e46b9a8123cf8731e405e3479b19d45e687b32876f23340b1ca82">d8a39b0f7c2e...ca82</div>
         </div>
       </div>
 
+      <!-- 1. EXECUTIVE SUMMARY -->
       <div style="margin-bottom: 18px;">
-        <h4 style="font-size: 0.88rem; font-weight: 800; margin-bottom: 6px;">1. Executive Summary</h4>
-        <p style="font-size: 0.78rem; color: var(--text); line-height: 1.5;">
-          The Autonomous Enterprise Data Governance Agent has governed 2,184 lakehouse, warehouse, and streaming datasets, successfully maintaining a 99.2% statutory compliance rate. During the current window, the 4-tier cognitive engine prevented 143 direct PII breaches and blocked 37 breaking contract schema mutations, avoiding an estimated $3.42M in potential regulatory fines under GDPR Article 32, HIPAA Safe Harbor, and PCI-DSS Requirement 3.4.
+        <h4 style="font-size: 0.88rem; font-weight: 800; margin-bottom: 6px; color: var(--text); border-bottom: 1px solid var(--card-border); padding-bottom: 4px;">1. Executive Summary</h4>
+        <p style="font-size: 0.78rem; color: var(--text); line-height: 1.55;">
+          The Autonomous Enterprise Data Governance Agent has governed <strong>2,184 lakehouse, warehouse, and streaming datasets</strong>, successfully sustaining a <strong>99.2% statutory compliance rate</strong>. Across the reporting period, the five-tier cognitive engine prevented <strong>143 direct PII breaches</strong> and blocked <strong>37 breaking contract schema mutations</strong> before ingestion, entirely safeguarding downstream ML feature stores, reporting pipelines, and customer-facing APIs.
         </p>
       </div>
 
+      <!-- 2. GOVERNANCE HEALTH SCORE & STATUTORY POSTURE -->
       <div style="margin-bottom: 18px;">
-        <h4 style="font-size: 0.88rem; font-weight: 800; margin-bottom: 6px;">2. Strategic Compliance Recommendations</h4>
-        <ul style="font-size: 0.78rem; color: var(--text); padding-left: 20px; line-height: 1.5;">
-          <li><strong>Mandate Ingestion Tokenization:</strong> Enforce automated dbt column masking on customer_master to remediate repeat offender status.</li>
-          <li><strong>CI/CD Gate Expansion:</strong> Mandate pre-merge exit code gating across all 14 growth analytics repositories.</li>
+        <h4 style="font-size: 0.88rem; font-weight: 800; margin-bottom: 6px; color: var(--text); border-bottom: 1px solid var(--card-border); padding-bottom: 4px;">2. Governance Health Score & Invariant Posture</h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.78rem;">
+          <div style="background: var(--section-box-bg); padding: 12px; border-radius: 8px;">
+            <div style="font-weight: 700; color: #059669; margin-bottom: 4px;">Score: 94/100 (State: Excellent)</div>
+            <div style="color: var(--text-muted); line-height: 1.4;">Zero critical regulatory lapses in production. Mean policy evaluation latency: <strong>1.4ms</strong> via Tier 4 zero-token deterministic scanner.</div>
+          </div>
+          <div style="background: var(--section-box-bg); padding: 12px; border-radius: 8px;">
+            <div style="font-weight: 700; color: var(--accent); margin-bottom: 4px;">Invariants Enforced (G-1 through G-5)</div>
+            <div style="color: var(--text-muted); line-height: 1.4;">100% invariant compliance. G-1 (Zero unmasked PII) and G-2 (Data contract immutability) strictly enforced at CI/CD merge boundaries.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. RISK OVERVIEW & REGULATORY EXPOSURE -->
+      <div style="margin-bottom: 18px;">
+        <h4 style="font-size: 0.88rem; font-weight: 800; margin-bottom: 6px; color: var(--text); border-bottom: 1px solid var(--card-border); padding-bottom: 4px;">3. Risk Overview & Regulatory Exposure</h4>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; font-size: 0.75rem; text-align: center;">
+          <div style="background: var(--section-box-bg); padding: 10px; border-radius: 8px;">
+            <div style="font-weight: 800; color: #4f46e5;">GDPR (Art 32)</div>
+            <div style="font-size: 1rem; font-weight: 800; margin: 4px 0;">42% Exposure</div>
+            <div style="color: var(--text-muted); font-size: 0.68rem;">61 Prevented Violations</div>
+          </div>
+          <div style="background: var(--section-box-bg); padding: 10px; border-radius: 8px;">
+            <div style="font-weight: 800; color: #059669;">HIPAA (164.514)</div>
+            <div style="font-size: 1rem; font-weight: 800; margin: 4px 0;">28% Exposure</div>
+            <div style="color: var(--text-muted); font-size: 0.68rem;">40 Prevented Violations</div>
+          </div>
+          <div style="background: var(--section-box-bg); padding: 10px; border-radius: 8px;">
+            <div style="font-weight: 800; color: #d97706;">PCI-DSS (Req 3.4)</div>
+            <div style="font-size: 1rem; font-weight: 800; margin: 4px 0;">18% Exposure</div>
+            <div style="color: var(--text-muted); font-size: 0.68rem;">26 Prevented Violations</div>
+          </div>
+          <div style="background: var(--section-box-bg); padding: 10px; border-radius: 8px;">
+            <div style="font-weight: 800; color: #7c3aed;">GLBA (Safeguards)</div>
+            <div style="font-size: 1rem; font-weight: 800; margin: 4px 0;">12% Exposure</div>
+            <div style="color: var(--text-muted); font-size: 0.68rem;">16 Prevented Violations</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. REPEAT OFFENDERS & INCIDENTS -->
+      <div style="margin-bottom: 18px;">
+        <h4 style="font-size: 0.88rem; font-weight: 800; margin-bottom: 6px; color: var(--text); border-bottom: 1px solid var(--card-border); padding-bottom: 4px;">4. High-Risk Datasets & Repeat Offenders</h4>
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.75rem; text-align: left;">
+          <thead>
+            <tr style="background: var(--section-box-bg); color: var(--text-muted);">
+              <th style="padding: 6px 10px;">Dataset URN</th>
+              <th style="padding: 6px 10px;">Risk Score</th>
+              <th style="padding: 6px 10px;">Trend</th>
+              <th style="padding: 6px 10px;">Violations</th>
+              <th style="padding: 6px 10px;">Enforcement Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--card-border);">
+              <td style="padding: 6px 10px;"><strong>customer_master</strong></td>
+              <td style="padding: 6px 10px; color: #dc2626; font-weight: 700;">87 (Critical)</td>
+              <td style="padding: 6px 10px;"><span style="color: #dc2626; font-weight: 700;">DETERIORATING</span></td>
+              <td style="padding: 6px 10px;">6 Repeat Offenses</td>
+              <td style="padding: 6px 10px;"><span class="badge badge-red">QUARANTINE + HITL</span></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--card-border);">
+              <td style="padding: 6px 10px;"><strong>lead_events</strong></td>
+              <td style="padding: 6px 10px; color: #d97706; font-weight: 700;">64 (High)</td>
+              <td style="padding: 6px 10px;"><span style="color: #d97706; font-weight: 700;">WATCHLIST</span></td>
+              <td style="padding: 6px 10px;">3 Offenses</td>
+              <td style="padding: 6px 10px;"><span class="badge badge-amber">ESCALATED JIRA</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 5. FINANCIAL IMPACT & AVOIDED FINES -->
+      <div style="margin-bottom: 18px;">
+        <h4 style="font-size: 0.88rem; font-weight: 800; margin-bottom: 6px; color: var(--text); border-bottom: 1px solid var(--card-border); padding-bottom: 4px;">5. Financial Risk Avoidance & Cost Efficiency</h4>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 0.75rem;">
+          <div style="background: var(--section-box-bg); padding: 10px; border-radius: 8px;">
+            <div style="color: var(--text-muted); font-size: 0.68rem;">Statutory Exposure Avoided</div>
+            <div style="font-size: 1.1rem; font-weight: 800; color: #059669; margin-top: 2px;">$3.42M</div>
+            <div style="color: var(--text-muted); font-size: 0.65rem;">Max statutory risk under GDPR & PCI-DSS</div>
+          </div>
+          <div style="background: var(--section-box-bg); padding: 10px; border-radius: 8px;">
+            <div style="color: var(--text-muted); font-size: 0.68rem;">LLM Token Cost Avoided</div>
+            <div style="font-size: 1.1rem; font-weight: 800; color: #4f46e5; margin-top: 2px;">$47,850</div>
+            <div style="color: var(--text-muted); font-size: 0.65rem;">93.4% filtered via zero-token Tier 4 AST</div>
+          </div>
+          <div style="background: var(--section-box-bg); padding: 10px; border-radius: 8px;">
+            <div style="color: var(--text-muted); font-size: 0.68rem;">Outage & Breakage Avoided</div>
+            <div style="font-size: 1.1rem; font-weight: 800; color: #7c3aed; margin-top: 2px;">$1.20M</div>
+            <div style="color: var(--text-muted); font-size: 0.65rem;">37 breaking contract mutations blocked</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. RECOMMENDATIONS -->
+      <div style="margin-bottom: 18px;">
+        <h4 style="font-size: 0.88rem; font-weight: 800; margin-bottom: 6px; color: var(--text); border-bottom: 1px solid var(--card-border); padding-bottom: 4px;">6. Strategic Governance Recommendations</h4>
+        <ul style="font-size: 0.78rem; color: var(--text); padding-left: 20px; line-height: 1.55;">
+          <li><strong>Mandate Ingestion Tokenization:</strong> Enforce automated dbt/PySpark column hashing on <code>customer_master</code> to remediate repeat offender risk.</li>
+          <li><strong>CI/CD Gate Expansion:</strong> Mandate pre-merge exit code gating across all 14 growth analytics and marketing repos.</li>
+          <li><strong>HITL Incident Dispatch:</strong> Activate Invariant G-4 automated ServiceNow dispatch for datasets with 2+ unmasked PII violations.</li>
           <li><strong>Edge Scanning Offload:</strong> Maintain Tier 4 deterministic scanner to sustain 93.4% LLM token cost reduction.</li>
         </ul>
       </div>
 
-      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
+      <!-- ACTION BUTTONS -->
+      <div class="no-print" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; border-top: 1px solid var(--card-border); padding-top: 16px;">
         <button class="header-btn" onclick="closeExecutiveReport()">Close</button>
         <button class="btn" style="background: #4f46e5; color: white;" onclick="window.print()">🖨️ Print / Save to PDF</button>
       </div>
