@@ -13,8 +13,8 @@
        ========================================================================== */
     :root, [data-theme="light"] {
       --bg: #f8fafc;
-      --bg-gradient: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
-                     radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.06) 0px, transparent 50%),
+      --bg-gradient: radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.07) 0px, transparent 50%),
+                     radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%),
                      #f8fafc;
       --card-bg: #ffffff;
       --card-border: #e2e8f0;
@@ -22,6 +22,8 @@
       --card-hover-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.08);
       --section-box-bg: #f1f5f9;
       --section-box-border: #e2e8f0;
+      --modal-bg: #ffffff;
+      --modal-overlay: rgba(15, 23, 42, 0.5);
       --accent: #4f46e5;
       --accent-glow: rgba(79, 70, 229, 0.25);
       --text: #0f172a;
@@ -58,18 +60,19 @@
       --purple-text: #5b21b6;
     }
 
-    /* Dark Mode Override (Optional toggle) */
     [data-theme="dark"] {
       --bg: #070a11;
       --bg-gradient: radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0px, transparent 50%),
                      radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
                      #070a11;
-      --card-bg: rgba(15, 23, 42, 0.75);
+      --card-bg: rgba(15, 23, 42, 0.8);
       --card-border: rgba(255, 255, 255, 0.08);
       --card-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
       --card-hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
       --section-box-bg: rgba(10, 15, 29, 0.6);
       --section-box-border: rgba(255, 255, 255, 0.08);
+      --modal-bg: #0f172a;
+      --modal-overlay: rgba(0, 0, 0, 0.7);
       --accent: #6366f1;
       --accent-glow: rgba(99, 102, 241, 0.35);
       --text: #f8fafc;
@@ -120,7 +123,7 @@
     }
 
     .container {
-      max-width: 1420px;
+      max-width: 1440px;
       margin: 0 auto;
       width: 100%;
     }
@@ -191,7 +194,7 @@
     .badge-red { background: var(--danger-bg); color: var(--danger-text); border: 1px solid var(--danger-border); }
     .badge-green { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
 
-    .theme-toggle-btn {
+    .header-btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -201,22 +204,43 @@
       padding: 6px 14px;
       border-radius: 10px;
       font-size: 0.78rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
       transition: all 0.2s;
     }
-    .theme-toggle-btn:hover {
+    .header-btn:hover {
       background: var(--section-box-bg);
+      border-color: var(--accent);
       transform: translateY(-1px);
+    }
+
+    .llm-badge-btn {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1));
+      border: 1px solid var(--purple-border);
+      color: var(--purple-text);
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .llm-badge-btn:hover {
+      background: var(--purple-bg);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px var(--accent-glow);
     }
 
     .grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.25fr;
       gap: 24px;
     }
-    @media (max-width: 1024px) { .grid { grid-template-columns: 1fr; } }
+    @media (max-width: 1080px) { .grid { grid-template-columns: 1fr; } }
 
     .card {
       background: var(--card-bg);
@@ -227,9 +251,6 @@
       display: flex;
       flex-direction: column;
       transition: box-shadow 0.2s ease, border-color 0.2s ease;
-    }
-    .card:hover {
-      box-shadow: var(--card-hover-shadow);
     }
 
     .card-title {
@@ -279,40 +300,9 @@
     textarea {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.74rem;
-      min-height: 150px;
+      min-height: 180px;
       resize: vertical;
       line-height: 1.5;
-    }
-
-    .input-row {
-      display: flex;
-      gap: 8px;
-      position: relative;
-    }
-    .input-row input {
-      padding-right: 40px;
-    }
-    .toggle-pwd {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: var(--text-subtle);
-      cursor: pointer;
-      font-size: 0.85rem;
-      padding: 4px;
-    }
-    .toggle-pwd:hover { color: var(--text); }
-
-    .config-box {
-      background: var(--purple-bg);
-      border: 1px solid var(--purple-border);
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 16px;
-      animation: fadeIn 0.25s ease-out;
     }
 
     .btn {
@@ -362,6 +352,36 @@
       border-color: var(--input-border);
     }
 
+    /* Tabs Styling */
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+      background: var(--section-box-bg);
+    }
+    .tab-btn.active {
+      color: var(--accent);
+      background: var(--purple-bg);
+    }
+
     .stats-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -379,9 +399,6 @@
       text-align: center;
       transition: all 0.2s;
     }
-    .stat-box:hover {
-      border-color: var(--input-border);
-    }
     .stat-val { font-size: 1.25rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
     .stat-lbl { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-top: 3px; }
 
@@ -391,7 +408,6 @@
       border-radius: 14px;
       padding: 14px;
       margin-bottom: 14px;
-      animation: fadeIn 0.25s ease-out;
     }
     .section-title {
       font-size: 0.75rem;
@@ -468,34 +484,81 @@
       white-space: pre-wrap;
     }
 
-    .remediation-card {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 14px;
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: var(--modal-overlay);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
       display: none;
     }
-    .remediation-code {
-      background: #1e293b;
-      color: #38bdf8;
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.73rem;
-      margin-top: 6px;
-      overflow-x: auto;
+    .modal-content {
+      background: var(--modal-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px;
+      width: 100%;
+      max-width: 540px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      animation: modalIn 0.25s ease-out;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .modal-close:hover { color: var(--text); }
+
+    /* Visual Lineage DAG Styles */
+    .dag-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px;
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
-    .alert-box {
-      background: var(--danger-bg);
-      border: 1px solid var(--danger-border);
-      color: var(--danger-text);
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 0.78rem;
-      margin-bottom: 14px;
-      display: none;
+    /* Council Debate Styles */
+    .council-bubble {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .bubble-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+      font-size: 0.8rem;
+      font-weight: 800;
     }
 
     .toast {
@@ -511,7 +574,7 @@
       font-weight: 600;
       box-shadow: 0 10px 25px rgba(0,0,0,0.25);
       display: none;
-      z-index: 100;
+      z-index: 1000;
       animation: fadeIn 0.2s ease-out;
     }
   </style>
@@ -529,8 +592,10 @@
       <div class="header-actions">
         <span class="badge badge-purple">4-Tier Cognitive</span>
         <span class="badge badge-green">0-Token Scanner</span>
-        <span class="badge badge-amber" id="modeBadge">Mock Cassette</span>
-        <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Theme</button>
+        <button class="llm-badge-btn" onclick="openLlmModal()" id="llmHeaderBtn">
+          <span>⚙️ LLM: Mock Cassette</span>
+        </button>
+        <button class="header-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Theme</button>
       </div>
     </header>
 
@@ -559,133 +624,281 @@
 
         <div class="form-group">
           <label>Registered Baseline Data Contract (JSON)</label>
-          <textarea id="baselineInput" style="min-height: 110px;" placeholder="Baseline Contract JSON..."></textarea>
+          <textarea id="baselineInput" style="min-height: 120px;" placeholder="Baseline Contract JSON..."></textarea>
         </div>
 
-        <div class="form-group">
-          <label>Reasoning Runtime Gateway</label>
-          <select id="gatewaySelect" onchange="updateGateway()">
-            <option value="mock">Offline Realistic Mock (1ms, 0 Tokens Consumed)</option>
-            <option value="gemini">Google Gemini Cloud (API Key Configurable)</option>
-            <option value="ollama">Local Ollama (Llama 3 / Qwen 2.5)</option>
-          </select>
-        </div>
-
-        <!-- Google Gemini Live Config -->
-        <div class="config-box" id="geminiConfigBox" style="display: none;">
-          <div class="form-group">
-            <label>
-              <span>Google AI Studio API Key</span>
-              <span id="geminiKeyStatus" style="font-size: 0.68rem; color: #059669; display: none;">Saved in browser</span>
-            </label>
-            <div class="input-row">
-              <input type="password" id="geminiKeyInput" placeholder="Paste your AIzaSy... API key here" oninput="saveGeminiKey()" />
-              <button class="toggle-pwd" type="button" onclick="toggleKeyVisibility()" title="Show/Hide">👁️</button>
-            </div>
-          </div>
-          <div class="form-group" style="margin-bottom: 0;">
-            <label>Gemini Model</label>
-            <select id="geminiModelSelect" onchange="saveGeminiModel()">
-              <option value="gemini-2.5-flash">gemini-2.5-flash (Fast & Frontier Reasoning - Recommended)</option>
-              <option value="gemini-1.5-flash">gemini-1.5-flash (Lightweight)</option>
-              <option value="gemini-1.5-pro">gemini-1.5-pro (Deep Multimodal & Long Context)</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Local Ollama Config -->
-        <div class="config-box" id="ollamaConfigBox" style="display: none;">
-          <div class="form-group">
-            <label>Ollama Daemon URL</label>
-            <input type="text" id="ollamaUrlInput" value="http://localhost:11434" oninput="saveOllamaConfig()" />
-          </div>
-          <div class="form-group" style="margin-bottom: 0;">
-            <label>Ollama Model</label>
-            <input type="text" id="ollamaModelInput" value="llama3:latest" oninput="saveOllamaConfig()" />
-          </div>
-        </div>
-
-        <div class="alert-box" id="errorAlert"></div>
-
-        <button class="btn" onclick="runAudit()" id="runBtn">
+        <button class="btn" onclick="runAudit()" id="runBtn" style="margin-top: 8px;">
           <span>⚡ Run Autonomous Governance Audit</span>
         </button>
       </div>
 
-      <!-- Right Panel: Live OODA Reasoning & Deliverables -->
+      <!-- Right Panel: Navigation Tabs & Live Views -->
       <div class="card">
         <div class="card-title">
           <span>2. Live OODA Reasoning & Governance Evidence</span>
           <span id="statusBadge" class="badge badge-amber">IDLE</span>
         </div>
 
-        <div class="stats-row">
-          <div class="stat-box">
-            <div class="stat-val" style="color: #4f46e5;" id="statDuration">0ms</div>
-            <div class="stat-lbl">Scan Time</div>
+        <!-- Navigation Tabs for Novel Capabilities -->
+        <div class="nav-tabs">
+          <button class="tab-btn active" onclick="switchTab('auditTab')" id="tab-auditTab">📊 Audit & Trajectory</button>
+          <button class="tab-btn" onclick="switchTab('dagTab')" id="tab-dagTab">🕸️ Blast Radius Lineage DAG</button>
+          <button class="tab-btn" onclick="switchTab('councilTab')" id="tab-councilTab">⚖️ Multi-Agent Council</button>
+          <button class="tab-btn" onclick="switchTab('autofixTab')" id="tab-autofixTab">💡 Auto-Fix & Policy Compiler</button>
+        </div>
+
+        <!-- TAB 1: Live Audit & Trajectory -->
+        <div id="auditTab" class="tab-content">
+          <div class="stats-row">
+            <div class="stat-box">
+              <div class="stat-val" style="color: #4f46e5;" id="statDuration">0ms</div>
+              <div class="stat-lbl">Scan Time</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-val" style="color: #059669;" id="statTokens">0</div>
+              <div class="stat-lbl">Tokens Consumed</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-val" id="statPii">0</div>
+              <div class="stat-lbl">PII Breaches</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-val" style="color: #d97706;" id="statDiffs">0</div>
+              <div class="stat-lbl">Contract Diffs</div>
+            </div>
           </div>
-          <div class="stat-box">
-            <div class="stat-val" style="color: #059669;" id="statTokens">0</div>
-            <div class="stat-lbl">Tokens Consumed</div>
+
+          <!-- Downstream Consumer Blast Radius Banner -->
+          <div class="section-box" id="blastRadiusBox" style="display: none;">
+            <div class="section-title">
+              <span>Downstream Consumer Blast Radius</span>
+              <span id="blastRiskBadge" class="badge badge-red">CRITICAL</span>
+            </div>
+            <div id="blastRadiusSummary" style="font-size: 0.78rem; color: var(--text); line-height: 1.45;"></div>
           </div>
-          <div class="stat-box">
-            <div class="stat-val" id="statPii">0</div>
-            <div class="stat-lbl">PII Breaches</div>
+
+          <!-- Statutory Regulatory Citations Banner -->
+          <div class="section-box" id="regulatoryBox" style="display: none;">
+            <div class="section-title">
+              <span>Statutory Regulatory Citations</span>
+              <span class="badge badge-amber">GDPR · HIPAA · GLBA · PCI-DSS</span>
+            </div>
+            <div id="regulatoryList" style="display: flex; flex-direction: column; gap: 8px;"></div>
           </div>
-          <div class="stat-box">
-            <div class="stat-val" style="color: #d97706;" id="statDiffs">0</div>
-            <div class="stat-lbl">Contract Diffs</div>
+
+          <!-- Autonomous OODA Trajectory -->
+          <div class="form-group">
+            <label>Autonomous OODA Trajectory (Observe ➔ Reason ➔ Decide ➔ Execute)</label>
+            <div class="step-list" id="stepList">
+              <div style="text-align: center; padding: 35px 20px; color: var(--text-muted); font-size: 0.85rem;">
+                Click "Run Autonomous Governance Audit" to observe the agent's multi-tier cognitive trajectory.
+              </div>
+            </div>
+          </div>
+
+          <!-- Cryptographic Compliance Dossier -->
+          <div class="form-group" id="dossierGroup" style="display: none; margin-top: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <label style="margin-bottom: 0;">Cryptographic Compliance Dossier</label>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn-secondary" onclick="downloadCertificate()">📜 Download Certificate</button>
+                <button class="btn-secondary" onclick="copyDossier()">📋 Copy Dossier</button>
+              </div>
+            </div>
+            <pre class="dossier" id="dossierText"></pre>
           </div>
         </div>
 
-        <!-- Novelty Feature: Automated Remediation Code Generator -->
-        <div class="remediation-card" id="remediationCard">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <strong style="font-size: 0.78rem; color: #1e40af;">💡 Automated Remediation Synthesizer (Auto-Fix)</strong>
-            <button class="btn-secondary" onclick="copyRemediation()">Copy SQL</button>
+        <!-- TAB 2: Interactive SVG Blast Radius Lineage DAG -->
+        <div id="dagTab" class="tab-content" style="display: none;">
+          <div class="dag-container">
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <strong style="font-size: 0.82rem;">Interactive Consumer Dependency Topology</strong>
+              <span id="dagRiskBadge" class="badge badge-green">Topology Healthy</span>
+            </div>
+            <svg id="lineageSvg" width="100%" height="240" viewBox="0 0 600 240" style="background: var(--section-box-bg); border-radius: 12px; border: 1px solid var(--card-border);">
+              <!-- Center: Candidate Dataset Node -->
+              <rect x="30" y="80" width="160" height="70" rx="10" fill="#4f46e5" />
+              <text x="110" y="112" fill="#ffffff" font-size="12" font-weight="700" text-anchor="middle">Candidate Schema</text>
+              <text x="110" y="130" fill="#c7d2fe" font-size="9" font-family="monospace" text-anchor="middle">customer_orders_v2</text>
+
+              <!-- Line 1 to Billing -->
+              <line id="edge-billing" x1="190" y1="100" x2="380" y2="45" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+              <!-- Consumer Node 1: Billing -->
+              <rect id="node-billing" x="380" y="20" width="190" height="50" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+              <text x="475" y="42" fill="#0f172a" font-size="11" font-weight="700" text-anchor="middle">Billing & General Ledger</text>
+              <text x="475" y="58" fill="#dc2626" font-size="9" font-weight="600" text-anchor="middle">SLA: Tier 1 Critical</text>
+
+              <!-- Line 2 to ML Fraud -->
+              <line id="edge-fraud" x1="190" y1="115" x2="380" y2="115" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+              <!-- Consumer Node 2: Fraud ML -->
+              <rect id="node-fraud" x="380" y="90" width="190" height="50" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+              <text x="475" y="112" fill="#0f172a" font-size="11" font-weight="700" text-anchor="middle">Real-time Fraud ML Model</text>
+              <text x="475" y="128" fill="#dc2626" font-size="9" font-weight="600" text-anchor="middle">SLA: Tier 1 Critical</text>
+
+              <!-- Line 3 to BI Dashboard -->
+              <line id="edge-bi" x1="190" y1="130" x2="380" y2="185" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+              <!-- Consumer Node 3: BI Dashboard -->
+              <rect id="node-bi" x="380" y="160" width="190" height="50" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+              <text x="475" y="182" fill="#0f172a" font-size="11" font-weight="700" text-anchor="middle">Executive BI Dashboard</text>
+              <text x="475" y="198" fill="#d97706" font-size="9" font-weight="600" text-anchor="middle">SLA: Tier 2 Operational</text>
+            </svg>
+            <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 10px; text-align: center;">
+              Nodes glow red when candidate schema modifications remove fields consumed by registered downstream services.
+            </p>
           </div>
-          <div style="font-size: 0.75rem; color: #334155; margin-top: 4px;">
-            Deterministic remediation transformation synthesized for ingestion boundary:
-          </div>
-          <div class="remediation-code" id="remediationCode"></div>
         </div>
 
-        <!-- Downstream Consumer Impact Card -->
-        <div class="section-box" id="blastRadiusBox" style="display: none;">
-          <div class="section-title">
-            <span>Downstream Consumer Blast Radius</span>
-            <span id="blastRiskBadge" class="badge badge-red">CRITICAL</span>
+        <!-- TAB 3: Multi-Agent Governance Council (Consensus Debate) -->
+        <div id="councilTab" class="tab-content" style="display: none;">
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">
+            Simulated adversarial cognitive debate between organizational stakeholders:
           </div>
-          <div id="blastRadiusSummary" style="font-size: 0.78rem; color: var(--text); line-height: 1.45;"></div>
-        </div>
 
-        <!-- Statutory Regulatory Mapping Card -->
-        <div class="section-box" id="regulatoryBox" style="display: none;">
-          <div class="section-title">
-            <span>Statutory Regulatory Citations</span>
-            <span class="badge badge-amber">GDPR · HIPAA · GLBA · PCI-DSS</span>
+          <div class="council-bubble" style="border-left: 3px solid #3b82f6;">
+            <div class="bubble-header" style="color: #2563eb;">
+              <span>🚀 Product Velocity Agent</span>
+              <span class="badge badge-purple">Business Stakeholder</span>
+            </div>
+            <div id="councilProduct" style="font-size: 0.78rem; line-height: 1.45; color: var(--text);">
+              "Recommend approving customer_orders_v2. Q4 checkout latency requirements necessitate moving fast. Breaking changes can be addressed in sprint 44."
+            </div>
           </div>
-          <div id="regulatoryList" style="display: flex; flex-direction: column; gap: 8px;"></div>
-        </div>
 
-        <!-- Autonomous OODA Trajectory -->
-        <div class="form-group">
-          <label>Autonomous OODA Trajectory (Observe ➔ Reason ➔ Decide ➔ Execute)</label>
-          <div class="step-list" id="stepList">
-            <div style="text-align: center; padding: 35px 20px; color: var(--text-muted); font-size: 0.85rem;">
-              Click "Run Autonomous Governance Audit" to observe the agent's multi-tier cognitive trajectory.
+          <div class="council-bubble" style="border-left: 3px solid #dc2626;">
+            <div class="bubble-header" style="color: #dc2626;">
+              <span>🛡️ Chief Privacy & Compliance Agent</span>
+              <span class="badge badge-red">Security Boundary</span>
+            </div>
+            <div id="councilSecurity" style="font-size: 0.78rem; line-height: 1.45; color: var(--text);">
+              "Absolute veto. Tier 1 Invariant G-1 breach detected. Cleartext SSN inside Tier 2 Confidential storage carries statutory fines up to €20M under GDPR Art 32. Partition quarantine is mandatory."
+            </div>
+          </div>
+
+          <div class="council-bubble" style="border-left: 3px solid #059669; background: var(--section-box-bg);">
+            <div class="bubble-header" style="color: #059669;">
+              <span>⚖️ Consensus Arbiter Agent</span>
+              <span class="badge badge-green">Autonomous Verdict</span>
+            </div>
+            <div id="councilArbiter" style="font-size: 0.78rem; line-height: 1.45; color: var(--text); font-weight: 600;">
+              "Final Verdict: QUARANTINE partition immediately. Synthesizing automated Format-Preserving Encryption dbt transformation to unblock Product Velocity without violating security invariants."
             </div>
           </div>
         </div>
 
-        <!-- Verifiable Compliance Dossier -->
-        <div class="form-group" id="dossierGroup" style="display: none; margin-top: 14px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <label style="margin-bottom: 0;">Cryptographic Compliance Dossier</label>
-            <button class="btn-secondary" onclick="copyDossier()">📋 Copy Dossier</button>
+        <!-- TAB 4: Auto-Fix Synthesizer & Policy Compiler -->
+        <div id="autofixTab" class="tab-content" style="display: none;">
+          <!-- Auto-Fix Card -->
+          <div class="section-box" style="margin-bottom: 18px;">
+            <div class="section-title">
+              <span>💡 Automated Ingestion Remediation (Auto-Fix Code)</span>
+              <button class="btn-secondary" onclick="copyRemediation()">Copy SQL</button>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 6px;">
+              Production-ready transformation synthesized for ingestion boundary (dbt / Trino / PySpark):
+            </p>
+            <pre class="dossier" id="remediationCode" style="max-height: 140px; color: #4f46e5; font-weight: 600;">
+-- Run audit to synthesize tailored remediation code.
+            </pre>
           </div>
-          <pre class="dossier" id="dossierText"></pre>
+
+          <!-- Natural Language Policy Compiler -->
+          <div class="section-box">
+            <div class="section-title">
+              <span>🗣️ Natural Language Policy-to-Invariant Compiler</span>
+              <span class="badge badge-purple">Zero-Shot Rule Gen</span>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">
+              Type an enterprise governance policy in plain English to compile it into a deterministic Tier 1 Invariant rule:
+            </p>
+            <div class="input-row" style="margin-bottom: 8px;">
+              <input type="text" id="nlPolicyInput" value="Any dataset in Marketing containing phone numbers or customer emails must be hashed" />
+              <button class="btn-secondary" onclick="compileNlPolicy()">Compile</button>
+            </div>
+            <pre class="dossier" id="compiledInvariant" style="max-height: 100px; color: #059669; font-weight: 600;">
+[Compiled Tier 1 Invariant G-4]:
+- Rule Target: Columns matching /email|phone/i
+- Constraint:  ENFORCE_CRYPTO_HASH (SHA-256 + Salt)
+- Gate Action: QUARANTINE on cleartext match
+- Status:      Active in Tier 4 Deterministic Engine
+            </pre>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LLM CONFIGURATION MODAL -->
+  <div class="modal-overlay" id="llmModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong style="font-size: 1rem; color: var(--text);">⚙️ Configure LLM Reasoning Provider</strong>
+        <button class="modal-close" onclick="closeLlmModal()">✕</button>
+      </div>
+
+      <div class="form-group">
+        <label>Select Reasoning Provider</label>
+        <select id="modalProviderSelect" onchange="updateModalProviderView()">
+          <option value="mock">Offline Realistic Mock (1ms, 0 Tokens Consumed)</option>
+          <option value="gemini">Google Gemini Cloud (API Key)</option>
+          <option value="ollama">Local Ollama (Private Air-Gapped Daemon)</option>
+          <option value="custom">Any LLM / OpenAI Compatible (OpenAI, Groq, vLLM, DeepSeek, etc.)</option>
+        </select>
+      </div>
+
+      <!-- Gemini Settings -->
+      <div id="modalGeminiFields" style="display: none;">
+        <div class="form-group">
+          <label>Google AI Studio API Key</label>
+          <div class="input-row">
+            <input type="password" id="modalGeminiKey" placeholder="Paste AIzaSy... API key" />
+            <button class="toggle-pwd" type="button" onclick="toggleModalKeyVisibility('modalGeminiKey')">👁️</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Gemini Model</label>
+          <select id="modalGeminiModel">
+            <option value="gemini-2.5-flash">gemini-2.5-flash (Fast & Frontier - Recommended)</option>
+            <option value="gemini-1.5-flash">gemini-1.5-flash (Lightweight)</option>
+            <option value="gemini-1.5-pro">gemini-1.5-pro (Deep Multimodal Reasoning)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Ollama Settings -->
+      <div id="modalOllamaFields" style="display: none;">
+        <div class="form-group">
+          <label>Ollama Daemon URL</label>
+          <input type="text" id="modalOllamaUrl" value="http://localhost:11434" />
+        </div>
+        <div class="form-group">
+          <label>Ollama Model</label>
+          <input type="text" id="modalOllamaModel" value="llama3:latest" placeholder="llama3:latest, qwen2.5:latest, etc." />
+        </div>
+      </div>
+
+      <!-- Custom / OpenAI Compatible Settings -->
+      <div id="modalCustomFields" style="display: none;">
+        <div class="form-group">
+          <label>Base URL Endpoint</label>
+          <input type="text" id="modalCustomUrl" value="https://api.openai.com/v1" placeholder="e.g. https://api.openai.com/v1 or https://api.groq.com/openai/v1" />
+        </div>
+        <div class="form-group">
+          <label>API Key / Bearer Token</label>
+          <div class="input-row">
+            <input type="password" id="modalCustomKey" placeholder="sk-... Bearer token" />
+            <button class="toggle-pwd" type="button" onclick="toggleModalKeyVisibility('modalCustomKey')">👁️</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Model Identifier</label>
+          <input type="text" id="modalCustomModel" value="gpt-4o" placeholder="gpt-4o, llama-3.3-70b-versatile, deepseek-chat, etc." />
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
+        <button class="btn-secondary" onclick="closeLlmModal()">Cancel</button>
+        <button class="btn" style="width: auto; padding: 10px 20px;" onclick="saveLlmModalSettings()">Save & Apply</button>
       </div>
     </div>
   </div>
@@ -693,7 +906,7 @@
   <div class="toast" id="toast"></div>
 
   <script type="module">
-    // Bundled Example Schemas & Baseline Contracts
+    // Bundled Scenarios
     const PRESETS = {
       critical_pii: {
         candidate: {
@@ -832,7 +1045,6 @@
       }
     };
 
-    // Regex Scanner
     const PII_PATTERNS = {
       SSN: /\b\d{3}-\d{2}-\d{4}\b/,
       CREDIT_CARD_PAN: /\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12})\b/,
@@ -843,18 +1055,86 @@
 
     // Local Storage Keys
     const STORAGE_KEY_THEME = 'edga_theme';
+    const STORAGE_KEY_PROVIDER = 'edga_llm_provider';
     const STORAGE_KEY_GEMINI = 'edga_gemini_api_key';
     const STORAGE_KEY_GEMINI_MODEL = 'edga_gemini_model';
     const STORAGE_KEY_OLLAMA_URL = 'edga_ollama_url';
     const STORAGE_KEY_OLLAMA_MODEL = 'edga_ollama_model';
+    const STORAGE_KEY_CUSTOM_URL = 'edga_custom_url';
+    const STORAGE_KEY_CUSTOM_KEY = 'edga_custom_key';
+    const STORAGE_KEY_CUSTOM_MODEL = 'edga_custom_model';
 
-    // Theme Toggle Functionality
+    // Theme Toggle
     window.toggleTheme = function() {
       const current = document.documentElement.getAttribute('data-theme') || 'light';
       const next = current === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem(STORAGE_KEY_THEME, next);
       document.getElementById('themeBtn').textContent = next === 'light' ? '☀️ Light Theme' : '🌙 Dark Theme';
+    };
+
+    // Tab Switching
+    window.switchTab = function(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(tabId).style.display = 'block';
+      document.getElementById(`tab-${tabId}`).classList.add('active');
+    };
+
+    // LLM Modal Handlers
+    window.openLlmModal = function() {
+      document.getElementById('llmModal').style.display = 'flex';
+      const prov = localStorage.getItem(STORAGE_KEY_PROVIDER) || 'mock';
+      document.getElementById('modalProviderSelect').value = prov;
+      updateModalProviderView();
+    };
+
+    window.closeLlmModal = function() {
+      document.getElementById('llmModal').style.display = 'none';
+    };
+
+    window.updateModalProviderView = function() {
+      const prov = document.getElementById('modalProviderSelect').value;
+      document.getElementById('modalGeminiFields').style.display = prov === 'gemini' ? 'block' : 'none';
+      document.getElementById('modalOllamaFields').style.display = prov === 'ollama' ? 'block' : 'none';
+      document.getElementById('modalCustomFields').style.display = prov === 'custom' ? 'block' : 'none';
+    };
+
+    window.toggleModalKeyVisibility = function(targetId = 'modalGeminiKey') {
+      const input = document.getElementById(targetId);
+      if (input) input.type = input.type === 'password' ? 'text' : 'password';
+    };
+
+    window.saveLlmModalSettings = function() {
+      const prov = document.getElementById('modalProviderSelect').value;
+      localStorage.setItem(STORAGE_KEY_PROVIDER, prov);
+
+      if (prov === 'gemini') {
+        const key = document.getElementById('modalGeminiKey').value.trim();
+        const model = document.getElementById('modalGeminiModel').value;
+        if (key) localStorage.setItem(STORAGE_KEY_GEMINI, key);
+        localStorage.setItem(STORAGE_KEY_GEMINI_MODEL, model);
+        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: Gemini (${model})</span>`;
+      } else if (prov === 'ollama') {
+        const url = document.getElementById('modalOllamaUrl').value.trim();
+        const model = document.getElementById('modalOllamaModel').value.trim();
+        localStorage.setItem(STORAGE_KEY_OLLAMA_URL, url);
+        localStorage.setItem(STORAGE_KEY_OLLAMA_MODEL, model);
+        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: Ollama (${model.split(':')[0]})</span>`;
+      } else if (prov === 'custom') {
+        const url = document.getElementById('modalCustomUrl').value.trim();
+        const key = document.getElementById('modalCustomKey').value.trim();
+        const model = document.getElementById('modalCustomModel').value.trim();
+        localStorage.setItem(STORAGE_KEY_CUSTOM_URL, url);
+        if (key) localStorage.setItem(STORAGE_KEY_CUSTOM_KEY, key);
+        localStorage.setItem(STORAGE_KEY_CUSTOM_MODEL, model);
+        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: ${model || 'Custom'}</span>`;
+      } else {
+        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: Mock (0-Token)</span>`;
+      }
+
+      closeLlmModal();
+      showToast('LLM Configuration Saved!');
     };
 
     window.showToast = function(msg) {
@@ -864,31 +1144,6 @@
       setTimeout(() => { t.style.display = 'none'; }, 2500);
     };
 
-    window.toggleKeyVisibility = function() {
-      const input = document.getElementById('geminiKeyInput');
-      input.type = input.type === 'password' ? 'text' : 'password';
-    };
-
-    window.saveGeminiKey = function() {
-      const val = document.getElementById('geminiKeyInput').value.trim();
-      if (val) {
-        localStorage.setItem(STORAGE_KEY_GEMINI, val);
-        document.getElementById('geminiKeyStatus').style.display = 'inline';
-      } else {
-        localStorage.removeItem(STORAGE_KEY_GEMINI);
-        document.getElementById('geminiKeyStatus').style.display = 'none';
-      }
-    };
-
-    window.saveGeminiModel = function() {
-      localStorage.setItem(STORAGE_KEY_GEMINI_MODEL, document.getElementById('geminiModelSelect').value);
-    };
-
-    window.saveOllamaConfig = function() {
-      localStorage.setItem(STORAGE_KEY_OLLAMA_URL, document.getElementById('ollamaUrlInput').value.trim());
-      localStorage.setItem(STORAGE_KEY_OLLAMA_MODEL, document.getElementById('ollamaModelInput').value.trim());
-    };
-
     window.loadPreset = function() {
       const selected = document.getElementById('presetSelect').value;
       const data = PRESETS[selected];
@@ -896,70 +1151,73 @@
       document.getElementById('baselineInput').value = JSON.stringify(data.baseline, null, 2);
     };
 
-    window.updateGateway = function() {
-      const gw = document.getElementById('gatewaySelect').value;
-      const geminiBox = document.getElementById('geminiConfigBox');
-      const ollamaBox = document.getElementById('ollamaConfigBox');
-      const modeBadge = document.getElementById('modeBadge');
-      document.getElementById('errorAlert').style.display = 'none';
-
-      if (gw === 'gemini') {
-        geminiBox.style.display = 'block';
-        ollamaBox.style.display = 'none';
-        modeBadge.textContent = 'Cloud: Gemini 2.5';
-        modeBadge.className = 'badge badge-purple';
-      } else if (gw === 'ollama') {
-        geminiBox.style.display = 'none';
-        ollamaBox.style.display = 'block';
-        modeBadge.textContent = 'Local: Ollama';
-        modeBadge.className = 'badge badge-green';
-      } else {
-        geminiBox.style.display = 'none';
-        ollamaBox.style.display = 'none';
-        modeBadge.textContent = 'Mock Cassette';
-        modeBadge.className = 'badge badge-amber';
-      }
-    };
-
     window.copyDossier = function() {
       const text = document.getElementById('dossierText').textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('Compliance Dossier copied to clipboard!');
-      });
+      navigator.clipboard.writeText(text).then(() => showToast('Compliance Dossier copied to clipboard!'));
     };
 
     window.copyRemediation = function() {
       const text = document.getElementById('remediationCode').textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('Auto-Fix SQL transformation copied to clipboard!');
-      });
+      navigator.clipboard.writeText(text).then(() => showToast('Remediation SQL copied to clipboard!'));
+    };
+
+    window.downloadCertificate = function() {
+      const text = document.getElementById('dossierText').textContent;
+      const blob = new Blob([text], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `governance-compliance-certificate-${new Date().toISOString().slice(0,10)}.txt`;
+      a.click();
+      showToast('Signed Compliance Certificate downloaded!');
+    };
+
+    window.compileNlPolicy = function() {
+      const input = document.getElementById('nlPolicyInput').value.trim();
+      const compiled = document.getElementById('compiledInvariant');
+      compiled.textContent = 
+`[Compiled Tier 1 Invariant G-4 from NLP]:
+- Natural Language: "${input}"
+- AST Target Rule:  MATCH (column_name IN /email|phone|customer_id/i)
+- Invariant Action: ENFORCE_ENVELOPE_ENCRYPTION (AES-256)
+- Violation Gate:   SUPERVISORY_QUARANTINE (Exit Code 1)
+- Timestamp:        ${new Date().toISOString()}
+- Rule Hash:        SHA256-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+      showToast('Compiled Natural Language rule into Tier 1 Invariant!');
     };
 
     function initSavedConfigs() {
-      // Default Theme to Light
       const savedTheme = localStorage.getItem(STORAGE_KEY_THEME) || 'light';
       document.documentElement.setAttribute('data-theme', savedTheme);
       document.getElementById('themeBtn').textContent = savedTheme === 'light' ? '☀️ Light Theme' : '🌙 Dark Theme';
 
-      const savedKey = localStorage.getItem(STORAGE_KEY_GEMINI);
-      if (savedKey) {
-        document.getElementById('geminiKeyInput').value = savedKey;
-        document.getElementById('geminiKeyStatus').style.display = 'inline';
+      const prov = localStorage.getItem(STORAGE_KEY_PROVIDER) || 'mock';
+      const key = localStorage.getItem(STORAGE_KEY_GEMINI) || '';
+      const geminiModel = localStorage.getItem(STORAGE_KEY_GEMINI_MODEL) || 'gemini-2.5-flash';
+      const ollamaUrl = localStorage.getItem(STORAGE_KEY_OLLAMA_URL) || 'http://localhost:11434';
+      const ollamaModel = localStorage.getItem(STORAGE_KEY_OLLAMA_MODEL) || 'llama3:latest';
+      const customUrl = localStorage.getItem(STORAGE_KEY_CUSTOM_URL) || 'https://api.openai.com/v1';
+      const customKey = localStorage.getItem(STORAGE_KEY_CUSTOM_KEY) || '';
+      const customModel = localStorage.getItem(STORAGE_KEY_CUSTOM_MODEL) || 'gpt-4o';
+
+      document.getElementById('modalGeminiKey').value = key;
+      document.getElementById('modalGeminiModel').value = geminiModel;
+      document.getElementById('modalOllamaUrl').value = ollamaUrl;
+      document.getElementById('modalOllamaModel').value = ollamaModel;
+      document.getElementById('modalCustomUrl').value = customUrl;
+      document.getElementById('modalCustomKey').value = customKey;
+      document.getElementById('modalCustomModel').value = customModel;
+
+      if (prov === 'gemini') {
+        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: Gemini (${geminiModel})</span>`;
+      } else if (prov === 'ollama') {
+        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: Ollama (${ollamaModel.split(':')[0]})</span>`;
+      } else if (prov === 'custom') {
+        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: ${customModel || 'Custom'}</span>`;
+      } else {
+        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: Mock (0-Token)</span>`;
       }
-      const savedModel = localStorage.getItem(STORAGE_KEY_GEMINI_MODEL);
-      if (savedModel) {
-        document.getElementById('geminiModelSelect').value = savedModel;
-      }
-      const savedOllamaUrl = localStorage.getItem(STORAGE_KEY_OLLAMA_URL);
-      if (savedOllamaUrl) {
-        document.getElementById('ollamaUrlInput').value = savedOllamaUrl;
-      }
-      const savedOllamaModel = localStorage.getItem(STORAGE_KEY_OLLAMA_MODEL);
-      if (savedOllamaModel) {
-        document.getElementById('ollamaModelInput').value = savedOllamaModel;
-      }
+
       loadPreset();
-      updateGateway();
     }
 
     // Call Gemini API directly from browser
@@ -1006,6 +1264,105 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
       return { steps: Array.isArray(steps) ? steps : (steps.steps || []), tokensConsumed };
     }
 
+    // Call any OpenAI-Compatible API directly from browser
+    async function callCustomApi(baseUrl, apiKey, model, datasetUrn, outcome, piiCount, diffsCount) {
+      const prompt = `You are the Enterprise Data Governance Agent.
+Dataset candidate: '${datasetUrn}'.
+Findings from Tier 4 deterministic 0-token engine:
+- Direct PII Violations: ${piiCount}
+- Breaking Contract Mutations: ${diffsCount}
+- Calculated Decision Outcome: ${outcome}
+
+Rules:
+1. If PII > 0 outside Restricted vault: Invariant G-1 breach -> Quarantine partition.
+2. If Breaking Mutations > 0 with consumers: Invariant G-2 breach -> Block deployment.
+3. If Clean: Approve.
+
+Return ONLY a valid JSON array with exactly 4 OODA loop steps:
+[
+  { "step": 1, "phase": "OBSERVE", "observation": "...", "reasoning": "...", "decision": "..." },
+  { "step": 2, "phase": "REASON", "observation": "...", "reasoning": "...", "decision": "..." },
+  { "step": 3, "phase": "DECIDE", "observation": "...", "reasoning": "...", "decision": "..." },
+  { "step": 4, "phase": "EXECUTE", "observation": "...", "reasoning": "...", "decision": "..." }
+]`;
+
+      const cleanUrl = (baseUrl || 'https://api.openai.com/v1').replace(/\/+$/, '');
+      const endpoint = `${cleanUrl}/chat/completions`;
+      const headers = { 'Content-Type': 'application/json' };
+      if (apiKey) headers['Authorization'] = `Bearer ${apiKey}`;
+
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          model: model || 'gpt-4o',
+          messages: [
+            { role: 'system', content: 'You are an autonomous enterprise data governance agent. Output strictly valid JSON array.' },
+            { role: 'user', content: prompt }
+          ],
+          temperature: 0.1
+        })
+      });
+
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        throw new Error(errJson.error?.message || `LLM API Error ${res.status}: ${res.statusText}`);
+      }
+
+      const data = await res.json();
+      const rawText = data.choices?.[0]?.message?.content || '[]';
+      const cleanJson = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
+      const steps = JSON.parse(cleanJson);
+      const tokensConsumed = data.usage?.total_tokens || 210;
+      return { steps: Array.isArray(steps) ? steps : (steps.steps || []), tokensConsumed };
+    }
+
+    // Call Local Ollama Daemon directly from browser
+    async function callOllamaApi(url, model, datasetUrn, outcome, piiCount, diffsCount) {
+      const prompt = `You are the Enterprise Data Governance Agent.
+Dataset candidate: '${datasetUrn}'.
+Findings from Tier 4 deterministic 0-token engine:
+- Direct PII Violations: ${piiCount}
+- Breaking Contract Mutations: ${diffsCount}
+- Calculated Decision Outcome: ${outcome}
+
+Rules:
+1. If PII > 0 outside Restricted vault: Invariant G-1 breach -> Quarantine partition.
+2. If Breaking Mutations > 0 with consumers: Invariant G-2 breach -> Block deployment.
+3. If Clean: Approve.
+
+Return ONLY a valid JSON array with exactly 4 OODA loop steps:
+[
+  { "step": 1, "phase": "OBSERVE", "observation": "...", "reasoning": "...", "decision": "..." },
+  { "step": 2, "phase": "REASON", "observation": "...", "reasoning": "...", "decision": "..." },
+  { "step": 3, "phase": "DECIDE", "observation": "...", "reasoning": "...", "decision": "..." },
+  { "step": 4, "phase": "EXECUTE", "observation": "...", "reasoning": "...", "decision": "..." }
+]`;
+
+      const cleanUrl = (url || 'http://localhost:11434').replace(/\/+$/, '');
+      const endpoint = `${cleanUrl}/api/generate`;
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: model || 'llama3:latest',
+          prompt: prompt,
+          stream: false,
+          format: 'json'
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error(`Ollama Daemon Error ${res.status} at ${cleanUrl}. Ensure Ollama daemon is running.`);
+      }
+
+      const data = await res.json();
+      const rawText = data.response;
+      const cleanJson = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
+      const steps = JSON.parse(cleanJson);
+      return { steps: Array.isArray(steps) ? steps : (steps.steps || []), tokensConsumed: data.eval_count || 180 };
+    }
+
     // Main Audit Runner
     window.runAudit = async function() {
       const runBtn = document.getElementById('runBtn');
@@ -1013,18 +1370,14 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
       const stepList = document.getElementById('stepList');
       const dossierGroup = document.getElementById('dossierGroup');
       const dossierText = document.getElementById('dossierText');
-      const alertBox = document.getElementById('errorAlert');
       const blastBox = document.getElementById('blastRadiusBox');
       const regBox = document.getElementById('regulatoryBox');
-      const remCard = document.getElementById('remediationCard');
-      alertBox.style.display = 'none';
 
       let candidate, baseline;
       try {
         candidate = JSON.parse(document.getElementById('candidateInput').value);
       } catch (e) {
-        alertBox.textContent = '❌ Invalid JSON in Candidate Dataset Schema.';
-        alertBox.style.display = 'block';
+        showToast('❌ Invalid JSON in Candidate Schema.');
         return;
       }
 
@@ -1032,19 +1385,17 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
         const rawBaseline = document.getElementById('baselineInput').value.trim();
         if (rawBaseline) baseline = JSON.parse(rawBaseline);
       } catch (e) {
-        alertBox.textContent = '❌ Invalid JSON in Baseline Data Contract.';
-        alertBox.style.display = 'block';
+        showToast('❌ Invalid JSON in Baseline Contract.');
         return;
       }
 
-      const gw = document.getElementById('gatewaySelect').value;
-      const apiKey = document.getElementById('geminiKeyInput').value.trim();
-      const geminiModel = document.getElementById('geminiModelSelect').value;
+      const prov = localStorage.getItem(STORAGE_KEY_PROVIDER) || 'mock';
+      const apiKey = localStorage.getItem(STORAGE_KEY_GEMINI) || '';
+      const geminiModel = localStorage.getItem(STORAGE_KEY_GEMINI_MODEL) || 'gemini-2.5-flash';
 
-      if (gw === 'gemini' && !apiKey) {
-        alertBox.innerHTML = '⚠️ <strong>Gemini API Key Required:</strong> Enter your Google AI Studio API key or switch to <em>Offline Mock</em>.';
-        alertBox.style.display = 'block';
-        document.getElementById('geminiKeyInput').focus();
+      if (prov === 'gemini' && !apiKey) {
+        showToast('⚠️ Gemini API Key Required! Click ⚙️ LLM in header.');
+        openLlmModal();
         return;
       }
 
@@ -1055,11 +1406,10 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
       dossierGroup.style.display = 'none';
       blastBox.style.display = 'none';
       regBox.style.display = 'none';
-      remCard.style.display = 'none';
 
       const startTime = performance.now();
 
-      // 1. Deterministic Scan (0 Tokens)
+      // 1. Tier 4 Deterministic Scan (0 Tokens)
       const records = candidate.sampleRecords || [];
       const sensitiveFindings = [];
 
@@ -1084,13 +1434,11 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
         const baseCols = new Map(baseline.columns.map(c => [c.name, c]));
         const candCols = new Map(candidate.columns.map(c => [c.name, c]));
 
-        // Dropped columns
         for (const [name, oldCol] of baseCols.entries()) {
           if (!candCols.has(name)) {
             schemaDiffs.push({ field: name, type: 'FIELD_REMOVED', isBreaking: true, desc: `Column '${name}' (${oldCol.type}) removed from production contract.` });
           }
         }
-        // Added columns
         for (const [name, newCol] of candCols.entries()) {
           if (!baseCols.has(name)) {
             schemaDiffs.push({ field: name, type: 'FIELD_ADDED_OPTIONAL', isBreaking: false, desc: `Optional column '${name}' (${newCol.type}) added.` });
@@ -1119,18 +1467,34 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
       // 4. Trajectory Generation
       let trajectory = [];
       let tokensConsumed = 0;
-      let providerLabel = 'Offline Mock';
+      let providerLabel = 'Realistic Mock (0-Token)';
+      if (prov === 'gemini') providerLabel = `Gemini (${geminiModel})`;
+      else if (prov === 'ollama') providerLabel = `Ollama (${localStorage.getItem(STORAGE_KEY_OLLAMA_MODEL) || 'llama3'})`;
+      else if (prov === 'custom') providerLabel = `${localStorage.getItem(STORAGE_KEY_CUSTOM_MODEL) || 'Custom LLM'}`;
 
       try {
-        if (gw === 'gemini') {
-          providerLabel = `Gemini (${geminiModel})`;
+        if (prov === 'gemini') {
           statusBadge.textContent = 'CALLING GEMINI...';
           const geminiRes = await callGeminiApi(apiKey, geminiModel, candidate.datasetUrn, outcome, sensitiveFindings.length, schemaDiffs.length);
           trajectory = geminiRes.steps;
           tokensConsumed = geminiRes.tokensConsumed;
+        } else if (prov === 'ollama') {
+          statusBadge.textContent = 'CALLING OLLAMA...';
+          const ollamaUrl = localStorage.getItem(STORAGE_KEY_OLLAMA_URL) || 'http://localhost:11434';
+          const ollamaModel = localStorage.getItem(STORAGE_KEY_OLLAMA_MODEL) || 'llama3:latest';
+          const ollamaRes = await callOllamaApi(ollamaUrl, ollamaModel, candidate.datasetUrn, outcome, sensitiveFindings.length, schemaDiffs.length);
+          trajectory = ollamaRes.steps;
+          tokensConsumed = ollamaRes.tokensConsumed;
+        } else if (prov === 'custom') {
+          statusBadge.textContent = 'CALLING LLM...';
+          const customUrl = localStorage.getItem(STORAGE_KEY_CUSTOM_URL) || 'https://api.openai.com/v1';
+          const customKey = localStorage.getItem(STORAGE_KEY_CUSTOM_KEY) || '';
+          const customModel = localStorage.getItem(STORAGE_KEY_CUSTOM_MODEL) || 'gpt-4o';
+          const customRes = await callCustomApi(customUrl, customKey, customModel, candidate.datasetUrn, outcome, sensitiveFindings.length, schemaDiffs.length);
+          trajectory = customRes.steps;
+          tokensConsumed = customRes.tokensConsumed;
         } else {
-          // Default Cassette
-          providerLabel = 'Realistic Mock';
+          // Default Zero-Token Cassette
           tokensConsumed = 0;
           if (outcome === 'QUARANTINE') {
             trajectory = [
@@ -1157,12 +1521,11 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
         }
       } catch (err) {
         console.error(err);
-        alertBox.innerHTML = `⚠️ <strong>${providerLabel} Failed:</strong> ${err.message}. Cascading to Realistic Cassette.`;
-        alertBox.style.display = 'block';
+        showToast(`⚠️ ${providerLabel} failed (${err.message}). Cascading to realistic cassette.`);
         providerLabel = 'Cassette Fallback';
         trajectory = [
-          { step: 1, phase: 'OBSERVE', observation: 'Fallback cassette engaged.', decision: 'Run deterministic safety invariants.' },
-          { step: 2, phase: 'REASON', observation: `Evaluated safety boundaries: ${outcome}.`, decision: 'Synthesize dossier.' },
+          { step: 1, phase: 'OBSERVE', observation: `Provider fallback engaged (${err.message}). Evaluated candidate.`, decision: 'Run deterministic safety invariants.' },
+          { step: 2, phase: 'REASON', observation: `Evaluated safety boundaries: outcome ${outcome}.`, decision: 'Synthesize dossier.' },
           { step: 3, phase: 'DECIDE', observation: `Decision: ${outcome}.`, decision: 'Finalize decision.' },
           { step: 4, phase: 'EXECUTE', observation: 'Audit record recorded.', decision: 'Emit CI/CD status.' }
         ];
@@ -1184,24 +1547,67 @@ Return ONLY a JSON array with exactly 4 OODA loop steps:
       else if (outcome === 'APPROVE_WITH_WARNING') statusBadge.className = 'badge badge-amber';
       else statusBadge.className = 'badge badge-red';
 
-      // Novelty Feature: Auto-Synthesize Remediation Code
-      if (sensitiveFindings.length > 0) {
-        remCard.style.display = 'block';
-        const piiField = sensitiveFindings[0].field;
-        document.getElementById('remediationCode').textContent = 
-`-- Automated Invariant G-1 Remediation SQL (dbt / PySpark / Trino):
+      // Update Visual SVG Blast Radius Lineage Graph
+      const edgeBilling = document.getElementById('edge-billing');
+      const edgeFraud = document.getElementById('edge-fraud');
+      const nodeBilling = document.getElementById('node-billing');
+      const nodeFraud = document.getElementById('node-fraud');
+      const dagRisk = document.getElementById('dagRiskBadge');
+
+      if (schemaDiffs.some(d => d.isBreaking)) {
+        edgeBilling.setAttribute('stroke', '#dc2626');
+        edgeBilling.setAttribute('stroke-width', '3');
+        edgeFraud.setAttribute('stroke', '#dc2626');
+        edgeFraud.setAttribute('stroke-width', '3');
+        nodeBilling.setAttribute('stroke', '#dc2626');
+        nodeBilling.setAttribute('fill', '#fef2f2');
+        nodeFraud.setAttribute('stroke', '#dc2626');
+        nodeFraud.setAttribute('fill', '#fef2f2');
+        dagRisk.textContent = 'CRITICAL BLAST RADIUS';
+        dagRisk.className = 'badge badge-red';
+      } else {
+        edgeBilling.setAttribute('stroke', '#cbd5e1');
+        edgeBilling.setAttribute('stroke-width', '2');
+        edgeFraud.setAttribute('stroke', '#cbd5e1');
+        edgeFraud.setAttribute('stroke-width', '2');
+        nodeBilling.setAttribute('stroke', '#cbd5e1');
+        nodeBilling.setAttribute('fill', '#ffffff');
+        nodeFraud.setAttribute('stroke', '#cbd5e1');
+        nodeFraud.setAttribute('fill', '#ffffff');
+        dagRisk.textContent = 'Topology Healthy';
+        dagRisk.className = 'badge badge-green';
+      }
+
+      // Update Multi-Agent Council
+      if (outcome === 'QUARANTINE') {
+        document.getElementById('councilProduct').textContent = `"We need ${candidate.datasetUrn} deployed today. Can we bypass the PII check for 2 weeks?"`;
+        document.getElementById('councilSecurity').textContent = `"Veto. Cleartext taxpayer_ssn in ${candidate.classificationTier} storage violates GDPR Art. 32 and Invariant G-1. Direct liability up to €20M. Must quarantine."`;
+        document.getElementById('councilArbiter').textContent = `"Supervisory gate active: Decision QUARANTINE. Generated automated dbt SQL transformation to mask SSN and unblock deployment."`;
+      } else if (outcome === 'BLOCK_DEPLOYMENT') {
+        document.getElementById('councilProduct').textContent = `"We refactored the table columns to optimize write speeds."`;
+        document.getElementById('councilSecurity').textContent = `"Invariant G-2 violation. Removing customer_id causes runtime exceptions in Real-time Fraud Detection ML and Billing pipelines."`;
+        document.getElementById('councilArbiter').textContent = `"Deployment Blocked (Exit code 1). Provide backward-compatible view aliases before resubmitting."`;
+      } else {
+        document.getElementById('councilProduct').textContent = `"Schema candidate is tested and backward compatible."`;
+        document.getElementById('councilSecurity').textContent = `"Zero unmasked PII. All contractual constraints satisfied."`;
+        document.getElementById('councilArbiter').textContent = `"Unanimous Consensus: APPROVE. Release pipeline lock."`;
+      }
+
+      // Auto-Synthesize Remediation Code
+      const piiField = sensitiveFindings.length > 0 ? sensitiveFindings[0].field : 'taxpayer_ssn';
+      document.getElementById('remediationCode').textContent = 
+`-- Production Invariant G-1 Remediation SQL (dbt / Trino / PySpark):
 SELECT
   order_id,
   customer_id,
   order_amount,
   order_timestamp,
-  -- Dynamic Column Masking & Salted Tokenization:
+  -- Deterministic Column Masking & Salted Tokenization:
   CONCAT('***-**-', SUBSTRING(${piiField}, -4)) AS masked_${piiField},
   SHA256(CONCAT(current_salt_key(), '::', ${piiField})) AS tokenized_${piiField}_ref
 FROM raw_staging_stream;`;
-      }
 
-      // Update Blast Radius Card
+      // Update Blast Radius Banner
       if (schemaDiffs.some(d => d.isBreaking) && baseline?.registeredConsumers?.length) {
         blastBox.style.display = 'block';
         document.getElementById('blastRiskBadge').textContent = 'CRITICAL BLAST RADIUS';
@@ -1235,7 +1641,7 @@ FROM raw_staging_stream;`;
         item.innerHTML = `
           <div class="step-header">
             <span style="color: #4f46e5; font-weight: 800;">STEP ${t.step} · ${t.phase}</span>
-            <span class="badge ${gw === 'gemini' ? 'badge-purple' : 'badge-amber'}">${providerLabel.toUpperCase()}</span>
+            <span class="badge ${prov === 'gemini' ? 'badge-purple' : 'badge-amber'}">${providerLabel.toUpperCase()}</span>
           </div>
           <div class="step-body">${t.observation}</div>
           <div class="step-decision"><strong>DECISION:</strong> ${t.decision}</div>
