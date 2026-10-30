@@ -1,0 +1,33 @@
+name: Autonomous Data Governance Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  governance-gate:
+    name: Tier 1 Invariant & Contract Enforcement
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Zero-Token Deterministic & Integration Tests
+        run: npm test
+
+      - name: Execute Autonomous Governance Gate (Exit 0 = PASS, Exit 1 = BLOCK)
+        run: |
+          echo "🚀 Evaluating candidate schema against Registered Data Contract..."
+          npm run start:clean

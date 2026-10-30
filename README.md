@@ -133,31 +133,41 @@ Produces four unambiguous, auditable decision outcomes:
 - **`QUARANTINE`**: Unmasked direct PII found in non-restricted tiers (Invariant G-1 breach). Partition isolated.
 - **`BLOCK_DEPLOYMENT`**: Breaking schema contract change impacting downstream consumers (Invariant G-2 breach). Deployment blocked.
 
-### 7. Human-in-the-Loop (HITL) Supervisory Gate
-Critical violations automatically lock the deployment pipeline, filing an issue defect candidate (e.g. `SEC-GOV-902`) and requiring explicit supervisory sign-off from Data Stewards.
+### 7. Governance Memory & Repeat Offender Tracking (Capability 7)
+Autonomous stateful tracking of historical dataset audits across enterprise runs:
+- Tracks cumulative audit history, violation tallies, and last-incident timestamps.
+- **Repeat Offender Escalation Engine**: Datasets breaching Invariant G-1/G-2 multiple times are automatically escalated (`STANDARD` ➔ `WARNING` ➔ `ESCALATED` ➔ `CRITICAL_BLOCK`).
+- Enforces Invariant G-4 by locking pipelines and requiring executive sign-off for habitual offenders.
 
-### 8. Cryptographic Compliance Dossier
-Every audit emits a formal compliance dossier containing:
-- Unique cryptographic Trace ID (`GOV-AUDIT-uuid`)
-- Executive Summary & Audit Timestamp
-- Zero-Token Deterministic Metrics
-- Sensitive Data Findings with masked previews
-- Downstream Consumer Blast Radius breakdown
-- Statutory Regulatory Citations
-- Prescriptive Recommended Actions
-- 4-Step OODA Cognitive Trajectory
+### 8. Autonomous Auto-Fix Remediation Synthesizer
+When violations are flagged, the agent does not merely report defects—it automatically synthesizes drop-in, production-ready remediation code:
+- **SQL / Trino / BigQuery**: Format-preserving cryptographic SHA-256 HMAC pseudonymization views.
+- **PySpark**: DataFrame transformations leveraging vault secret salts.
+- **dbt Models & Macros**: `{{ crypto_hash_pii(...) }}` incremental models.
+- **Delta Live Tables (DLT)**: `@dlt.expect_or_drop` expectation constraints.
 
-### 9. CI/CD Governance Gate
-Engineered for pipeline integration. The CLI returns strict POSIX exit codes:
-- **`Exit Code 0`**: PASS (Approved or Approved with Warning).
-- **`Exit Code 1`**: BLOCK (Quarantine or Deployment Blocked).
+### 9. Natural Language Policy-to-Invariant Compiler
+Enables legal counsel, compliance officers, and data stewards to write plain English policies (e.g. *"Marketing datasets containing customer phone numbers must be masked before entering analytics"*):
+- Compiles natural language zero-shot into deterministic Tier 1 AST rules.
+- Generates immutable SHA-256 Rule Hashes and automated scanner expressions.
 
-### 10. Tri-Mode Reasoning Gateway
+### 10. Human-in-the-Loop (HITL) Supervisory Gating
+Critical violations activate supervisory gating (Invariant G-4), generating structured dispatch payloads for enterprise incident platforms:
+- **Jira**: Issue creation payloads (`POST /rest/api/3/issue`) with priority mapping.
+- **ServiceNow**: Information Security change request records.
+- **Slack**: Interactive Block Kit cards with one-click supervisory override and quarantine confirmation buttons.
+- **Microsoft Teams**: Adaptive Card notifications.
+
+### 11. Cryptographic Compliance Certificate
+Every audit emits a downloadable digital compliance certificate signed with SHA-256 digital signature, timestamp, dataset URN, and decision outcome for SOX/SOC-2/ISO-27001 audit verification.
+
+### 12. Tri-Mode Reasoning Gateway
 | Gateway | Configuration | When to Use |
 | :--- | :--- | :--- |
 | **Offline Mock** *(Default)* | Pre-recorded realistic cassettes (`--llm mock`) | Local development, unit testing, air-gapped CI/CD runners (0 cost). |
 | **Local Ollama** | Private daemon URL + model (`--llm ollama`) | Private, zero-data-egress enterprise networks. |
 | **Google Gemini** | Google AI Studio API key (`--llm gemini`) | Frontier cognitive reasoning and dynamic remediation synthesis. |
+| **OpenAI / Custom** | Custom Base URL + Bearer Token (`--llm custom`) | Groq, vLLM, DeepSeek, Together, or OpenAI enterprise endpoints. |
 
 ---
 

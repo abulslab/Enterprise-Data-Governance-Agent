@@ -645,6 +645,7 @@
           <button class="tab-btn" onclick="switchTab('dagTab')" id="tab-dagTab">🕸️ Blast Radius Lineage DAG</button>
           <button class="tab-btn" onclick="switchTab('councilTab')" id="tab-councilTab">⚖️ Multi-Agent Council</button>
           <button class="tab-btn" onclick="switchTab('autofixTab')" id="tab-autofixTab">💡 Auto-Fix & Policy Compiler</button>
+          <button class="tab-btn" onclick="switchTab('memoryTab')" id="tab-memoryTab">🧠 Governance Memory & HITL</button>
         </div>
 
         <!-- TAB 1: Live Audit & Trajectory -->
@@ -821,6 +822,58 @@
 - Constraint:  ENFORCE_CRYPTO_HASH (SHA-256 + Salt)
 - Gate Action: QUARANTINE on cleartext match
 - Status:      Active in Tier 4 Deterministic Engine
+            </pre>
+          </div>
+        </div>
+
+        <!-- TAB 5: Governance Memory & Human-In-The-Loop (HITL) -->
+        <div id="memoryTab" class="tab-content" style="display: none;">
+          <!-- Governance Memory Summary Card -->
+          <div class="section-box" style="margin-bottom: 18px;">
+            <div class="section-title">
+              <span>🧠 Dataset Governance Memory & Incident History</span>
+              <span id="memoryEscalationBadge" class="badge badge-green">STANDARD (0 Prior Violations)</span>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 10px;">
+              Autonomous tracking of repeat non-compliance offenders. Invariant G-4 auto-escalates risk upon repeated contract or statutory breaches:
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px;">
+              <div class="stat-box" style="padding: 8px;">
+                <div class="stat-val" id="memTotalAudits" style="font-size: 1.1rem; color: #4f46e5;">1</div>
+                <div class="stat-lbl">Total Audits</div>
+              </div>
+              <div class="stat-box" style="padding: 8px;">
+                <div class="stat-val" id="memViolations" style="font-size: 1.1rem; color: #dc2626;">0</div>
+                <div class="stat-lbl">Violations Logged</div>
+              </div>
+              <div class="stat-box" style="padding: 8px;">
+                <div class="stat-val" id="memRiskProfile" style="font-size: 1.1rem; color: #059669;">Tier 1 Clean</div>
+                <div class="stat-lbl">Offender Status</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-secondary" onclick="simulateRepeatViolation()">Simulate Repeat Offender Breach</button>
+              <button class="btn-secondary" onclick="resetMemoryHistory()">Reset Memory Store</button>
+            </div>
+          </div>
+
+          <!-- Human-in-the-Loop Supervisory Review (HITL) -->
+          <div class="section-box">
+            <div class="section-title">
+              <span>🛡️ Human-in-the-Loop (HITL) Enterprise Escalation Package</span>
+              <span class="badge badge-amber">Supervisory Gating Active</span>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">
+              Simulated enterprise incident dispatch for critical Invariant G-1/G-2 violations:
+            </p>
+            <div style="display: flex; gap: 6px; margin-bottom: 10px;">
+              <button class="btn-secondary" onclick="showHitlPayload('jira')" id="btn-hitl-jira" style="font-weight: 700;">Jira Issue</button>
+              <button class="btn-secondary" onclick="showHitlPayload('snow')" id="btn-hitl-snow">ServiceNow CR</button>
+              <button class="btn-secondary" onclick="showHitlPayload('slack')" id="btn-hitl-slack">Slack Alert</button>
+              <button class="btn-secondary" onclick="showHitlPayload('teams')" id="btn-hitl-teams">MS Teams Card</button>
+            </div>
+            <pre class="dossier" id="hitlPayloadDisplay" style="max-height: 160px; color: #3b82f6; font-size: 0.72rem;">
+Select an enterprise incident platform above to view the synthesized escalation dispatch payload.
             </pre>
           </div>
         </div>
@@ -1183,6 +1236,109 @@
 - Timestamp:        ${new Date().toISOString()}
 - Rule Hash:        SHA256-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
       showToast('Compiled Natural Language rule into Tier 1 Invariant!');
+    };
+
+    let mockViolationTally = 0;
+    window.simulateRepeatViolation = function() {
+      mockViolationTally++;
+      const total = mockViolationTally + 1;
+      document.getElementById('memTotalAudits').textContent = String(total);
+      document.getElementById('memViolations').textContent = String(mockViolationTally);
+
+      const badge = document.getElementById('memoryEscalationBadge');
+      const profile = document.getElementById('memRiskProfile');
+
+      if (mockViolationTally >= 3) {
+        badge.textContent = 'CRITICAL BLOCK (3 Violations - Repeat Offender)';
+        badge.className = 'badge badge-red';
+        profile.textContent = 'CRITICAL BLOCK';
+        profile.style.color = '#dc2626';
+        showToast('🚨 CRITICAL REPEAT OFFENDER: Pipeline access revoked under Invariant G-4!');
+      } else if (mockViolationTally === 2) {
+        badge.textContent = 'ESCALATED (2 Violations - Repeat Offender)';
+        badge.className = 'badge badge-red';
+        profile.textContent = 'ESCALATED OFFENDER';
+        profile.style.color = '#dc2626';
+        showToast('⚠️ Repeat Offender Escalation Engaged: Mandatory HITL Review');
+      } else {
+        badge.textContent = 'WARNING (1 Violation Logged)';
+        badge.className = 'badge badge-amber';
+        profile.textContent = 'WATCHLIST';
+        profile.style.color = '#d97706';
+        showToast('Incident logged to Governance Memory');
+      }
+      showHitlPayload('jira');
+    };
+
+    window.resetMemoryHistory = function() {
+      mockViolationTally = 0;
+      document.getElementById('memTotalAudits').textContent = '1';
+      document.getElementById('memViolations').textContent = '0';
+      document.getElementById('memRiskProfile').textContent = 'Tier 1 Clean';
+      document.getElementById('memRiskProfile').style.color = '#059669';
+      const badge = document.getElementById('memoryEscalationBadge');
+      badge.textContent = 'STANDARD (0 Prior Violations)';
+      badge.className = 'badge badge-green';
+      document.getElementById('hitlPayloadDisplay').textContent = 'Memory store reset. Select an enterprise platform to view dispatch templates.';
+      showToast('Governance Memory cleared.');
+    };
+
+    window.showHitlPayload = function(platform) {
+      const display = document.getElementById('hitlPayloadDisplay');
+      const ticketId = 'SEC-GOV-' + Math.floor(1000 + Math.random() * 9000);
+      const isEscalated = mockViolationTally >= 2;
+
+      if (platform === 'jira') {
+        display.textContent = JSON.stringify({
+          fields: {
+            project: { key: 'SEC' },
+            summary: `[${isEscalated ? 'SEV-1-CRITICAL' : 'SEV-2-HIGH'}] Data Governance Violation - customer_orders_v2`,
+            description: "Automated Governance Gate Invariant G-1/G-2 breach. Pipeline locked awaiting CPO approval.",
+            issuetype: { name: "Security Incident" },
+            priority: { name: isEscalated ? "Highest" : "High" },
+            labels: ["data-governance", "invariant-g1", isEscalated ? "repeat-offender" : "standard-breach"]
+          }
+        }, null, 2);
+      } else if (platform === 'snow') {
+        display.textContent = JSON.stringify({
+          short_description: "Automated Governance Gate QUARANTINE on customer_orders_v2",
+          category: "Information Security",
+          urgency: isEscalated ? "1" : "2",
+          impact: isEscalated ? "1" : "2",
+          assignment_group: "Data Governance Board",
+          work_notes: "Cryptographic trace generated. Pipeline ingestion halted. Supervisory approval requested."
+        }, null, 2);
+      } else if (platform === 'slack') {
+        display.textContent = JSON.stringify({
+          text: "🚨 Autonomous Data Governance Gate Alert",
+          blocks: [
+            { type: "header", text: { type: "plain_text", text: "🚨 Governance Decision: QUARANTINE" } },
+            { type: "section", fields: [
+              { type: "mrkdwn", text: "*Dataset:*\n`customer_orders_v2`" },
+              { type: "mrkdwn", text: `*Severity:*\n${isEscalated ? 'SEV-1-CRITICAL' : 'SEV-2-HIGH'}` },
+              { type: "mrkdwn", text: `*Repeat Offender:*\n${isEscalated ? '⚠️ YES (ESCALATED)' : 'NO'}` }
+            ]},
+            { type: "actions", elements: [
+              { type: "button", text: { type: "plain_text", text: "Approve Override (HITL)" }, style: "primary" },
+              { type: "button", text: { type: "plain_text", text: "Confirm Lock" }, style: "danger" }
+            ]}
+          ]
+        }, null, 2);
+      } else if (platform === 'teams') {
+        display.textContent = JSON.stringify({
+          type: "AdaptiveCard",
+          version: "1.4",
+          body: [
+            { type: "TextBlock", text: "🛡️ Autonomous Governance Gate — QUARANTINE", weight: "Bolder" },
+            { type: "TextBlock", text: "Invariant G-1 breach: Cleartext SSN detected outside Restricted vault." },
+            { type: "FactSet", facts: [
+              { title: "Dataset", value: "customer_orders_v2" },
+              { title: "Ticket", value: ticketId },
+              { title: "Repeat Offender", value: isEscalated ? "YES" : "NO" }
+            ]}
+          ]
+        }, null, 2);
+      }
     };
 
     function initSavedConfigs() {

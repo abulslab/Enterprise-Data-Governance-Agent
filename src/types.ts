@@ -21,6 +21,10 @@ export type SensitivePatternType =
   | 'BANK_ACCOUNT_NUMBER' 
   | 'EMAIL_ADDRESS' 
   | 'PHONE_NUMBER' 
+  | 'IBAN'
+  | 'PASSPORT'
+  | 'DRIVER_LICENSE'
+  | 'HEALTHCARE_IDENTIFIER'
   | 'NATIONAL_ID' 
   | 'IP_ADDRESS';
 
@@ -173,4 +177,50 @@ export interface GovernanceAuditResult {
   exitCode: 0 | 1; // 0 for PASS / APPROVE / WARNING, 1 for QUARANTINE / BLOCK_DEPLOYMENT
   decision: GovernanceDecisionOutcome;
   dossier: ComplianceDossier;
+}
+
+export interface DatasetIncidentHistory {
+  datasetUrn: string;
+  totalAudits: number;
+  violationCount: number;
+  lastViolationTimestamp?: string;
+  incidentHistory: {
+    timestamp: string;
+    outcome: GovernanceDecisionOutcome;
+    reasons: string[];
+  }[];
+  isRepeatOffender: boolean;
+  escalationLevel: 'STANDARD' | 'WARNING' | 'ESCALATED' | 'CRITICAL_BLOCK';
+}
+
+export interface RemediationPackage {
+  datasetUrn: string;
+  suggestedSql: string;
+  suggestedPySpark: string;
+  suggestedDbt: string;
+  suggestedDeltaLiveTables: string;
+  remediationSummary: string;
+}
+
+export interface CompiledPolicyRule {
+  id: string;
+  naturalLanguagePrompt: string;
+  targetDomain: string;
+  targetColumnsRegex: string;
+  invariantTarget: 'G-1' | 'G-2' | 'G-3' | 'G-4' | 'G-5';
+  constraintAction: 'ENFORCE_CRYPTO_HASH' | 'ENFORCE_MASKING' | 'DISALLOW_CLEAR_TEXT' | 'ENFORCE_SUPERVISORY_QUARANTINE';
+  ruleHash: string;
+  compiledAt: string;
+}
+
+export interface HitlEscalationPackage {
+  ticketId: string;
+  datasetUrn: string;
+  severity: 'SEV-1-CRITICAL' | 'SEV-2-HIGH' | 'SEV-3-MEDIUM';
+  approvalRequiredBy: string[];
+  summary: string;
+  jiraPayload: Record<string, any>;
+  serviceNowPayload: Record<string, any>;
+  slackCardPayload: Record<string, any>;
+  teamsCardPayload: Record<string, any>;
 }

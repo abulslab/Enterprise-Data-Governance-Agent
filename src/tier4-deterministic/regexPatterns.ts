@@ -3,8 +3,8 @@
  */
 
 export interface PatternRule {
-  type: 'SSN' | 'CREDIT_CARD_PAN' | 'BANK_ROUTING_ABA' | 'BANK_ACCOUNT_NUMBER' | 'EMAIL_ADDRESS' | 'PHONE_NUMBER';
-  category: 'DIRECT_PII' | 'FINANCIAL';
+  type: 'SSN' | 'CREDIT_CARD_PAN' | 'BANK_ROUTING_ABA' | 'BANK_ACCOUNT_NUMBER' | 'EMAIL_ADDRESS' | 'PHONE_NUMBER' | 'IBAN' | 'PASSPORT' | 'DRIVER_LICENSE' | 'HEALTHCARE_IDENTIFIER' | 'NATIONAL_ID';
+  category: 'DIRECT_PII' | 'FINANCIAL' | 'REGULATED_HEALTH';
   regex: RegExp;
   statutoryRegulation: ('GDPR' | 'HIPAA' | 'GLBA' | 'PCI-DSS')[];
 }
@@ -30,6 +30,12 @@ export const SENSITIVE_PATTERNS: PatternRule[] = [
     statutoryRegulation: ['GLBA']
   },
   {
+    type: 'IBAN',
+    category: 'FINANCIAL',
+    regex: /\b[A-Z]{2}\d{2}[A-Z0-9]{4}\d{7}([A-Z0-9]?){0,16}\b/,
+    statutoryRegulation: ['GDPR', 'GLBA']
+  },
+  {
     type: 'EMAIL_ADDRESS',
     category: 'DIRECT_PII',
     regex: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/,
@@ -40,6 +46,32 @@ export const SENSITIVE_PATTERNS: PatternRule[] = [
     category: 'DIRECT_PII',
     regex: /\b(?:\+?1[-.\s]?)?\(?[2-9][0-9]{2}\)?[-.\s]?[2-9][0-9]{2}[-.\s]?[0-9]{4}\b/,
     statutoryRegulation: ['GDPR', 'HIPAA']
+  },
+  {
+    type: 'PASSPORT',
+    category: 'DIRECT_PII',
+    regex: /\b[A-Z]{1,2}[0-9]{7,9}\b/,
+    statutoryRegulation: ['GDPR', 'HIPAA']
+  },
+  {
+    type: 'DRIVER_LICENSE',
+    category: 'DIRECT_PII',
+    regex: /\b[A-Z][0-9]{7,8}\b/,
+    statutoryRegulation: ['GDPR', 'GLBA']
+  },
+  {
+    type: 'HEALTHCARE_IDENTIFIER',
+    category: 'REGULATED_HEALTH',
+    // US NPI (National Provider Identifier: 10 digits starting with 1 or 2) or MRN format
+    regex: /\b(?:NPI-[12]\d{9}|MRN-\d{6,10}|[12]\d{9})\b/,
+    statutoryRegulation: ['HIPAA']
+  },
+  {
+    type: 'NATIONAL_ID',
+    category: 'DIRECT_PII',
+    // UK NINO or Canadian SIN
+    regex: /\b(?:[A-CEGHJ-PR-TW-Z]{2}\s?\d{2}\s?\d{2}\s?\d{2}\s?[A-D]|\d{3}-\d{3}-\d{3})\b/,
+    statutoryRegulation: ['GDPR']
   }
 ];
 

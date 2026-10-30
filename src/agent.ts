@@ -106,4 +106,17 @@ export class EnterpriseDataGovernanceAgent {
       dossier
     };
   }
+
+  /**
+   * Alias for auditDataset for concise SDK usage.
+   */
+  public async audit(
+    candidate: DatasetSchema,
+    baseline?: BaselineDataContract
+  ): Promise<GovernanceAuditResult> {
+    return this.auditDataset(candidate, baseline);
+  }
 }
+
+// Export GovernanceAgent alias
+export const GovernanceAgent = EnterpriseDataGovernanceAgent;

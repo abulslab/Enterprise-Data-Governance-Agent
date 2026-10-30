@@ -54,22 +54,28 @@ Every governance task executed by the agent must conform strictly to the **4-Tie
 
 ---
 
-## 3. Tier 1 Core Governance Invariants
+## 3. Tier 1 Core System Invariants
 
-### Invariant 1: Zero Unmasked Direct PII Outside Approved Vaults
+### Invariant G-1: No Unmasked Direct PII Outside Approved Vault Zones
 - **Direct PII** (cleartext Social Security Numbers, Credit Card PANs, unhashed Passwords, National Identity IDs) is strictly forbidden in any dataset classified as `PUBLIC`, `INTERNAL`, or `CONFIDENTIAL`.
 - Direct PII may only reside in approved `RESTRICTED` security vaults with hardware-level envelope encryption or certified tokenization.
 - Any candidate dataset in `PUBLIC`, `INTERNAL`, or `CONFIDENTIAL` containing unmasked direct PII triggers an immediate **`QUARANTINE`** or **`BLOCK_DEPLOYMENT`** decision.
 
-### Invariant 2: Data Contracts Cannot Be Violated
+### Invariant G-2: Breaking Schema Changes Cannot Bypass Governance Review
 - Incompatible breaking changes (such as dropping fields consumed by downstream systems, renaming active fields without formal aliasing, or narrowing types such as `string` to `integer`) are prohibited from merging into active pipelines without formal deprecation approval.
 - Non-breaking changes (such as adding an optional nullable field) may receive `APPROVE` or `APPROVE_WITH_WARNING`.
 
-### Invariant 3: Governance Decisions Must Be Auditable
-- Every decision emitted by the agent must be accompanied by an immutable **Compliance Dossier** with a cryptographically verifiable trace, executive summary, policy citations, affected downstream consumers, and full OODA reasoning trail.
+### Invariant G-3: All Governance Decisions Must Be Auditable
+- Every decision emitted by the agent must be accompanied by an immutable **Compliance Dossier** with a cryptographically verifiable SHA-256 trace ID, executive summary, policy citations, affected downstream consumers, and full OODA reasoning trail.
 
-### Invariant 4: Zero-Token Deterministic Offloading
-- Under no circumstances shall probabilistic LLM tokens be burned to perform regex pattern matching, Luhn checksum calculation, or schema AST tree diffing. These operations must be offloaded 100% to Tier 4 deterministic engines.
+### Invariant G-4: Critical Violations Require Human-In-The-Loop (HITL) Approval
+- Automated bypass or auto-approval of `QUARANTINE` or `BLOCK_DEPLOYMENT` actions is strictly prohibited. Critical invariant breaches mandate formal sign-off from designated human stakeholders (CPO, Lead Data Steward, Principal Architect).
+
+### Invariant G-5: Every Enforcement Decision Must Provide Evidence
+- No gate decision may be rendered without concrete mathematical evidence (matched records preview, regex finding, AST diff comparison, or downstream consumer impact graph). Probabilistic assertions without deterministic evidence are prohibited.
+
+### Invariant G-6: Zero-Token Deterministic Offloading
+- Under no circumstances shall probabilistic LLM tokens be burned to perform regex pattern matching, Luhn checksum calculation, or schema AST tree diffing. These operations must be offloaded 100% to Tier 4 deterministic engines (< 2ms execution).
 
 ---
 
