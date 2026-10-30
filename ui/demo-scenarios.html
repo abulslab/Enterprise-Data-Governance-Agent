@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Scenarios — Enterprise Data Governance Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-gradient: radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.07) 0px, transparent 50%),
+                     radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%),
+                     #f8fafc;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(226, 232, 240, 0.6);
+      --section-box-bg: #f1f5f9;
+      --accent: #4f46e5;
+      --accent-glow: rgba(79, 70, 229, 0.25);
+      --text: #0f172a;
+      --text-muted: #475569;
+      --purple-bg: #f5f3ff;
+      --purple-border: #ddd6fe;
+      --purple-text: #5b21b6;
+    }
+    [data-theme="dark"] {
+      --bg: #070a11;
+      --bg-gradient: radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0px, transparent 50%),
+                     radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+                     #070a11;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+      --section-box-bg: rgba(10, 15, 29, 0.65);
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.35);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --purple-bg: rgba(139, 92, 246, 0.15);
+      --purple-border: rgba(139, 92, 246, 0.3);
+      --purple-text: #c4b5fd;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--bg);
+      background-image: var(--bg-gradient);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .container { max-width: 1440px; margin: 0 auto; width: 100%; }
+
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 8px 16px var(--accent-glow);
+    }
+    .brand-title h1 { font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em; }
+    .brand-title p { font-size: 0.73rem; color: var(--text-muted); margin-top: 2px; }
+
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+    .nav-link:hover { color: var(--text); background: var(--section-box-bg); }
+    .nav-link.active {
+      color: var(--accent);
+      background: var(--purple-bg);
+      border: 1px solid var(--purple-border);
+    }
+    .header-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 24px;
+    }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text);
+    }
+    .card-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.45;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-purple { background: var(--purple-bg); color: var(--purple-text); border: 1px solid var(--purple-border); }
+    .badge-red { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+    .badge-amber { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+    .badge-green { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 20px;
+    }
+    @media (max-width: 640px) { .scenario-grid { grid-template-columns: 1fr; } }
+
+    .scenario-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+    .scenario-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -4px var(--accent-glow);
+      border-color: var(--accent);
+    }
+
+    .scenario-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .scenario-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .scenario-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .scenario-meta {
+      background: var(--section-box-bg);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.72rem;
+      color: var(--text-subtle);
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 18px;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: white;
+      text-decoration: none;
+    }
+    .btn:hover {
+      box-shadow: 0 6px 16px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="top-nav">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">🛡️</div>
+        <div class="brand-title">
+          <h1>Enterprise Data Governance Agent</h1>
+          <p>Autonomous Lakehouse Governance, Contract Enforcement & Blast Radius Intelligence</p>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">🛡️ Governance Studio</a>
+        <a href="reasoning-runtime.html" class="nav-link">🧠 Reasoning Runtime Gateway</a>
+        <a href="architecture.html" class="nav-link">🏛️ Architecture</a>
+        <a href="demo-scenarios.html" class="nav-link active">🎬 Demo Scenarios</a>
+      </div>
+      <div class="header-actions">
+        <span class="badge badge-purple">1-Click Demonstrations</span>
+        <button class="header-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Theme</button>
+      </div>
+    </nav>
+
+    <div class="card">
+      <div class="card-title">
+        <span>Curated Enterprise Governance Demonstrations</span>
+        <span class="badge badge-purple">Recruiter & Executive Ready</span>
+      </div>
+      <div class="card-subtitle">
+        One-click interactive scenarios designed to showcase autonomous decision-making, zero-token deterministic scanning, and multi-agent governance in production.
+      </div>
+
+      <div class="scenario-grid">
+        <!-- Scenario 1: PII Leak Detection -->
+        <div class="scenario-card">
+          <div>
+            <div class="scenario-header">
+              <div class="scenario-title">1. PII Leak Detection</div>
+              <span class="badge badge-red">QUARANTINE</span>
+            </div>
+            <p class="scenario-desc">
+              Customer orders dataset partition containing unmasked Social Security Numbers (SSN) submitted to a <code>CONFIDENTIAL</code> lakehouse bucket. Triggers Invariant G-1 breach, GDPR Art 32 statutory mapping, and supervisory quarantine.
+            </p>
+            <div class="scenario-meta">
+              <div><strong>Target Invariant:</strong> G-1 (Zero Direct PII outside vault)</div>
+              <div><strong>Regulation:</strong> GDPR Article 32, HIPAA Safe Harbor, GLBA 501b</div>
+              <div><strong>Outcome:</strong> Automated partition quarantine + Auto-fix SQL</div>
+            </div>
+          </div>
+          <a href="index.html?scenario=critical_pii&autorun=true" class="btn">🚀 Launch &amp; Execute Scenario</a>
+        </div>
+
+        <!-- Scenario 2: Credit Card PAN Exposure -->
+        <div class="scenario-card">
+          <div>
+            <div class="scenario-header">
+              <div class="scenario-title">2. Credit Card PAN Exposure</div>
+              <span class="badge badge-red">QUARANTINE</span>
+            </div>
+            <p class="scenario-desc">
+              Payment audit ingestion with cleartext Primary Account Numbers (PAN). Validated deterministically with zero tokens via mathematical <strong>Luhn Mod 10</strong> checksum algorithm, triggering PCI-DSS Requirement 3.4 isolation.
+            </p>
+            <div class="scenario-meta">
+              <div><strong>Target Invariant:</strong> G-1 &amp; PCI-DSS Req 3.4 (Unreadable PAN)</div>
+              <div><strong>Algorithm:</strong> Mathematical Luhn Mod 10 Checksum (0 Tokens)</div>
+              <div><strong>Outcome:</strong> Dead-letter queue diversion + PySpark HMAC fix</div>
+            </div>
+          </div>
+          <a href="index.html?scenario=card_pan&autorun=true" class="btn">🚀 Launch &amp; Execute Scenario</a>
+        </div>
+
+        <!-- Scenario 3: Breaking Schema Contract -->
+        <div class="scenario-card">
+          <div>
+            <div class="scenario-header">
+              <div class="scenario-title">3. Breaking Schema Contract</div>
+              <span class="badge badge-red">BLOCK_DEPLOYMENT</span>
+            </div>
+            <p class="scenario-desc">
+              Developer pull request drops critical <code>customer_id</code> column from production contract. The agent evaluates the consumer topology, identifies broken Tier 1 General Ledger and Fraud ML pipelines, and blocks CI/CD merge with exit code 1.
+            </p>
+            <div class="scenario-meta">
+              <div><strong>Target Invariant:</strong> G-2 (Data contracts cannot be broken)</div>
+              <div><strong>Blast Radius:</strong> CRITICAL (General Ledger + Fraud ML Model)</div>
+              <div><strong>Outcome:</strong> CI/CD Build Fail (Exit code 1) + Issue SEC-GOV-902</div>
+            </div>
+          </div>
+          <a href="index.html?scenario=breaking_drift&autorun=true" class="btn">🚀 Launch &amp; Execute Scenario</a>
+        </div>
+
+        <!-- Scenario 4: Repeat Offender Dataset -->
+        <div class="scenario-card">
+          <div>
+            <div class="scenario-header">
+              <div class="scenario-title">4. Repeat Offender Dataset</div>
+              <span class="badge badge-amber">HITL ESCALATION</span>
+            </div>
+            <p class="scenario-desc">
+              Dataset with multiple recurring governance breaches across sprint runs. Activates <strong>Governance Memory</strong>, escalates risk profile from Standard to Critical Block under Invariant G-4, and generates Jira / ServiceNow / Slack dispatch packages.
+            </p>
+            <div class="scenario-meta">
+              <div><strong>Target Invariant:</strong> G-4 (Mandatory Human-in-the-Loop Approval)</div>
+              <div><strong>Engine:</strong> Governance Memory &amp; Incident Tracker</div>
+              <div><strong>Outcome:</strong> Pipeline lock + Chief Privacy Officer review</div>
+            </div>
+          </div>
+          <a href="index.html?scenario=repeat_offender&autorun=true" class="btn">🚀 Launch &amp; Execute Scenario</a>
+        </div>
+
+        <!-- Scenario 5: Policy Compiler Workflow -->
+        <div class="scenario-card">
+          <div>
+            <div class="scenario-header">
+              <div class="scenario-title">5. Policy Compiler Workflow</div>
+              <span class="badge badge-purple">NATURAL LANGUAGE NLP</span>
+            </div>
+            <p class="scenario-desc">
+              Demonstrates translation of non-technical English policies (e.g. <em>"Marketing datasets containing customer phone numbers must be masked"</em>) into deterministic Tier 1 AST Invariants with cryptographic SHA-256 rule hashes.
+            </p>
+            <div class="scenario-meta">
+              <div><strong>Feature:</strong> Zero-Shot Natural Language Policy Compiler</div>
+              <div><strong>Deliverable:</strong> AST Invariant G-4 + Scanner Regex + Rule Hash</div>
+              <div><strong>Outcome:</strong> Instant compile to Tier 4 deterministic engine</div>
+            </div>
+          </div>
+          <a href="index.html?scenario=policy_compiler&autorun=true" class="btn">🚀 Launch &amp; Execute Scenario</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    const STORAGE_KEY_THEME = 'edga_theme';
+    window.toggleTheme = function() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(STORAGE_KEY_THEME, next);
+      document.getElementById('themeBtn').textContent = next === 'light' ? '☀️ Light Theme' : '🌙 Dark Theme';
+    };
+
+    function init() {
+      const savedTheme = localStorage.getItem(STORAGE_KEY_THEME) || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeBtn').textContent = savedTheme === 'light' ? '☀️ Light Theme' : '🌙 Dark Theme';
+    }
+    init();
+  </script>
+</body>
+</html>

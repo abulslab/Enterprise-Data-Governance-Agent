@@ -128,47 +128,80 @@
       width: 100%;
     }
 
-    header {
+    .top-nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 24px;
-      padding-bottom: 18px;
+      padding-bottom: 16px;
       border-bottom: 1px solid var(--card-border);
       flex-wrap: wrap;
       gap: 16px;
     }
 
-    .brand {
+    .nav-brand {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
     }
 
     .brand-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       background: linear-gradient(135deg, #4f46e5, #7c3aed);
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: 0 8px 18px var(--accent-glow);
-      font-size: 24px;
+      font-size: 22px;
       color: white;
     }
 
     .brand-title h1 {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 800;
       letter-spacing: -0.02em;
       color: var(--text);
     }
 
     .brand-title p {
-      font-size: 0.78rem;
+      font-size: 0.73rem;
       color: var(--text-muted);
       font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 10px;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--section-box-bg);
+    }
+
+    .nav-link.active {
+      color: var(--accent);
+      background: var(--purple-bg);
+      border: 1px solid var(--purple-border);
     }
 
     .header-actions {
@@ -215,25 +248,36 @@
       transform: translateY(-1px);
     }
 
-    .llm-badge-btn {
-      background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1));
+    .runtime-status-pill {
+      background: var(--card-bg);
       border: 1px solid var(--purple-border);
-      color: var(--purple-text);
+      color: var(--text);
       padding: 6px 14px;
       border-radius: 10px;
       font-size: 0.76rem;
       font-weight: 700;
-      cursor: pointer;
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       transition: all 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
-    .llm-badge-btn:hover {
+    .runtime-status-pill:hover {
       background: var(--purple-bg);
+      border-color: var(--accent);
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px var(--accent-glow);
     }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-green { background: #10b981; box-shadow: 0 0 8px #10b981; }
+    .dot-amber { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
+    .dot-red { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
 
     .grid {
       display: grid;
@@ -581,23 +625,30 @@
 </head>
 <body>
   <div class="container">
-    <header>
-      <div class="brand">
+    <!-- TOP ENTERPRISE NAVBAR -->
+    <nav class="top-nav">
+      <a href="index.html" class="nav-brand" style="text-decoration: none; display: flex; align-items: center; gap: 12px; color: inherit;">
         <div class="brand-icon">🛡️</div>
         <div class="brand-title">
           <h1>Enterprise Data Governance Agent Studio</h1>
           <p>Autonomous Lakehouse Data Governance, Contract Enforcement & Blast Radius Intelligence</p>
         </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active">🛡️ Governance Studio</a>
+        <a href="reasoning-runtime.html" class="nav-link">🧠 Reasoning Runtime Gateway</a>
+        <a href="architecture.html" class="nav-link">🏛️ Architecture</a>
+        <a href="demo-scenarios.html" class="nav-link">🎬 Demo Scenarios</a>
       </div>
       <div class="header-actions">
         <span class="badge badge-purple">4-Tier Cognitive</span>
-        <span class="badge badge-green">0-Token Scanner</span>
-        <button class="llm-badge-btn" onclick="openLlmModal()" id="llmHeaderBtn">
-          <span>⚙️ LLM: Mock Cassette</span>
-        </button>
+        <a href="reasoning-runtime.html" class="runtime-status-pill" id="headerRuntimeBadge" title="Click to open Reasoning Runtime Gateway">
+          <span class="status-dot dot-green" id="headerStatusDot"></span>
+          <span id="headerRuntimeText">Current Runtime: Mock</span>
+        </a>
         <button class="header-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Theme</button>
       </div>
-    </header>
+    </nav>
 
     <div class="grid">
       <!-- Left Panel: Input & Configuration -->
@@ -610,8 +661,11 @@
         <div class="form-group">
           <label>Load Scenario Preset</label>
           <select id="presetSelect" onchange="loadPreset()">
-            <option value="critical_pii">Violation: Finance Customer Data (Cleartext SSN in Confidential) -> QUARANTINE</option>
-            <option value="breaking_drift">Violation: Breaking Contract Drift (Customer ID Dropped) -> BLOCK_DEPLOYMENT</option>
+            <option value="critical_pii">Scenario 1: Finance Customer Data (Cleartext SSN in Confidential) -> QUARANTINE</option>
+            <option value="card_pan">Scenario 2: Payment Transaction Stream (Credit Card PAN Exposure) -> QUARANTINE</option>
+            <option value="breaking_drift">Scenario 3: Breaking Contract Drift (Customer ID Dropped) -> BLOCK_DEPLOYMENT</option>
+            <option value="repeat_offender">Scenario 4: Repeat Offender Dataset (Multiple Prior Breaches) -> HITL ESCALATION</option>
+            <option value="policy_compiler">Scenario 5: Natural Language Policy Compiler -> AST INVARIANT COMPILE</option>
             <option value="clean_evolution">Evolution: Optional Column Added (Masked PII) -> APPROVE_WITH_WARNING</option>
             <option value="clean_exact">Compliant: Exact Contract Match (Zero Drift) -> APPROVE</option>
           </select>
@@ -881,80 +935,7 @@ Select an enterprise incident platform above to view the synthesized escalation 
     </div>
   </div>
 
-  <!-- LLM CONFIGURATION MODAL -->
-  <div class="modal-overlay" id="llmModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <strong style="font-size: 1rem; color: var(--text);">⚙️ Configure LLM Reasoning Provider</strong>
-        <button class="modal-close" onclick="closeLlmModal()">✕</button>
-      </div>
-
-      <div class="form-group">
-        <label>Select Reasoning Provider</label>
-        <select id="modalProviderSelect" onchange="updateModalProviderView()">
-          <option value="mock">Offline Realistic Mock (1ms, 0 Tokens Consumed)</option>
-          <option value="gemini">Google Gemini Cloud (API Key)</option>
-          <option value="ollama">Local Ollama (Private Air-Gapped Daemon)</option>
-          <option value="custom">Any LLM / OpenAI Compatible (OpenAI, Groq, vLLM, DeepSeek, etc.)</option>
-        </select>
-      </div>
-
-      <!-- Gemini Settings -->
-      <div id="modalGeminiFields" style="display: none;">
-        <div class="form-group">
-          <label>Google AI Studio API Key</label>
-          <div class="input-row">
-            <input type="password" id="modalGeminiKey" placeholder="Paste AIzaSy... API key" />
-            <button class="toggle-pwd" type="button" onclick="toggleModalKeyVisibility('modalGeminiKey')">👁️</button>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Gemini Model</label>
-          <select id="modalGeminiModel">
-            <option value="gemini-2.5-flash">gemini-2.5-flash (Fast & Frontier - Recommended)</option>
-            <option value="gemini-1.5-flash">gemini-1.5-flash (Lightweight)</option>
-            <option value="gemini-1.5-pro">gemini-1.5-pro (Deep Multimodal Reasoning)</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Ollama Settings -->
-      <div id="modalOllamaFields" style="display: none;">
-        <div class="form-group">
-          <label>Ollama Daemon URL</label>
-          <input type="text" id="modalOllamaUrl" value="http://localhost:11434" />
-        </div>
-        <div class="form-group">
-          <label>Ollama Model</label>
-          <input type="text" id="modalOllamaModel" value="llama3:latest" placeholder="llama3:latest, qwen2.5:latest, etc." />
-        </div>
-      </div>
-
-      <!-- Custom / OpenAI Compatible Settings -->
-      <div id="modalCustomFields" style="display: none;">
-        <div class="form-group">
-          <label>Base URL Endpoint</label>
-          <input type="text" id="modalCustomUrl" value="https://api.openai.com/v1" placeholder="e.g. https://api.openai.com/v1 or https://api.groq.com/openai/v1" />
-        </div>
-        <div class="form-group">
-          <label>API Key / Bearer Token</label>
-          <div class="input-row">
-            <input type="password" id="modalCustomKey" placeholder="sk-... Bearer token" />
-            <button class="toggle-pwd" type="button" onclick="toggleModalKeyVisibility('modalCustomKey')">👁️</button>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Model Identifier</label>
-          <input type="text" id="modalCustomModel" value="gpt-4o" placeholder="gpt-4o, llama-3.3-70b-versatile, deepseek-chat, etc." />
-        </div>
-      </div>
-
-      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
-        <button class="btn-secondary" onclick="closeLlmModal()">Cancel</button>
-        <button class="btn" style="width: auto; padding: 10px 20px;" onclick="saveLlmModalSettings()">Save & Apply</button>
-      </div>
-    </div>
-  </div>
+  <!-- REASONING RUNTIME GATEWAY: Configured via dedicated page /reasoning-runtime -->
 
   <div class="toast" id="toast"></div>
 
@@ -1095,6 +1076,102 @@ Select an enterprise incident platform above to view the synthesized escalation 
           ],
           registeredConsumers: []
         }
+      },
+      card_pan: {
+        candidate: {
+          datasetUrn: "urn:datacatalog:production:payments:transactions_live_v1",
+          datasetName: "Global Payment Ingestion Stream (Candidate v1)",
+          classificationTier: "CONFIDENTIAL",
+          schemaVersion: "1.0.0",
+          storageTarget: "STREAM_TOPIC",
+          columns: [
+            { name: "txn_id", type: "uuid", nullable: false },
+            { name: "merchant_id", type: "string", nullable: false },
+            { name: "card_pan", type: "string", nullable: false },
+            { name: "amount_cents", type: "bigint", nullable: false },
+            { name: "currency", type: "string", nullable: false }
+          ],
+          sampleRecords: [
+            { txn_id: "txn-449102-a", merchant_id: "MERCH-9901", card_pan: "4111111111111111", amount_cents: 5420, currency: "USD" },
+            { txn_id: "txn-449103-b", merchant_id: "MERCH-3320", card_pan: "5500000000000004", amount_cents: 12890, currency: "EUR" }
+          ]
+        },
+        baseline: {
+          datasetUrn: "urn:datacatalog:production:payments:transactions_live_v1",
+          contractVersion: "1.0.0",
+          minimumClassificationTier: "RESTRICTED",
+          allowedMutations: ["ADD_NULLABLE_COLUMN"],
+          prohibitedMutations: ["DROP_COLUMN", "UNENCRYPTED_CARD_PAN"],
+          columns: [
+            { name: "txn_id", type: "uuid", nullable: false },
+            { name: "merchant_id", type: "string", nullable: false },
+            { name: "tokenized_card_ref", type: "string", nullable: false },
+            { name: "amount_cents", type: "bigint", nullable: false },
+            { name: "currency", type: "string", nullable: false }
+          ],
+          registeredConsumers: [
+            { id: "c-pay", serviceName: "Settlement & Clearing Engine", consumerType: "SETTLEMENT", ownerTeam: "Payments Core", dependentFields: ["txn_id", "tokenized_card_ref"], slaTier: "TIER_1_CRITICAL" }
+          ]
+        }
+      },
+      repeat_offender: {
+        candidate: {
+          datasetUrn: "urn:datacatalog:production:marketing:lead_events_unvaulted",
+          datasetName: "Marketing Lead Ingestion (Repeat Offender Partition)",
+          classificationTier: "CONFIDENTIAL",
+          schemaVersion: "2.1.0",
+          storageTarget: "LAKEHOUSE",
+          columns: [
+            { name: "lead_id", type: "uuid", nullable: false },
+            { name: "taxpayer_ssn", type: "string", nullable: false },
+            { name: "email_address", type: "string", nullable: false },
+            { name: "campaign_id", type: "string", nullable: false }
+          ],
+          sampleRecords: [
+            { lead_id: "lead-0012", taxpayer_ssn: "123-45-6789", email_address: "lead@example.com", campaign_id: "Q4_GROWTH" }
+          ]
+        },
+        baseline: {
+          datasetUrn: "urn:datacatalog:production:marketing:lead_events_v1",
+          contractVersion: "1.0.0",
+          minimumClassificationTier: "CONFIDENTIAL",
+          allowedMutations: ["ADD_NULLABLE_COLUMN"],
+          prohibitedMutations: ["DROP_COLUMN"],
+          columns: [
+            { name: "lead_id", type: "uuid", nullable: false },
+            { name: "email_address", type: "string", nullable: false },
+            { name: "campaign_id", type: "string", nullable: false }
+          ],
+          registeredConsumers: []
+        }
+      },
+      policy_compiler: {
+        candidate: {
+          datasetUrn: "urn:datacatalog:production:marketing:contact_sync",
+          datasetName: "Contact Sync Stream",
+          classificationTier: "CONFIDENTIAL",
+          schemaVersion: "1.0.0",
+          storageTarget: "LAKEHOUSE",
+          columns: [
+            { name: "contact_id", type: "uuid", nullable: false },
+            { name: "phone_number", type: "string", nullable: false }
+          ],
+          sampleRecords: [
+            { contact_id: "c-101", phone_number: "202-555-0199" }
+          ]
+        },
+        baseline: {
+          datasetUrn: "urn:datacatalog:production:marketing:contact_sync",
+          contractVersion: "1.0.0",
+          minimumClassificationTier: "CONFIDENTIAL",
+          allowedMutations: ["ADD_NULLABLE_COLUMN"],
+          prohibitedMutations: ["DROP_COLUMN"],
+          columns: [
+            { name: "contact_id", type: "uuid", nullable: false },
+            { name: "phone_number", type: "string", nullable: false }
+          ],
+          registeredConsumers: []
+        }
       }
     };
 
@@ -1130,65 +1207,17 @@ Select an enterprise incident platform above to view the synthesized escalation 
     window.switchTab = function(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(tabId).style.display = 'block';
-      document.getElementById(`tab-${tabId}`).classList.add('active');
+      const target = document.getElementById(tabId);
+      if (target) target.style.display = 'block';
+      const btn = document.getElementById(`tab-${tabId}`);
+      if (btn) btn.classList.add('active');
     };
 
-    // LLM Modal Handlers
+    // LLM Gateway Navigation (Replacing modal with dedicated workspace page)
     window.openLlmModal = function() {
-      document.getElementById('llmModal').style.display = 'flex';
-      const prov = localStorage.getItem(STORAGE_KEY_PROVIDER) || 'mock';
-      document.getElementById('modalProviderSelect').value = prov;
-      updateModalProviderView();
+      window.location.href = 'reasoning-runtime.html';
     };
-
-    window.closeLlmModal = function() {
-      document.getElementById('llmModal').style.display = 'none';
-    };
-
-    window.updateModalProviderView = function() {
-      const prov = document.getElementById('modalProviderSelect').value;
-      document.getElementById('modalGeminiFields').style.display = prov === 'gemini' ? 'block' : 'none';
-      document.getElementById('modalOllamaFields').style.display = prov === 'ollama' ? 'block' : 'none';
-      document.getElementById('modalCustomFields').style.display = prov === 'custom' ? 'block' : 'none';
-    };
-
-    window.toggleModalKeyVisibility = function(targetId = 'modalGeminiKey') {
-      const input = document.getElementById(targetId);
-      if (input) input.type = input.type === 'password' ? 'text' : 'password';
-    };
-
-    window.saveLlmModalSettings = function() {
-      const prov = document.getElementById('modalProviderSelect').value;
-      localStorage.setItem(STORAGE_KEY_PROVIDER, prov);
-
-      if (prov === 'gemini') {
-        const key = document.getElementById('modalGeminiKey').value.trim();
-        const model = document.getElementById('modalGeminiModel').value;
-        if (key) localStorage.setItem(STORAGE_KEY_GEMINI, key);
-        localStorage.setItem(STORAGE_KEY_GEMINI_MODEL, model);
-        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: Gemini (${model})</span>`;
-      } else if (prov === 'ollama') {
-        const url = document.getElementById('modalOllamaUrl').value.trim();
-        const model = document.getElementById('modalOllamaModel').value.trim();
-        localStorage.setItem(STORAGE_KEY_OLLAMA_URL, url);
-        localStorage.setItem(STORAGE_KEY_OLLAMA_MODEL, model);
-        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: Ollama (${model.split(':')[0]})</span>`;
-      } else if (prov === 'custom') {
-        const url = document.getElementById('modalCustomUrl').value.trim();
-        const key = document.getElementById('modalCustomKey').value.trim();
-        const model = document.getElementById('modalCustomModel').value.trim();
-        localStorage.setItem(STORAGE_KEY_CUSTOM_URL, url);
-        if (key) localStorage.setItem(STORAGE_KEY_CUSTOM_KEY, key);
-        localStorage.setItem(STORAGE_KEY_CUSTOM_MODEL, model);
-        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: ${model || 'Custom'}</span>`;
-      } else {
-        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: Mock (0-Token)</span>`;
-      }
-
-      closeLlmModal();
-      showToast('LLM Configuration Saved!');
-    };
+    window.closeLlmModal = function() {};
 
     window.showToast = function(msg) {
       const t = document.getElementById('toast');
@@ -1344,36 +1373,63 @@ Select an enterprise incident platform above to view the synthesized escalation 
     function initSavedConfigs() {
       const savedTheme = localStorage.getItem(STORAGE_KEY_THEME) || 'light';
       document.documentElement.setAttribute('data-theme', savedTheme);
-      document.getElementById('themeBtn').textContent = savedTheme === 'light' ? '☀️ Light Theme' : '🌙 Dark Theme';
+      const themeBtn = document.getElementById('themeBtn');
+      if (themeBtn) themeBtn.textContent = savedTheme === 'light' ? '☀️ Light Theme' : '🌙 Dark Theme';
 
       const prov = localStorage.getItem(STORAGE_KEY_PROVIDER) || 'mock';
-      const key = localStorage.getItem(STORAGE_KEY_GEMINI) || '';
       const geminiModel = localStorage.getItem(STORAGE_KEY_GEMINI_MODEL) || 'gemini-2.5-flash';
-      const ollamaUrl = localStorage.getItem(STORAGE_KEY_OLLAMA_URL) || 'http://localhost:11434';
       const ollamaModel = localStorage.getItem(STORAGE_KEY_OLLAMA_MODEL) || 'llama3:latest';
-      const customUrl = localStorage.getItem(STORAGE_KEY_CUSTOM_URL) || 'https://api.openai.com/v1';
-      const customKey = localStorage.getItem(STORAGE_KEY_CUSTOM_KEY) || '';
       const customModel = localStorage.getItem(STORAGE_KEY_CUSTOM_MODEL) || 'gpt-4o';
 
-      document.getElementById('modalGeminiKey').value = key;
-      document.getElementById('modalGeminiModel').value = geminiModel;
-      document.getElementById('modalOllamaUrl').value = ollamaUrl;
-      document.getElementById('modalOllamaModel').value = ollamaModel;
-      document.getElementById('modalCustomUrl').value = customUrl;
-      document.getElementById('modalCustomKey').value = customKey;
-      document.getElementById('modalCustomModel').value = customModel;
+      const headerRuntimeText = document.getElementById('headerRuntimeText');
+      const headerStatusDot = document.getElementById('headerStatusDot');
 
-      if (prov === 'gemini') {
-        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: Gemini (${geminiModel})</span>`;
-      } else if (prov === 'ollama') {
-        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: Ollama (${ollamaModel.split(':')[0]})</span>`;
-      } else if (prov === 'custom') {
-        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: ${customModel || 'Custom'}</span>`;
-      } else {
-        document.getElementById('llmHeaderBtn').innerHTML = `<span>⚙️ LLM: Mock (0-Token)</span>`;
+      if (headerRuntimeText) {
+        if (prov === 'gemini') {
+          headerRuntimeText.textContent = `Current Runtime: Google Gemini (${geminiModel})`;
+          if (headerStatusDot) headerStatusDot.className = 'status-dot dot-green';
+        } else if (prov === 'ollama') {
+          headerRuntimeText.textContent = `Current Runtime: Ollama (${ollamaModel.split(':')[0]})`;
+          if (headerStatusDot) headerStatusDot.className = 'status-dot dot-green';
+        } else if (prov === 'custom') {
+          headerRuntimeText.textContent = `Current Runtime: OpenAI-Compatible (${customModel || 'vLLM'})`;
+          if (headerStatusDot) headerStatusDot.className = 'status-dot dot-green';
+        } else {
+          headerRuntimeText.textContent = 'Current Runtime: Mock (Deterministic)';
+          if (headerStatusDot) headerStatusDot.className = 'status-dot dot-green';
+        }
       }
 
       loadPreset();
+
+      // Check URL parameters for 1-Click Demo Scenarios (/demo-scenarios)
+      const urlParams = new URLSearchParams(window.location.search);
+      const scenarioParam = urlParams.get('scenario');
+      const autorunParam = urlParams.get('autorun');
+      if (scenarioParam) {
+        if (scenarioParam === 'repeat_offender') {
+          document.getElementById('presetSelect').value = 'repeat_offender';
+          window.loadPreset();
+          window.switchTab('memoryTab');
+          window.simulateRepeatViolation();
+          window.simulateRepeatViolation();
+          if (autorunParam === 'true') {
+            setTimeout(() => { window.runAudit(); }, 350);
+          }
+        } else if (scenarioParam === 'policy_compiler') {
+          document.getElementById('presetSelect').value = 'policy_compiler';
+          window.loadPreset();
+          window.switchTab('autofixTab');
+          document.getElementById('nlPolicyInput').value = "All customer phone numbers and payment card records in marketing lakehouse must be salted with HMAC-SHA256";
+          window.compileNlPolicy();
+        } else if (PRESETS[scenarioParam]) {
+          document.getElementById('presetSelect').value = scenarioParam;
+          window.loadPreset();
+          if (autorunParam === 'true') {
+            setTimeout(() => { window.runAudit(); }, 350);
+          }
+        }
+      }
     }
 
     // Call Gemini API directly from browser

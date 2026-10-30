@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architecture & Topologies — Enterprise Data Governance Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-gradient: radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.07) 0px, transparent 50%),
+                     radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%),
+                     #f8fafc;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(226, 232, 240, 0.6);
+      --section-box-bg: #f1f5f9;
+      --section-box-border: #e2e8f0;
+      --accent: #4f46e5;
+      --accent-glow: rgba(79, 70, 229, 0.25);
+      --text: #0f172a;
+      --text-muted: #475569;
+      --purple-bg: #f5f3ff;
+      --purple-border: #ddd6fe;
+      --purple-text: #5b21b6;
+    }
+    [data-theme="dark"] {
+      --bg: #070a11;
+      --bg-gradient: radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.15) 0px, transparent 50%),
+                     radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
+                     #070a11;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+      --section-box-bg: rgba(10, 15, 29, 0.65);
+      --section-box-border: rgba(255, 255, 255, 0.08);
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.35);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --purple-bg: rgba(139, 92, 246, 0.15);
+      --purple-border: rgba(139, 92, 246, 0.3);
+      --purple-text: #c4b5fd;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--bg);
+      background-image: var(--bg-gradient);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .container { max-width: 1440px; margin: 0 auto; width: 100%; }
+
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 8px 16px var(--accent-glow);
+    }
+    .brand-title h1 { font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em; }
+    .brand-title p { font-size: 0.73rem; color: var(--text-muted); margin-top: 2px; }
+
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+    .nav-link:hover { color: var(--text); background: var(--section-box-bg); }
+    .nav-link.active {
+      color: var(--accent);
+      background: var(--purple-bg);
+      border: 1px solid var(--purple-border);
+    }
+    .header-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 24px;
+    }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text);
+    }
+    .card-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.45;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-purple { background: var(--purple-bg); color: var(--purple-text); border: 1px solid var(--purple-border); }
+
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 1024px) { .tiers-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .tiers-grid { grid-template-columns: 1fr; } }
+
+    .tier-box {
+      background: var(--section-box-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px;
+      border-top: 4px solid var(--accent);
+    }
+    .tier-num { font-size: 0.7rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .tier-name { font-size: 0.95rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .tier-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.45; }
+
+    .topo-diagram {
+      background: var(--section-box-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="top-nav">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">🛡️</div>
+        <div class="brand-title">
+          <h1>Enterprise Data Governance Agent</h1>
+          <p>Autonomous Lakehouse Governance, Contract Enforcement & Blast Radius Intelligence</p>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">🛡️ Governance Studio</a>
+        <a href="reasoning-runtime.html" class="nav-link">🧠 Reasoning Runtime Gateway</a>
+        <a href="architecture.html" class="nav-link active">🏛️ Architecture</a>
+        <a href="demo-scenarios.html" class="nav-link">🎬 Demo Scenarios</a>
+      </div>
+      <div class="header-actions">
+        <span class="badge badge-purple">Recruiter & Architect Reference</span>
+        <button class="header-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Theme</button>
+      </div>
+    </nav>
+
+    <!-- 4-TIER COGNITIVE ARCHITECTURE -->
+    <div class="card">
+      <div class="card-title">
+        <span>The Four-Tier Cognitive Governance Architecture</span>
+        <span class="badge badge-purple">Deterministic + AI Hybrid</span>
+      </div>
+      <div class="card-subtitle">
+        Architectural separation of immutable safety invariants, statutory frameworks, cognitive OODA reasoning, and zero-token deterministic engines.
+      </div>
+
+      <div class="tiers-grid">
+        <div class="tier-box" style="border-top-color: #dc2626;">
+          <div class="tier-num">Tier 1</div>
+          <div class="tier-name">System Invariants</div>
+          <div class="tier-desc">
+            Immutable operating principles defined in <code>AGENTS.md</code>: Invariants G-1 (Zero unmasked PII outside vaults), G-2 (Contracts cannot be broken), G-3 (Auditable compliance dossiers), G-4 (Mandatory HITL on critical breaches), G-5 (Deterministic evidence required).
+          </div>
+        </div>
+
+        <div class="tier-box" style="border-top-color: #d97706;">
+          <div class="tier-num">Tier 2</div>
+          <div class="tier-name">Governance Policies</div>
+          <div class="tier-desc">
+            Statutory legal and regulatory mapping: GDPR Art 32 & 5(1)(f), HIPAA 45 CFR § 164.514 Safe Harbor, GLBA 15 U.S.C. § 6801(b) Safeguards Rule, and PCI-DSS Requirement 3.4 for unreadable primary account numbers.
+          </div>
+        </div>
+
+        <div class="tier-box" style="border-top-color: #7c3aed;">
+          <div class="tier-num">Tier 3</div>
+          <div class="tier-name">Autonomous OODA Agent</div>
+          <div class="tier-desc">
+            Autonomous cognitive reasoning loop: OBSERVE ➔ REASON ➔ DECIDE ➔ EXECUTE. Evaluates downstream consumer blast radius and coordinates multi-agent consensus debate via Tri-Mode Gateway.
+          </div>
+        </div>
+
+        <div class="tier-box" style="border-top-color: #059669;">
+          <div class="tier-num">Tier 4</div>
+          <div class="tier-name">Deterministic Engine</div>
+          <div class="tier-desc">
+            100% zero-token offloading: regex patterns (SSN, Email, Phone, IBAN, Passport), mathematical checksums (Luhn Mod 10 PAN, ABA Federal Reserve Routing mod-10), and AST schema contract differ (&lt; 2ms).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOPOLOGY 1: GOVERNANCE WORKFLOW SEQUENCE -->
+    <div class="card">
+      <div class="card-title">
+        <span>1. Governance Workflow Sequence Diagram</span>
+        <span class="badge badge-purple">End-to-End Pipeline</span>
+      </div>
+      <div class="card-subtitle">
+        Sequence from schema commit / event arrival through deterministic offloading, OODA reasoning, and pipeline gating.
+      </div>
+      <div class="topo-diagram">
+        <svg width="100%" height="220" viewBox="0 0 900 220">
+          <!-- Actors -->
+          <rect x="20" y="10" width="120" height="35" rx="8" fill="#4f46e5" />
+          <text x="80" y="32" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">Data Pipeline</text>
+
+          <rect x="240" y="10" width="140" height="35" rx="8" fill="#059669" />
+          <text x="310" y="32" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">Tier 4 Deterministic</text>
+
+          <rect x="480" y="10" width="140" height="35" rx="8" fill="#7c3aed" />
+          <text x="550" y="32" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">Tier 3 OODA Reasoner</text>
+
+          <rect x="720" y="10" width="140" height="35" rx="8" fill="#0f172a" />
+          <text x="790" y="32" fill="#fff" font-size="11" font-weight="700" text-anchor="middle">CI/CD & Gate</text>
+
+          <!-- Lifelines -->
+          <line x1="80" y1="45" x2="80" y2="210" stroke="#cbd5e1" stroke-dasharray="4" />
+          <line x1="310" y1="45" x2="310" y2="210" stroke="#cbd5e1" stroke-dasharray="4" />
+          <line x1="550" y1="45" x2="550" y2="210" stroke="#cbd5e1" stroke-dasharray="4" />
+          <line x1="790" y1="45" x2="790" y2="210" stroke="#cbd5e1" stroke-dasharray="4" />
+
+          <!-- Message 1 -->
+          <line x1="80" y1="70" x2="310" y2="70" stroke="#4f46e5" stroke-width="2" />
+          <text x="195" y="65" fill="#475569" font-size="9" font-weight="600" text-anchor="middle">1. Submit Schema &amp; Samples</text>
+
+          <!-- Message 2 -->
+          <line x1="310" y1="105" x2="550" y2="105" stroke="#059669" stroke-width="2" />
+          <text x="430" y="100" fill="#475569" font-size="9" font-weight="600" text-anchor="middle">2. Findings &amp; AST Diffs (0 Tokens, &lt;2ms)</text>
+
+          <!-- Message 3 -->
+          <line x1="550" y1="140" x2="790" y2="140" stroke="#7c3aed" stroke-width="2" />
+          <text x="670" y="135" fill="#475569" font-size="9" font-weight="600" text-anchor="middle">3. OODA Decision + Remediation SQL</text>
+
+          <!-- Message 4 Return -->
+          <line x1="790" y1="180" x2="80" y2="180" stroke="#dc2626" stroke-width="2" stroke-dasharray="4" />
+          <text x="435" y="175" fill="#dc2626" font-size="9" font-weight="700" text-anchor="middle">4. Emit Exit Code (0 = PASS / 1 = BLOCK)</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- TOPOLOGY 2: CI/CD & STREAMING TOPOLOGIES -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+      <!-- CI/CD Gate -->
+      <div class="card">
+        <div class="card-title">
+          <span>2. CI/CD Deployment Gate</span>
+          <span class="badge badge-purple">Shift-Left</span>
+        </div>
+        <div class="card-subtitle">
+          Pull request pre-merge enforcement in GitHub Actions, GitLab CI, or Azure DevOps.
+        </div>
+        <div class="topo-diagram">
+          <svg width="100%" height="140" viewBox="0 0 420 140">
+            <rect x="10" y="45" width="90" height="50" rx="8" fill="#4f46e5" />
+            <text x="55" y="75" fill="#fff" font-size="10" font-weight="700" text-anchor="middle">PR Commit</text>
+
+            <line x1="100" y1="70" x2="150" y2="70" stroke="#94a3b8" stroke-width="2" />
+
+            <rect x="150" y="35" width="120" height="70" rx="8" fill="#ffffff" stroke="#7c3aed" stroke-width="2" />
+            <text x="210" y="65" fill="#5b21b6" font-size="10" font-weight="800" text-anchor="middle">Governance Gate</text>
+            <text x="210" y="82" fill="#7c3aed" font-size="8" text-anchor="middle">CLI Invariant Check</text>
+
+            <line x1="270" y1="55" x2="330" y2="35" stroke="#059669" stroke-width="2" />
+            <rect x="330" y="15" width="80" height="40" rx="6" fill="#ecfdf5" stroke="#059669" />
+            <text x="370" y="38" fill="#065f46" font-size="9" font-weight="700" text-anchor="middle">Merge (Exit 0)</text>
+
+            <line x1="270" y1="85" x2="330" y2="105" stroke="#dc2626" stroke-width="2" />
+            <rect x="330" y="85" width="80" height="40" rx="6" fill="#fef2f2" stroke="#dc2626" />
+            <text x="370" y="108" fill="#991b1b" font-size="9" font-weight="700" text-anchor="middle">Block (Exit 1)</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Streaming Ingestion -->
+      <div class="card">
+        <div class="card-title">
+          <span>3. Streaming Ingestion Boundary</span>
+          <span class="badge badge-purple">Kafka / Kinesis</span>
+        </div>
+        <div class="card-subtitle">
+          Real-time micro-batch interception routing clean events to Lakehouse and toxic data to DLQ.
+        </div>
+        <div class="topo-diagram">
+          <svg width="100%" height="140" viewBox="0 0 420 140">
+            <rect x="10" y="45" width="90" height="50" rx="8" fill="#334155" />
+            <text x="55" y="70" fill="#fff" font-size="10" font-weight="700" text-anchor="middle">Kafka Topic</text>
+            <text x="55" y="84" fill="#94a3b8" font-size="8" text-anchor="middle">Incoming Events</text>
+
+            <line x1="100" y1="70" x2="150" y2="70" stroke="#94a3b8" stroke-width="2" />
+
+            <rect x="150" y="35" width="120" height="70" rx="8" fill="#ffffff" stroke="#4f46e5" stroke-width="2" />
+            <text x="210" y="65" fill="#4338ca" font-size="10" font-weight="800" text-anchor="middle">Agent Filter</text>
+            <text x="210" y="82" fill="#6366f1" font-size="8" text-anchor="middle">Micro-batch Scan</text>
+
+            <line x1="270" y1="55" x2="330" y2="35" stroke="#059669" stroke-width="2" />
+            <rect x="330" y="15" width="80" height="40" rx="6" fill="#ecfdf5" stroke="#059669" />
+            <text x="370" y="38" fill="#065f46" font-size="9" font-weight="700" text-anchor="middle">Delta Lake</text>
+
+            <line x1="270" y1="85" x2="330" y2="105" stroke="#dc2626" stroke-width="2" />
+            <rect x="330" y="85" width="80" height="40" rx="6" fill="#fef2f2" stroke="#dc2626" />
+            <text x="370" y="108" fill="#991b1b" font-size="9" font-weight="700" text-anchor="middle">Quarantine DLQ</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOPOLOGY 3: HITL ESCALATION WORKFLOW & BLAST RADIUS FLOW -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+      <!-- HITL Workflow -->
+      <div class="card">
+        <div class="card-title">
+          <span>4. Human-In-The-Loop Escalation</span>
+          <span class="badge badge-purple">Invariant G-4</span>
+        </div>
+        <div class="card-subtitle">
+          Supervisory gating dispatches structured incident payloads to Jira, ServiceNow, Slack, and Teams.
+        </div>
+        <div class="topo-diagram">
+          <svg width="100%" height="140" viewBox="0 0 420 140">
+            <rect x="15" y="45" width="110" height="50" rx="8" fill="#fef2f2" stroke="#dc2626" />
+            <text x="70" y="68" fill="#991b1b" font-size="10" font-weight="800" text-anchor="middle">Critical Breach</text>
+            <text x="70" y="82" fill="#dc2626" font-size="8" text-anchor="middle">Invariant G-1/G-2</text>
+
+            <line x1="125" y1="70" x2="175" y2="70" stroke="#dc2626" stroke-width="2" />
+
+            <rect x="175" y="35" width="110" height="70" rx="8" fill="#ffffff" stroke="#d97706" stroke-width="2" />
+            <text x="230" y="65" fill="#92400e" font-size="10" font-weight="800" text-anchor="middle">Supervisory Gate</text>
+            <text x="230" y="82" fill="#b45309" font-size="8" text-anchor="middle">Auto-Approval Veto</text>
+
+            <line x1="285" y1="70" x2="325" y2="70" stroke="#94a3b8" stroke-width="2" />
+
+            <rect x="325" y="20" width="85" height="100" rx="8" fill="#f1f5f9" stroke="#cbd5e1" />
+            <text x="367" y="42" fill="#0f172a" font-size="9" font-weight="700" text-anchor="middle">Jira Issue</text>
+            <text x="367" y="65" fill="#0f172a" font-size="9" font-weight="700" text-anchor="middle">ServiceNow CR</text>
+            <text x="367" y="88" fill="#0f172a" font-size="9" font-weight="700" text-anchor="middle">Slack Alert</text>
+            <text x="367" y="108" fill="#0f172a" font-size="9" font-weight="700" text-anchor="middle">Teams Card</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Blast Radius Analysis Flow -->
+      <div class="card">
+        <div class="card-title">
+          <span>5. Consumer Blast Radius Topology</span>
+          <span class="badge badge-purple">Dependency Mapping</span>
+        </div>
+        <div class="card-subtitle">
+          Interactive evaluation of schema drift impact across registered Tier 1 Critical and Tier 2 downstream services.
+        </div>
+        <div class="topo-diagram">
+          <svg width="100%" height="140" viewBox="0 0 420 140">
+            <rect x="15" y="45" width="120" height="50" rx="8" fill="#4f46e5" />
+            <text x="75" y="68" fill="#fff" font-size="10" font-weight="800" text-anchor="middle">Mutated Schema</text>
+            <text x="75" y="82" fill="#c7d2fe" font-size="8" text-anchor="middle">customer_id Dropped</text>
+
+            <line x1="135" y1="55" x2="230" y2="35" stroke="#dc2626" stroke-width="2" />
+            <rect x="230" y="15" width="175" height="35" rx="6" fill="#fef2f2" stroke="#dc2626" />
+            <text x="317" y="32" fill="#991b1b" font-size="9" font-weight="700" text-anchor="middle">Billing GL Pipeline [Tier 1 Critical]</text>
+            <text x="317" y="44" fill="#dc2626" font-size="7" text-anchor="middle">Broken: customer_id missing</text>
+
+            <line x1="135" y1="70" x2="230" y2="70" stroke="#dc2626" stroke-width="2" />
+            <rect x="230" y="55" width="175" height="35" rx="6" fill="#fef2f2" stroke="#dc2626" />
+            <text x="317" y="72" fill="#991b1b" font-size="9" font-weight="700" text-anchor="middle">Fraud ML Model [Tier 1 Critical]</text>
+            <text x="317" y="84" fill="#dc2626" font-size="7" text-anchor="middle">Broken: Feature pipeline broken</text>
+
+            <line x1="135" y1="85" x2="230" y2="110" stroke="#d97706" stroke-width="2" stroke-dasharray="3" />
+            <rect x="230" y="95" width="175" height="35" rx="6" fill="#fffbeb" stroke="#d97706" />
+            <text x="317" y="112" fill="#92400e" font-size="9" font-weight="700" text-anchor="middle">Executive BI Dashboard [Tier 2]</text>
+            <text x="317" y="124" fill="#b45309" font-size="7" text-anchor="middle">Warning: Metric visual degraded</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    const STORAGE_KEY_THEME = 'edga_theme';
+    window.toggleTheme = function() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(STORAGE_KEY_THEME, next);
+      document.getElementById('themeBtn').textContent = next === 'light' ? '☀️ Light Theme' : '🌙 Dark Theme';
+    };
+
+    function init() {
+      const savedTheme = localStorage.getItem(STORAGE_KEY_THEME) || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeBtn').textContent = savedTheme === 'light' ? '☀️ Light Theme' : '🌙 Dark Theme';
+    }
+    init();
+  </script>
+</body>
+</html>
