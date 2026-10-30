@@ -117,57 +117,63 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--card-border);
-      flex-wrap: wrap;
       gap: 16px;
+      flex-wrap: nowrap;
+    }
+    @media (max-width: 1200px) {
+      .top-nav { flex-wrap: wrap; }
     }
     .nav-brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       text-decoration: none;
       color: inherit;
+      flex-shrink: 0;
     }
     .brand-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
       background: linear-gradient(135deg, #4f46e5, #7c3aed);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
-      box-shadow: 0 8px 16px var(--accent-glow);
+      font-size: 16px;
+      box-shadow: 0 4px 10px var(--accent-glow);
+      color: white;
+      flex-shrink: 0;
     }
-    .brand-title h1 {
-      font-size: 1.15rem;
+    .brand-title {
+      font-size: 0.98rem;
       font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    .brand-title p {
-      font-size: 0.73rem;
-      color: var(--text-muted);
-      margin-top: 2px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      white-space: nowrap;
+      margin: 0;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 4px;
+      flex-wrap: nowrap;
     }
     .nav-link {
       text-decoration: none;
       color: var(--text-muted);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      padding: 8px 14px;
-      border-radius: 10px;
+      padding: 6px 12px;
+      border-radius: 8px;
       transition: all 0.2s;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
     }
     .nav-link:hover {
       color: var(--text);
@@ -182,27 +188,35 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-shrink: 0;
     }
     .header-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       color: var(--text);
-      padding: 6px 14px;
-      border-radius: 10px;
-      font-size: 0.78rem;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 0.75rem;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
       transition: all 0.2s;
+      text-decoration: none;
+      white-space: nowrap;
     }
     .header-btn:hover {
       background: var(--section-box-bg);
       border-color: var(--accent);
       transform: translateY(-1px);
+    }
+    .header-btn.active {
+      color: var(--accent);
+      background: var(--purple-bg);
+      border-color: var(--purple-border);
     }
 
     /* BADGES */
@@ -614,27 +628,19 @@
     <nav class="top-nav">
       <a href="index.html" class="nav-brand">
         <div class="brand-icon">🛡️</div>
-        <div class="brand-title">
-          <h1>Enterprise Data Governance Agent</h1>
-          <p>Autonomous Lakehouse Governance, Contract Enforcement, Compliance Intelligence, Blast Radius Analysis</p>
-        </div>
+        <div class="brand-title">Enterprise Data Governance Agent</div>
       </a>
       <div class="nav-links">
         <a href="index.html" class="nav-link">🛡️ Governance Studio</a>
-        <a href="reasoning-runtime.html" class="nav-link active">🧠 Reasoning Runtime Gateway</a>
         <a href="evidence-vault.html" class="nav-link">🗄️ Evidence Vault</a>
         <a href="executive-dashboard.html" class="nav-link">📊 Executive Dashboard</a>
         <a href="architecture.html" class="nav-link">🏛️ Architecture</a>
         <a href="demo-scenarios.html" class="nav-link">🎬 Demo Scenarios</a>
       </div>
       <div class="header-actions">
+        <a href="reasoning-runtime.html" class="header-btn active" title="Configure LLM Reasoning Provider">🧠 LLM Config</a>
         <span class="badge badge-purple">5-TIER GOVERNANCE</span>
-        <a href="reasoning-runtime.html" class="runtime-status-pill" id="headerRuntimeBadge" title="Click to open Reasoning Runtime Gateway">
-          <span class="status-dot dot-green" id="headerStatusDot"></span>
-          <span id="headerRuntimeText">Current Runtime: Mock</span>
-        </a>
-        <span class="badge badge-green" title="Platform Health: Excellent (94/100)">Platform Health: Excellent</span>
-        <span class="badge badge-purple" title="Compliance Success Rate: 99.2%">Compliance: 99.2%</span>
+        <span class="badge badge-green">Platform Health: Excellent</span>
         <button class="header-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Theme</button>
       </div>
     </nav>
