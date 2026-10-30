@@ -58,18 +58,22 @@
     }
     .container { max-width: 1440px; margin: 0 auto; width: 100%; }
 
-    .top-nav {
+    /* ==========================================================================
+       TWO-ROW ENTERPRISE HEADER (Databricks / ServiceNow / Azure / Atlassian)
+       ========================================================================== */
+    .app-header {
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--card-border);
+      width: 100%;
+    }
+
+    .header-row-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
       padding-bottom: 12px;
       border-bottom: 1px solid var(--card-border);
       gap: 16px;
-      flex-wrap: nowrap;
-    }
-    @media (max-width: 1200px) {
-      .top-nav { flex-wrap: wrap; }
     }
 
     .nav-brand {
@@ -94,7 +98,7 @@
       flex-shrink: 0;
     }
     .brand-title {
-      font-size: 0.98rem;
+      font-size: 1.05rem;
       font-weight: 800;
       letter-spacing: -0.01em;
       color: var(--text);
@@ -102,18 +106,37 @@
       margin: 0;
     }
 
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    /* ROW 2: PRIMARY NAVIGATION */
+    .header-row-nav {
+      display: flex;
+      align-items: center;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 4px;
-      flex-wrap: nowrap;
+      gap: 6px;
+      margin: 0;
+      padding: 0;
+      justify-content: flex-start;
+      width: 100%;
+      overflow-x: auto;
     }
     .nav-link {
       text-decoration: none;
       color: var(--text-muted);
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       font-weight: 700;
-      padding: 6px 12px;
+      padding: 7px 14px;
       border-radius: 8px;
       transition: all 0.2s;
       display: inline-flex;
@@ -259,25 +282,33 @@
 </head>
 <body>
   <div class="container">
-    <nav class="top-nav">
-      <a href="index.html" class="nav-brand">
-        <div class="brand-icon">🛡️</div>
-        <div class="brand-title">Enterprise Data Governance Agent</div>
-      </a>
-      <div class="nav-links">
-        <a href="index.html" class="nav-link">🛡️ Governance Studio</a>
-        <a href="evidence-vault.html" class="nav-link">🗄️ Evidence Vault</a>
-        <a href="executive-dashboard.html" class="nav-link">📊 Executive Dashboard</a>
-        <a href="architecture.html" class="nav-link active">🏛️ Architecture</a>
-        <a href="demo-scenarios.html" class="nav-link">🎬 Demo Scenarios</a>
+    <!-- ENTERPRISE TWO-ROW HEADER (Databricks / Azure Portal / Atlassian style) -->
+    <header class="app-header">
+      <!-- ROW 1: BRAND + UTILITY CONTROLS -->
+      <div class="header-row-top">
+        <a href="index.html" class="nav-brand">
+          <div class="brand-icon">🛡️</div>
+          <div class="brand-title">Enterprise Data Governance Agent</div>
+        </a>
+        <div class="header-actions">
+          <a href="reasoning-runtime.html" class="header-btn" title="Configure LLM Reasoning Provider">🧠 LLM Config</a>
+          <span class="badge badge-purple">5-TIER GOVERNANCE</span>
+          <span class="badge badge-green">Platform Health: Excellent</span>
+          <button class="header-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Theme</button>
+        </div>
       </div>
-      <div class="header-actions">
-        <a href="reasoning-runtime.html" class="header-btn" title="Configure LLM Reasoning Provider">🧠 LLM Config</a>
-        <span class="badge badge-purple">5-TIER GOVERNANCE</span>
-        <span class="badge badge-green">Platform Health: Excellent</span>
-        <button class="header-btn" onclick="toggleTheme()" id="themeBtn">☀️ Light Theme</button>
+
+      <!-- ROW 2: PRIMARY BUSINESS NAVIGATION (Left edge aligned with Brand Title) -->
+      <div class="header-row-nav">
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">🛡️ Governance Studio</a>
+          <a href="evidence-vault.html" class="nav-link">🗄️ Evidence Vault</a>
+          <a href="executive-dashboard.html" class="nav-link">📊 Executive Dashboard</a>
+          <a href="architecture.html" class="nav-link active">🏛️ Architecture</a>
+          <a href="demo-scenarios.html" class="nav-link">🎬 Demo Scenarios</a>
+        </div>
       </div>
-    </nav>
+    </header>
 
     <!-- 5-TIER COGNITIVE ARCHITECTURE -->
     <div class="card">
