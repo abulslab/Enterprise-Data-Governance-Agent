@@ -1,6 +1,6 @@
 # Enterprise Data Governance Agent 🛡️
 
-> **Autonomous AI Governance Agent for Lakehouse Schema Contract Verification, Regulatory Boundary Enforcement, and Consumer Blast Radius Intelligence.**
+> **Autonomous governance, compliance enforcement, contract protection, governance memory, and executive risk visibility.**
 
 [![TypeScript 5.6](https://img.shields.io/badge/TypeScript-5.6-3178C6.svg?logo=typescript)](https://www.typescriptlang.org/)
 [![Five-Tier Architecture](https://img.shields.io/badge/Architecture-5--Tier%20Governance-8A2BE2.svg)](docs/ARCHITECTURE.md)
@@ -11,9 +11,31 @@
 
 ---
 
+## 🛑 Problem Statement
+
+Modern data platforms require governance controls that are deterministic, auditable, and capable of enforcing regulatory requirements before non-compliant datasets reach production.
+
+Traditional data governance relies on passive catalogs that document metadata after ingestion has already occurred, or generic LLM chatbots lacking deterministic guarantees. When cleartext credentials or breaking schema mutations breach production lakehouses, organizations face severe statutory fines (GDPR Art. 32, PCI-DSS v4.0), data pipeline halts, and downstream service failures.
+
+The **Enterprise Data Governance Agent** provides an active, deterministic pre-production governance gate and continuous compliance system of record.
+
+---
+
+## 💎 What Makes This Different
+
+- **Deterministic Enforcement Layer**: Sub-millisecond, zero-token mathematical scanners (compiled Regex, Luhn Mod 10, ABA mod-10, AST schema diff) run before LLMs are invoked.
+- **Governance Memory**: Append-only audit history, repeat offender escalation (`STANDARD` ➔ `WARNING` ➔ `ESCALATED` ➔ `CRITICAL_BLOCK`), and cumulative compliance telemetry.
+- **Evidence Vault**: Cryptographic, tamper-evident system of record chaining every evaluation, violation, and decision into an immutable audit trail.
+- **Policy Compiler**: Translates natural language policies into deterministic Tier 1 AST rules with SHA-256 rule hashes in real time.
+- **Executive Dashboard**: Boardroom-ready compliance telemetry, risk-weighted posture tracking, and financial liability avoided analytics.
+- **Blast Radius Analysis**: Dependency graph lineage mapping evaluating downstream impacts across billing, fraud ML, analytics, and consumer APIs.
+- **Human-In-The-Loop (HITL) Controls**: Automated enterprise incident dispatching for Jira, ServiceNow, Slack Block Kit, and Microsoft Teams.
+
+---
+
 ## 🌟 Mission & Positioning
 
-The **Enterprise Data Governance Agent** is a production-style reference platform inspired by modern enterprise data governance architectures. Its core objective is to **prevent non-compliant, unsafe, or contract-breaking data from entering production lakehouses, warehouses, streaming pipelines, and AI analytical platforms**.
+The **Enterprise Data Governance Agent** is a production-style governance reference platform inspired by modern enterprise data governance architectures. Its core objective is to **prevent non-compliant, unsafe, or contract-breaking data from entering production lakehouses, warehouses, streaming pipelines, and AI analytical platforms**.
 
 ### 🏛️ Platform Core Capabilities
 - **Governance Automation**: Automated pre-merge and streaming boundary validation.
@@ -78,6 +100,18 @@ Candidate Dataset Schema + Sample Partition
 │                                                        │      • CI/CD Exit Code Gate (0 = PASS, 1 = BLOCK)
 └────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## 🖥️ Enterprise Workspaces & Visual Presentation
+
+The platform features a zero-dependency, dual-theme (Light/Dark) Web Visual Studio structured into five dedicated enterprise workspaces:
+
+1. **🛡️ Governance Studio** (`index.html`): Real-time schema candidate audition, 0-token AST inspection, interactive SVG Blast Radius Lineage DAG, Autonomous Governance Decision Workflow, and automated dbt remediation code generator.
+2. **📊 Executive Dashboard** (`executive-dashboard.html`): Boardroom compliance telemetry, risk-weighted posture scoring, regulatory violation breakdowns (GDPR, HIPAA, GLBA, PCI-DSS), and financial liability avoided metrics.
+3. **🗄️ Evidence Vault** (`evidence-vault.html`): Immutable system of record with cryptographic SHA-256 Merkle chain verification, timeline audit logs, and downloadable compliance certificates.
+4. **🏛️ Architecture Workspace** (`architecture.html`): Interactive visual specification of the 5-tier architecture, deterministic zero-token offload boundaries, and cognitive runtime topologies.
+5. **🎬 Demo Center** (`demo-scenarios.html`): 1-click execution scenarios demonstrating PII quarantine, breaking drift prevention, repeat offender escalation, and natural language policy compilation.
 
 ---
 
