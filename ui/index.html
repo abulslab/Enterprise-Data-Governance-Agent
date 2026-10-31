@@ -613,7 +613,84 @@
       justify-content: center;
     }
 
-    /* Council Debate Styles */
+    /* Workflow Lifecycle Component */
+    .workflow-lifecycle-container {
+      background: var(--section-box-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .workflow-lifecycle-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .workflow-lifecycle-title {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .workflow-stepper-track {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    @media (max-width: 680px) {
+      .workflow-stepper-track {
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+    }
+    .workflow-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: var(--section-box-bg);
+      border: 1px solid var(--card-border);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+    .workflow-pill.active {
+      background: var(--purple-bg);
+      border-color: var(--purple-border);
+      color: var(--purple-text);
+    }
+    .pill-num {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 800;
+    }
+    .workflow-arrow {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 800;
+      user-select: none;
+    }
+
+    /* Governance Arbitration Styles */
     .council-bubble {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -727,7 +804,7 @@
         <div class="nav-tabs">
           <button class="tab-btn active" onclick="switchTab('auditTab')" id="tab-auditTab">📊 Audit & Trajectory</button>
           <button class="tab-btn" onclick="switchTab('dagTab')" id="tab-dagTab">🕸️ Blast Radius Lineage DAG</button>
-          <button class="tab-btn" onclick="switchTab('councilTab')" id="tab-councilTab">⚖️ Multi-Agent Council</button>
+          <button class="tab-btn" onclick="switchTab('councilTab')" id="tab-councilTab">⚖️ Governance Arbitration</button>
           <button class="tab-btn" onclick="switchTab('autofixTab')" id="tab-autofixTab">💡 Auto-Fix & Policy Compiler</button>
           <button class="tab-btn" onclick="switchTab('memoryTab')" id="tab-memoryTab">🧠 Governance Memory & HITL</button>
         </div>
@@ -771,12 +848,36 @@
             <div id="regulatoryList" style="display: flex; flex-direction: column; gap: 8px;"></div>
           </div>
 
-          <!-- Autonomous Governance Decision Workflow -->
-          <div class="form-group">
-            <label>AUTONOMOUS GOVERNANCE DECISION WORKFLOW (OBSERVE ➔ REASON ➔ DECIDE ➔ EXECUTE)</label>
+          <!-- Autonomous Governance Decision Workflow Lifecycle Component -->
+          <div class="workflow-lifecycle-container">
+            <div class="workflow-lifecycle-header">
+              <span class="workflow-lifecycle-title">Autonomous Governance Decision Workflow</span>
+              <span class="badge badge-purple" style="font-size: 0.62rem;">Tier 3 Engine</span>
+            </div>
+            <div class="workflow-stepper-track">
+              <div class="workflow-pill active" id="pill-observe">
+                <span class="pill-num">1</span>
+                <span class="pill-name">OBSERVE</span>
+              </div>
+              <div class="workflow-arrow">→</div>
+              <div class="workflow-pill active" id="pill-reason">
+                <span class="pill-num">2</span>
+                <span class="pill-name">REASON</span>
+              </div>
+              <div class="workflow-arrow">→</div>
+              <div class="workflow-pill active" id="pill-decide">
+                <span class="pill-num">3</span>
+                <span class="pill-name">DECIDE</span>
+              </div>
+              <div class="workflow-arrow">→</div>
+              <div class="workflow-pill active" id="pill-execute">
+                <span class="pill-num">4</span>
+                <span class="pill-name">EXECUTE</span>
+              </div>
+            </div>
             <div class="step-list" id="stepList">
               <div style="text-align: center; padding: 35px 20px; color: var(--text-muted); font-size: 0.85rem;">
-                Click "Run Autonomous Governance Audit" to observe the agent's multi-tier cognitive trajectory.
+                Click "Run Autonomous Governance Audit" to initiate the multi-tier governance evaluation sequence.
               </div>
             </div>
           </div>
@@ -834,16 +935,16 @@
           </div>
         </div>
 
-        <!-- TAB 3: Multi-Agent Governance Council (Consensus Debate) -->
+        <!-- TAB 3: Governance Policy Arbitration -->
         <div id="councilTab" class="tab-content" style="display: none;">
           <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px;">
-            Simulated adversarial cognitive debate between organizational stakeholders:
+            Multi-stakeholder policy arbitration resolving competing priorities across velocity, contract stability, and compliance:
           </div>
 
           <div class="council-bubble" style="border-left: 3px solid #3b82f6;">
             <div class="bubble-header" style="color: #2563eb;">
-              <span>🚀 Product Velocity Agent</span>
-              <span class="badge badge-purple">Business Stakeholder</span>
+              <span>Product &amp; Data Engineering View</span>
+              <span class="badge badge-purple">Velocity Priority</span>
             </div>
             <div id="councilProduct" style="font-size: 0.78rem; line-height: 1.45; color: var(--text);">
               "Recommend approving customer_orders_v2. Q4 checkout latency requirements necessitate moving fast. Breaking changes can be addressed in sprint 44."
@@ -852,7 +953,7 @@
 
           <div class="council-bubble" style="border-left: 3px solid #dc2626;">
             <div class="bubble-header" style="color: #dc2626;">
-              <span>🛡️ Chief Privacy & Compliance Agent</span>
+              <span>Information Security &amp; Compliance View</span>
               <span class="badge badge-red">Security Boundary</span>
             </div>
             <div id="councilSecurity" style="font-size: 0.78rem; line-height: 1.45; color: var(--text);">
@@ -862,8 +963,8 @@
 
           <div class="council-bubble" style="border-left: 3px solid #059669; background: var(--section-box-bg);">
             <div class="bubble-header" style="color: #059669;">
-              <span>⚖️ Consensus Arbiter Agent</span>
-              <span class="badge badge-green">Autonomous Verdict</span>
+              <span>⚖️ Governance Policy Arbiter</span>
+              <span class="badge badge-green">Binding Arbitration</span>
             </div>
             <div id="councilArbiter" style="font-size: 0.78rem; line-height: 1.45; color: var(--text); font-weight: 600;">
               "Final Verdict: QUARANTINE partition immediately. Synthesizing automated Format-Preserving Encryption dbt transformation to unblock Product Velocity without violating security invariants."
@@ -887,25 +988,26 @@
             </pre>
           </div>
 
-          <!-- Natural Language Policy Compiler -->
+          <!-- Policy-to-Invariant Compiler -->
           <div class="section-box">
             <div class="section-title">
-              <span>🗣️ Natural Language Policy-to-Invariant Compiler</span>
-              <span class="badge badge-purple">Zero-Shot Rule Gen</span>
+              <span>🗣️ Policy-to-Invariant Compiler</span>
+              <span class="badge badge-purple">Deterministic Rule Generation</span>
             </div>
             <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">
-              Type an enterprise governance policy in plain English to compile it into a deterministic Tier 1 Invariant rule:
+              Specify an enterprise governance policy to compile it into an immutable Tier 1 Invariant rule for deterministic enforcement:
             </p>
             <div class="input-row" style="margin-bottom: 8px;">
               <input type="text" id="nlPolicyInput" value="Any dataset in Marketing containing phone numbers or customer emails must be hashed" />
               <button class="btn-secondary" onclick="compileNlPolicy()">Compile</button>
             </div>
             <pre class="dossier" id="compiledInvariant" style="max-height: 100px; color: #059669; font-weight: 600;">
-[Compiled Tier 1 Invariant G-4]:
-- Rule Target: Columns matching /email|phone/i
-- Constraint:  ENFORCE_CRYPTO_HASH (SHA-256 + Salt)
-- Gate Action: QUARANTINE on cleartext match
-- Status:      Active in Tier 4 Deterministic Engine
+[Compiled Governance Rule — Tier 1 Invariant G-4]:
+- Policy Statement:           "Any dataset in Marketing containing phone numbers or customer emails must be hashed"
+- AST Deterministic Target:   MATCH (column_name IN /email|phone|customer_id/i)
+- Invariant Enforcement:      ENFORCE_ENVELOPE_ENCRYPTION (AES-256)
+- Deterministic Gate Action:  SUPERVISORY_QUARANTINE (Exit Code 1)
+- Status:                     Active in Tier 4 Deterministic Engine
             </pre>
           </div>
         </div>
@@ -1323,14 +1425,14 @@ Select an enterprise incident platform above to view the synthesized escalation 
       const input = document.getElementById('nlPolicyInput').value.trim();
       const compiled = document.getElementById('compiledInvariant');
       compiled.textContent = 
-`[Compiled Tier 1 Invariant G-4 from NLP]:
-- Natural Language: "${input}"
-- AST Target Rule:  MATCH (column_name IN /email|phone|customer_id/i)
-- Invariant Action: ENFORCE_ENVELOPE_ENCRYPTION (AES-256)
-- Violation Gate:   SUPERVISORY_QUARANTINE (Exit Code 1)
-- Timestamp:        ${new Date().toISOString()}
-- Rule Hash:        SHA256-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
-      showToast('Compiled Natural Language rule into Tier 1 Invariant!');
+`[Compiled Governance Rule — Tier 1 Invariant G-4]:
+- Policy Statement:           "${input}"
+- AST Deterministic Target:   MATCH (column_name IN /email|phone|customer_id/i)
+- Invariant Enforcement:      ENFORCE_ENVELOPE_ENCRYPTION (AES-256)
+- Deterministic Gate Action:  SUPERVISORY_QUARANTINE (Exit Code 1)
+- Timestamp:                  ${new Date().toISOString()}
+- Cryptographic Rule Hash:    SHA256-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+      showToast('Compiled policy into Tier 1 Invariant rule!');
     };
 
     let mockViolationTally = 0;
@@ -1866,7 +1968,7 @@ Return ONLY a valid JSON array with exactly 4 governance workflow steps (OBSERVE
         dagRisk.className = 'badge badge-green';
       }
 
-      // Update Multi-Agent Council
+      // Update Governance Arbitration
       if (outcome === 'QUARANTINE') {
         document.getElementById('councilProduct').textContent = `"We need ${candidate.datasetUrn} deployed today. Can we bypass the PII check for 2 weeks?"`;
         document.getElementById('councilSecurity').textContent = `"Veto. Cleartext taxpayer_ssn in ${candidate.classificationTier} storage violates GDPR Art. 32 and Invariant G-1. Direct liability up to €20M. Must quarantine."`;
@@ -1878,7 +1980,7 @@ Return ONLY a valid JSON array with exactly 4 governance workflow steps (OBSERVE
       } else {
         document.getElementById('councilProduct').textContent = `"Schema candidate is tested and backward compatible."`;
         document.getElementById('councilSecurity').textContent = `"Zero unmasked PII. All contractual constraints satisfied."`;
-        document.getElementById('councilArbiter').textContent = `"Unanimous Consensus: APPROVE. Release pipeline lock."`;
+        document.getElementById('councilArbiter').textContent = `"Binding Arbitration: APPROVE. Release pipeline lock."`;
       }
 
       // Auto-Synthesize Remediation Code

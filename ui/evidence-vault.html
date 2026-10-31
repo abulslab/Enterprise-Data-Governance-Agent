@@ -469,7 +469,7 @@
       align-items: center;
       text-align: center;
       flex: 1;
-      min-width: 80px;
+      min-width: 105px;
       transition: transform 0.2s;
     }
     .v-node:hover {
@@ -923,56 +923,61 @@
       const list = document.getElementById('timelineList');
       list.innerHTML = '';
 
-      records.forEach(r => {
-        let nodeColor = 'green';
-        let label = 'APPROVE';
-        if (r.hitlRequired || r.decision === 'HITL ESCALATION' || (r.violations && r.violations.some(v => v.type === 'REPEAT_OFFENDER'))) {
-          nodeColor = 'purple';
-          label = 'HITL';
-        } else if (r.decision === 'BLOCK_DEPLOYMENT') {
-          nodeColor = 'red';
-          label = 'BLOCK_DEPLOYMENT';
-        } else if (r.decision === 'QUARANTINE') {
-          nodeColor = 'orange';
-          label = 'QUARANTINE';
-        } else if (r.decision === 'APPROVE_WITH_WARNING') {
-          nodeColor = 'amber';
-          label = 'WARNING';
-        } else {
-          nodeColor = 'green';
-          label = 'APPROVE';
-        }
+      if (records.length === 0) {
+        vTimeline.innerHTML = '<div style="color: var(--text-muted); font-size: 0.78rem; padding: 14px; text-align: center; width: 100%;">No prior compliance records stored for this dataset partition.</div>';
+        list.innerHTML = '<div style="color: var(--text-muted); font-size: 0.78rem; padding: 24px; text-align: center;">No prior audit history available.</div>';
+      } else {
+        records.forEach(r => {
+          let nodeColor = 'green';
+          let label = 'APPROVE';
+          if (r.hitlRequired || r.decision === 'HITL ESCALATION' || (r.violations && r.violations.some(v => v.type === 'REPEAT_OFFENDER'))) {
+            nodeColor = 'purple';
+            label = 'HITL ESCALATION';
+          } else if (r.decision === 'BLOCK_DEPLOYMENT') {
+            nodeColor = 'red';
+            label = 'BLOCK_DEPLOYMENT';
+          } else if (r.decision === 'QUARANTINE') {
+            nodeColor = 'orange';
+            label = 'QUARANTINE';
+          } else if (r.decision === 'APPROVE_WITH_WARNING') {
+            nodeColor = 'amber';
+            label = 'APPROVE_WITH_WARNING';
+          } else {
+            nodeColor = 'green';
+            label = 'APPROVE';
+          }
 
-        const dateStr = new Date(r.timestamp).toISOString().split('T')[0];
+          const dateStr = new Date(r.timestamp).toISOString().split('T')[0];
 
-        // 1. Append Visual Stepper Node
-        const vNode = document.createElement('div');
-        vNode.className = 'v-node';
-        vNode.innerHTML = `
-          <div class="v-dot ${nodeColor}">●</div>
-          <div class="v-badge ${nodeColor}">${label}</div>
-          <div class="v-date">${dateStr}</div>
-        `;
-        vTimeline.appendChild(vNode);
+          // 1. Append Visual Stepper Node
+          const vNode = document.createElement('div');
+          vNode.className = 'v-node';
+          vNode.innerHTML = `
+            <div class="v-dot ${nodeColor}">●</div>
+            <div class="v-badge ${nodeColor}">${label}</div>
+            <div class="v-date">${dateStr}</div>
+          `;
+          vTimeline.appendChild(vNode);
 
-        // 2. Append Detailed List Item
-        const item = document.createElement('div');
-        item.className = 'timeline-item';
-        item.innerHTML = `
-          <div class="timeline-dot ${nodeColor}"></div>
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <strong style="font-size: 0.78rem;">${dateStr}</strong>
-            <span class="badge ${nodeColor === 'red' ? 'badge-red' : nodeColor === 'orange' ? 'badge-amber' : nodeColor === 'purple' ? 'badge-purple' : nodeColor === 'amber' ? 'badge-amber' : 'badge-green'}">${label === 'HITL' ? 'HITL ESCALATION' : r.decision}</span>
-          </div>
-          <div style="font-size: 0.73rem; color: var(--text-muted);">
-            ${r.violations.length > 0 ? r.violations.map(v => v.description).join('; ') : 'All statutory governance invariants satisfied.'}
-          </div>
-          <div style="font-size: 0.66rem; font-family: 'JetBrains Mono', monospace; color: var(--text-subtle);">
-            Fingerprint: ${r.evidenceHash.substring(0, 24)}...
-          </div>
-        `;
-        list.appendChild(item);
-      });
+          // 2. Append Detailed List Item
+          const item = document.createElement('div');
+          item.className = 'timeline-item';
+          item.innerHTML = `
+            <div class="timeline-dot ${nodeColor}"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="font-size: 0.78rem;">${dateStr}</strong>
+              <span class="badge ${nodeColor === 'red' ? 'badge-red' : nodeColor === 'orange' ? 'badge-amber' : nodeColor === 'purple' ? 'badge-purple' : nodeColor === 'amber' ? 'badge-amber' : 'badge-green'}">${label}</span>
+            </div>
+            <div style="font-size: 0.73rem; color: var(--text-muted);">
+              ${r.violations.length > 0 ? r.violations.map(v => v.description).join('; ') : 'All statutory governance invariants satisfied.'}
+            </div>
+            <div style="font-size: 0.66rem; font-family: 'JetBrains Mono', monospace; color: var(--text-subtle);">
+              Fingerprint: ${r.evidenceHash.substring(0, 24)}...
+            </div>
+          `;
+          list.appendChild(item);
+        });
+      }
 
       // Repeat Offender Banner
       const banner = document.getElementById('repeatOffenderBanner');
