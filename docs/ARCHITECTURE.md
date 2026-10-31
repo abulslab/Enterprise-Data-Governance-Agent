@@ -67,6 +67,14 @@ flowchart TD
 
 ---
 
+## 📸 Visual Architecture Diagrams
+
+| 🏛️ 5-Tier Architecture Stack | ⚡ Governance Decision Workflow | 🕸️ Blast Radius Lineage Topology |
+| :---: | :---: | :---: |
+| <img src="images/architecture-overview.png" width="300" alt="5-Tier Architecture Stack" /> | <img src="images/governance-workflow.png" width="300" alt="Governance Workflow" /> | <img src="images/blast-radius-topology.png" width="300" alt="Blast Radius Lineage" /> |
+
+---
+
 ## 5-Tier Architecture Breakdown
 
 ### Tier 0: Evidence Vault (`src/tier0-vault/`)

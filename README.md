@@ -113,6 +113,12 @@ The platform features a zero-dependency, dual-theme (Light/Dark) Web Visual Stud
 4. **🏛️ Architecture Workspace** (`architecture.html`): Interactive visual specification of the 5-tier architecture, deterministic zero-token offload boundaries, and cognitive runtime topologies.
 5. **🎬 Demo Center** (`demo-scenarios.html`): 1-click execution scenarios demonstrating PII quarantine, breaking drift prevention, repeat offender escalation, and natural language policy compilation.
 
+### 📸 Architecture & Workflow Visual Previews
+
+| 🏛️ 5-Tier Architecture Stack | ⚡ Governance Decision Workflow | 🕸️ Blast Radius Lineage Topology |
+| :---: | :---: | :---: |
+| <img src="docs/images/architecture-overview.png" width="300" alt="5-Tier Architecture Stack" /> | <img src="docs/images/governance-workflow.png" width="300" alt="Governance Workflow" /> | <img src="docs/images/blast-radius-topology.png" width="300" alt="Blast Radius Lineage" /> |
+
 ---
 
 ## ⚡ 30-Second Quickstart
@@ -296,5 +302,36 @@ npm run build
 
 ---
 
+## 🛠️ Technology Stack & Core Foundations
+
+- **Google Gemini**: Frontier reasoning engine (`gemini-2.5-flash`, `gemini-1.5-pro`) for high-context regulatory evaluation, compliance arbitration, and automated dbt/PySpark remediation code generation.
+- **Agentic AI Architecture**: Autonomous multi-stage governance reasoning (`OBSERVE` ➔ `REASON` ➔ `DECIDE` ➔ `EXECUTE`), supervisory policy arbitration, and memory-backed stateful repeat offender escalation.
+- **Google Antigravity IDE**: Engineered, tested, and verified using the Antigravity Advanced Agentic Coding environment.
+- **TypeScript 5.6 & Node.js**: Sub-millisecond mathematical algorithms (Luhn Mod 10, ABA mod-10 weighted checksums, AST schema differ) executing deterministically with 0 token consumption.
+- **Modern Web Standards**: Zero external client-side dependencies, pure Vanilla CSS design system with dual light/dark executive themes, and responsive SVG consumer dependency graphs.
+
+---
+
+## 🔄 Reusability & Integration Blueprints
+
+The Enterprise Data Governance Agent is designed for drop-in reuse across modern data stacks:
+
+1. **GitHub Actions CI/CD Gate**: Block non-compliant schema PRs before merging to production (see [`docs/REUSE_GUIDE.md`](docs/REUSE_GUIDE.md)).
+2. **Pre-Commit Invariant Hooks**: Catch cleartext credentials on developer workstations prior to `git commit`.
+3. **Data Orchestration (Airflow / Dagster / Prefect)**: Call the TypeScript SDK or CLI from ingestion DAGs to validate landing staging tables before writing to lakehouses.
+4. **dbt & Delta Lake Integration**: Automatically apply synthesized remediation views and format-preserving cryptographic masks.
+5. **Human-In-The-Loop Incident Dispatch**: Automated JSON/payload generation for Jira, ServiceNow, Slack, and Microsoft Teams.
+
+---
+
+## 🏷️ GitHub Repository Topics
+
+```text
+data-governance · data-contracts · compliance · data-privacy · gdpr · hipaa · pci-dss · typescript · lakehouse · risk-management · schema-governance · merkle-tree · gemini · agentic-ai · antigravity
+```
+
+---
+
 ## 📄 License
 MIT © [abulslab](https://github.com/abulslab)
+
