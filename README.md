@@ -3,7 +3,7 @@
 > **Autonomous AI Governance Agent for Lakehouse Schema Contract Verification, Regulatory Boundary Enforcement, and Consumer Blast Radius Intelligence.**
 
 [![TypeScript 5.6](https://img.shields.io/badge/TypeScript-5.6-3178C6.svg?logo=typescript)](https://www.typescriptlang.org/)
-[![Cognitive Architecture](https://img.shields.io/badge/Cognitive%20Architecture-4--Tier%20OODA-8A2BE2.svg)](docs/ARCHITECTURE.md)
+[![Five-Tier Architecture](https://img.shields.io/badge/Architecture-5--Tier%20Governance-8A2BE2.svg)](docs/ARCHITECTURE.md)
 [![Zero-Token Offload](https://img.shields.io/badge/Zero--Token%20Offload-100%25%20Deterministic-success.svg)](docs/ARCHITECTURE.md)
 [![Regulatory Frameworks](https://img.shields.io/badge/Compliance-GDPR%20%7C%20HIPAA%20%7C%20GLBA%20%7C%20PCI--DSS-blue.svg)](docs/POLICIES.md)
 [![CI/CD Ready](https://img.shields.io/badge/CI%2FCD-Exit%20Code%20Gate%20(0%2F1)-green.svg)](docs/REUSE_GUIDE.md)
@@ -11,12 +11,21 @@
 
 ---
 
-## 🌟 Mission & Scope Boundary
+## 🌟 Mission & Positioning
 
-The **Enterprise Data Governance Agent** is an autonomous AI Quality Engineering agent whose singular mandate is to **prevent non-compliant data from entering enterprise data lakehouses, warehouses, streaming topics (Kafka), and analytical ecosystems**.
+The **Enterprise Data Governance Agent** is a production-style reference platform inspired by modern enterprise data governance architectures. Its core objective is to **prevent non-compliant, unsafe, or contract-breaking data from entering production lakehouses, warehouses, streaming pipelines, and AI analytical platforms**.
+
+### 🏛️ Platform Core Capabilities
+- **Governance Automation**: Automated pre-merge and streaming boundary validation.
+- **Compliance Enforcement**: Real-time statutory mapping for GDPR, HIPAA, GLBA, and PCI-DSS.
+- **Policy Compilation**: Zero-shot compilation of natural language policies into AST invariants.
+- **Governance Memory**: Append-only audit history, repeat offender escalation, and risk tracking.
+- **Human-in-the-Loop (HITL)**: Automated incident generation for Jira, ServiceNow, Slack, and Teams.
+- **Executive Risk Visibility**: Boardroom-level KPIs, compliance health telemetry, and financial risk avoided tracking.
+- **Deterministic + Reasoning Architecture**: Sub-millisecond zero-token scanning combined with autonomous governance reasoning.
 
 ### ⛔ Strict Scope Boundary: Data Governance ONLY
-This agent focuses **exclusively on Data Governance**. It explicitly excludes traditional Data Quality operations:
+This platform focuses **exclusively on Data Governance**. It explicitly excludes traditional Data Quality operations:
 - ❌ **No freshness monitoring**
 - ❌ **No null analysis or completeness checks**
 - ❌ **No duplicate detection**
@@ -25,42 +34,40 @@ This agent focuses **exclusively on Data Governance**. It explicitly excludes tr
 - ❌ **No numeric anomaly detection**
 
 *(These capabilities belong to a separate, dedicated Data Quality Agent).*  
-This agent specializes in **data privacy boundaries, sensitive data discovery, classification, data contracts, downstream consumer blast radius analysis, regulatory citations, and human-in-the-loop governance**.
+This platform specializes in **data privacy boundaries, sensitive data discovery, classification, data contracts, downstream consumer blast radius analysis, regulatory citations, and human-in-the-loop governance**.
 
 ---
 
----
-
-## 🏗️ 5-Tier Cognitive Architecture
+## 🏗️ The Five-Tier Governance Architecture
 
 ```
 Candidate Dataset Schema + Sample Partition
                     │
                     ▼
 ┌────────────────────────────────────────────────────────┐
-│ Tier 4: Zero-Token Deterministic Scanner               │  ◄── 0 Tokens Consumed
+│ Tier 4: Deterministic Enforcement Engine               │  ◄── 0 Tokens Consumed
 │ (Compiled Regex, Luhn Mod 10, ABA Checksum, AST Diff)  │      Sub-millisecond execution (< 2ms)
 └───────────────────────────┬────────────────────────────┘
                             │ Exact Findings & Offsets
                             ▼
 ┌────────────────────────────────────────────────────────┐
-│ Tier 3: Autonomous OODA Cognitive Reasoner             │  ◄── Observe ➔ Reason ➔ Decide ➔ Execute
-│ (Tri-Mode Gateway: Gemini, Ollama, Mock)               │      Consumer Blast Radius Assessment
+│ Tier 3: Governance Reasoning Engine                    │  ◄── OBSERVE ➔ REASON ➔ DECIDE ➔ EXECUTE
+│ (Tri-Mode Gateway: Gemini, Ollama, Mock)               │      Consumer Blast Radius Assessment & Policy Arbitration
 └───────────────────────────┬────────────────────────────┘
                             │
                             ├──► Offline Realistic Mock   (0 Cost, 1ms, 0 Tokens)
                             ├──► Local Ollama Daemon       (Private Air-Gapped, Llama 3)
-                            └──► Google Gemini Cloud       (Frontier Cognitive Reasoning)
+                            └──► Google Gemini Cloud       (Frontier Governance Reasoning)
                             │
                             ▼
 ┌────────────────────────────────────────────────────────┐
-│ Tier 1 & 2: Invariants & Governance Policies           │  ◄── AGENTS.md Invariants G-1 to G-5
-│ (Supervisory Gate & Statutory Mappings)                │      GDPR, HIPAA, GLBA, PCI-DSS
+│ Tier 1 & 2: System Invariants & Governance Policies    │  ◄── AGENTS.md Invariants G-1 to G-5
+│ (Supervisory Gate & Statutory Regulatory Mappings)     │      GDPR, HIPAA, GLBA, PCI-DSS
 └───────────────────────────┬────────────────────────────┘
                             │
                             ▼
 ┌────────────────────────────────────────────────────────┐
-│ Tier 0: Governance Evidence Vault & Memory Ledger      │  ◄── Append-only SHA-256 Merkle chain,
+│ Tier 0: Evidence Vault                                 │  ◄── Append-only SHA-256 Merkle chain,
 │ (Historical Timelines, Repeat Offenders, System Audit) │      Tamper-evident verification, Executive KPIs
 └───────────────────────────┬────────────────────────────┘
                             │
@@ -169,12 +176,12 @@ Critical violations activate supervisory gating (Invariant G-4), generating stru
 ### 11. Cryptographic Compliance Certificate
 Every audit emits a downloadable digital compliance certificate signed with SHA-256 digital signature, timestamp, dataset URN, and decision outcome for SOX/SOC-2/ISO-27001 audit verification.
 
-### 12. Tri-Mode Reasoning Gateway
+### 12. Tri-Mode Governance Reasoning Runtime
 | Gateway | Configuration | When to Use |
 | :--- | :--- | :--- |
 | **Offline Mock** *(Default)* | Pre-recorded realistic cassettes (`--llm mock`) | Local development, unit testing, air-gapped CI/CD runners (0 cost). |
 | **Local Ollama** | Private daemon URL + model (`--llm ollama`) | Private, zero-data-egress enterprise networks. |
-| **Google Gemini** | Google AI Studio API key (`--llm gemini`) | Frontier cognitive reasoning and dynamic remediation synthesis. |
+| **Google Gemini** | Google AI Studio API key (`--llm gemini`) | Frontier governance reasoning and dynamic remediation synthesis. |
 | **OpenAI / Custom** | Custom Base URL + Bearer Token (`--llm custom`) | Groq, vLLM, DeepSeek, Together, or OpenAI enterprise endpoints. |
 
 ---
