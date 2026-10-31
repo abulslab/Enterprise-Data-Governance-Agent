@@ -630,17 +630,86 @@
       align-items: center;
     }
     .workflow-lifecycle-title {
-      font-size: 0.84rem;
+      font-size: 0.86rem;
       font-weight: 800;
       color: var(--text);
       letter-spacing: -0.01em;
+      line-height: 1.25;
     }
+    .workflow-lifecycle-subtitle {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 2px;
+      letter-spacing: -0.005em;
+    }
+
+    /* Lightweight Execution Status Row */
+    .workflow-status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+      transition: all 0.25s ease;
+    }
+    .workflow-status-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .workflow-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+    .workflow-status-dot.idle {
+      background: #94a3b8;
+    }
+    .workflow-status-dot.running {
+      background: #3b82f6;
+      box-shadow: 0 0 8px #3b82f6;
+      animation: statusPulse 1.4s infinite ease-in-out;
+    }
+    .workflow-status-dot.complete {
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+    @keyframes statusPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.85); }
+    }
+    .workflow-status-text {
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .workflow-status-text strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+    .workflow-status-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.73rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
     .workflow-stepper-track {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 10px 14px;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 18px;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
@@ -649,45 +718,99 @@
     @media (max-width: 680px) {
       .workflow-stepper-track {
         flex-wrap: wrap;
-        gap: 6px;
+        gap: 8px;
+        justify-content: center;
       }
     }
     .workflow-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      border-radius: 8px;
-      background: var(--section-box-bg);
-      border: 1px solid var(--card-border);
-      font-size: 0.72rem;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 0.76rem;
       font-weight: 800;
-      letter-spacing: 0.04em;
-      color: var(--text);
-      transition: all 0.2s ease;
-    }
-    .workflow-pill.active {
-      background: var(--purple-bg);
-      border-color: var(--purple-border);
-      color: var(--purple-text);
+      letter-spacing: 0.05em;
+      transition: all 0.25s ease;
+      user-select: none;
+      line-height: 1;
     }
     .pill-num {
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
-      background: var(--accent);
-      color: white;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.6rem;
+      font-size: 0.68rem;
       font-weight: 800;
+      line-height: 1;
+      transition: all 0.25s ease;
     }
+
+    /* Future / Pending steps: outline styling */
+    .workflow-pill.outline {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-subtle);
+    }
+    .workflow-pill.outline .pill-num {
+      background: var(--section-box-bg);
+      color: var(--text-subtle);
+      border: 1px solid var(--card-border);
+    }
+
+    /* Current step: highlight styling (high contrast) */
+    .workflow-pill.current,
+    .workflow-pill.active {
+      background: var(--purple-bg);
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow), 0 2px 6px rgba(79, 70, 229, 0.15);
+      transform: translateY(-1px);
+    }
+    .workflow-pill.current .pill-num,
+    .workflow-pill.active .pill-num {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+
+    /* Completed steps: filled styling */
+    .workflow-pill.completed {
+      background: #0f172a;
+      border: 1.5px solid #0f172a;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+    }
+    .workflow-pill.completed .pill-num {
+      background: rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+    [data-theme="dark"] .workflow-pill.completed {
+      background: #4f46e5;
+      border-color: #6366f1;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+    }
+    [data-theme="dark"] .workflow-pill.completed .pill-num {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
     .workflow-arrow {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      font-weight: 800;
+      color: var(--text-subtle);
+      font-size: 1rem;
+      font-weight: 700;
       user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.6;
+      line-height: 1;
     }
 
     /* Governance Arbitration Styles */
@@ -851,33 +974,48 @@
           <!-- Autonomous Governance Decision Workflow Lifecycle Component -->
           <div class="workflow-lifecycle-container">
             <div class="workflow-lifecycle-header">
-              <span class="workflow-lifecycle-title">Autonomous Governance Decision Workflow</span>
-              <span class="badge badge-purple" style="font-size: 0.62rem;">Tier 3 Engine</span>
+              <div>
+                <div class="workflow-lifecycle-title">Autonomous Governance Decision Workflow</div>
+                <div class="workflow-lifecycle-subtitle">Governance Reasoning Engine</div>
+              </div>
+              <span class="badge badge-purple" style="font-size: 0.68rem; font-weight: 800; letter-spacing: 0.04em;">TIER 3</span>
             </div>
-            <div class="workflow-stepper-track">
-              <div class="workflow-pill active" id="pill-observe">
+
+            <!-- Lightweight Execution Status Row -->
+            <div class="workflow-status-row" id="workflowStatusRow">
+              <div class="workflow-status-left">
+                <span class="workflow-status-dot idle" id="workflowStatusDot"></span>
+                <span class="workflow-status-text" id="workflowStatusText">Status: <strong>Awaiting Audit Execution</strong></span>
+              </div>
+              <div class="workflow-status-right" id="workflowStatusRight">
+                <span style="font-size: 0.72rem; color: var(--text-subtle);">Ready</span>
+              </div>
+            </div>
+
+            <div class="workflow-stepper-track" id="workflowStepperTrack">
+              <div class="workflow-pill outline" id="pill-observe">
                 <span class="pill-num">1</span>
                 <span class="pill-name">OBSERVE</span>
               </div>
               <div class="workflow-arrow">→</div>
-              <div class="workflow-pill active" id="pill-reason">
+              <div class="workflow-pill outline" id="pill-reason">
                 <span class="pill-num">2</span>
                 <span class="pill-name">REASON</span>
               </div>
               <div class="workflow-arrow">→</div>
-              <div class="workflow-pill active" id="pill-decide">
+              <div class="workflow-pill outline" id="pill-decide">
                 <span class="pill-num">3</span>
                 <span class="pill-name">DECIDE</span>
               </div>
               <div class="workflow-arrow">→</div>
-              <div class="workflow-pill active" id="pill-execute">
+              <div class="workflow-pill outline" id="pill-execute">
                 <span class="pill-num">4</span>
                 <span class="pill-name">EXECUTE</span>
               </div>
             </div>
             <div class="step-list" id="stepList">
-              <div style="text-align: center; padding: 35px 20px; color: var(--text-muted); font-size: 0.85rem;">
-                Click "Run Autonomous Governance Audit" to initiate the multi-tier governance evaluation sequence.
+              <div style="text-align: center; padding: 36px 24px; color: var(--text-muted); font-size: 0.84rem; line-height: 1.55; max-width: 580px; margin: 0 auto;">
+                Run a Governance Audit to evaluate policies, contracts, regulatory controls, and risk exposure through the Governance Decision Workflow.
               </div>
             </div>
           </div>
@@ -1399,6 +1537,15 @@ Select an enterprise incident platform above to view the synthesized escalation 
       const data = PRESETS[selected];
       document.getElementById('candidateInput').value = JSON.stringify(data.candidate, null, 2);
       document.getElementById('baselineInput').value = JSON.stringify(data.baseline, null, 2);
+      if (typeof setWorkflowStatus === 'function') {
+        setWorkflowStatus('idle');
+      }
+      const stepList = document.getElementById('stepList');
+      if (stepList) {
+        stepList.innerHTML = `<div style="text-align: center; padding: 36px 24px; color: var(--text-muted); font-size: 0.84rem; line-height: 1.55; max-width: 580px; margin: 0 auto;">
+          Run a Governance Audit to evaluate policies, contracts, regulatory controls, and risk exposure through the Governance Decision Workflow.
+        </div>`;
+      }
     };
 
     window.copyDossier = function() {
@@ -1753,6 +1900,50 @@ Return ONLY a valid JSON array with exactly 4 governance workflow steps (OBSERVE
       return { steps: Array.isArray(steps) ? steps : (steps.steps || []), tokensConsumed: data.eval_count || 180 };
     }
 
+    function updateWorkflowStepIndicators(currentStep) {
+      const pillIds = ['pill-observe', 'pill-reason', 'pill-decide', 'pill-execute'];
+      pillIds.forEach((id, idx) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.remove('completed', 'current', 'active', 'outline');
+        if (currentStep === -1) {
+          el.classList.add('outline');
+        } else if (idx < currentStep) {
+          el.classList.add('completed');
+        } else if (idx === currentStep) {
+          el.classList.add('current');
+        } else {
+          el.classList.add('outline');
+        }
+      });
+    }
+
+    function setWorkflowStatus(state, outcome) {
+      const dot = document.getElementById('workflowStatusDot');
+      const text = document.getElementById('workflowStatusText');
+      const right = document.getElementById('workflowStatusRight');
+      if (!dot || !text || !right) return;
+
+      if (state === 'idle') {
+        dot.className = 'workflow-status-dot idle';
+        text.innerHTML = 'Status: <strong>Awaiting Audit Execution</strong>';
+        right.innerHTML = '<span style="font-size: 0.72rem; color: var(--text-subtle);">Ready</span>';
+        updateWorkflowStepIndicators(-1);
+      } else if (state === 'running') {
+        dot.className = 'workflow-status-dot running';
+        text.innerHTML = 'Status: <strong>Evaluating Governance Controls...</strong>';
+        right.innerHTML = '<span style="font-size: 0.72rem; color: #3b82f6; font-weight: 700;">Evaluating</span>';
+      } else if (state === 'complete') {
+        dot.className = 'workflow-status-dot complete';
+        text.innerHTML = 'Status: <strong>Governance Decision Complete</strong>';
+        let badgeClass = 'badge-green';
+        if (outcome === 'APPROVE_WITH_WARNING') badgeClass = 'badge-amber';
+        else if (outcome === 'QUARANTINE' || outcome === 'BLOCK_DEPLOYMENT') badgeClass = 'badge-red';
+        right.innerHTML = `<span style="display: inline-flex; align-items: center; gap: 6px;">Decision: <span class="badge ${badgeClass}" style="font-size: 0.7rem; font-weight: 800;">${outcome || 'APPROVE'}</span></span>`;
+        updateWorkflowStepIndicators(4);
+      }
+    }
+
     // Main Audit Runner
     window.runAudit = async function() {
       const runBtn = document.getElementById('runBtn');
@@ -1792,6 +1983,8 @@ Return ONLY a valid JSON array with exactly 4 governance workflow steps (OBSERVE
       runBtn.disabled = true;
       statusBadge.textContent = 'EXECUTING AUDIT...';
       statusBadge.className = 'badge badge-amber';
+      setWorkflowStatus('running');
+      updateWorkflowStepIndicators(0);
       stepList.innerHTML = '<div style="text-align: center; padding: 30px; color: var(--text-muted); font-size: 0.85rem;">🔄 Executing Tier 4 Deterministic Scanners & Autonomous Governance Decision Engine...</div>';
       dossierGroup.style.display = 'none';
       blastBox.style.display = 'none';
@@ -2024,7 +2217,9 @@ FROM raw_staging_stream;`;
 
       // Render Trajectory Steps
       stepList.innerHTML = '';
-      for (const t of trajectory) {
+      for (let i = 0; i < trajectory.length; i++) {
+        const t = trajectory[i];
+        updateWorkflowStepIndicators(i);
         await new Promise(r => setTimeout(r, 120));
         const item = document.createElement('div');
         item.className = 'step-item';
@@ -2038,6 +2233,7 @@ FROM raw_staging_stream;`;
         `;
         stepList.appendChild(item);
       }
+      setWorkflowStatus('complete', outcome);
 
       // Generate Dossier Text
       const traceId = `GOV-AUDIT-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
